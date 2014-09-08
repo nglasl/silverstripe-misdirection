@@ -1,0 +1,8 @@
+---
+Name: requestfilters
+---
+Injector:
+  RequestProcessor:
+    properties:
+      filters:
+        - '%$LinkMappingRequestFilter'

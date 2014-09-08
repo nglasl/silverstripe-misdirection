@@ -1,0 +1,16 @@
+{
+	"name": "silverstripe/linkmapping",
+	"description": "Linkmapping module for SilverStripe.",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe-linkmapping", "linkmapping"],
+	"authors": [
+	{
+		"name": "Andrew Short",
+		"email": "andrew@silverstripe.com.au"
+	}
+	],
+	"require":
+	{
+		"silverstripe/framework": ">=3.1"
+	}
+}

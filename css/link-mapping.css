@@ -1,0 +1,123 @@
+/* Correcting core layout issues when viewing a LinkMapping through the CMS. */
+
+ul.redirect {
+	padding-bottom: 8px;
+	padding-left: 154px;
+}
+
+ul.redirect li.selected > div.selectiongroup_item {
+	margin-bottom: 0;
+}
+
+div.redirect-link {
+	margin-bottom: 0;
+}
+
+div.redirect-link div.fieldgroup-field,
+div.response div.fieldgroup-field {
+	float: none;
+	padding: 0 !important;
+}
+
+ul.redirect > li label,
+div.redirect-link div.fieldgroup-field input,
+div.redirect-link div.fieldgroup-field label,
+div.response div.fieldgroup-field input,
+div.response div.fieldgroup-field label {
+	vertical-align: middle;
+}
+
+ul.redirect > li input {
+	margin-top: 2px;
+}
+
+div.redirect-link div.fieldgroup-field input,
+div.response div.fieldgroup-field input {
+	display: inline;
+}
+
+/* Styling when viewing the LinkMappingAdmin through the CMS. */
+
+div.link-mapping-test.wrapper,
+div.link-mapping-test.admin {
+	padding: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/* IE9 border radius and background gradient compatibility. */
+
+div.link-mapping-test.wrapper {
+	margin-bottom: 16px;
+	padding: 0;
+	overflow: hidden;
+}
+
+div.link-mapping-test.admin {
+	background: #B0BEC7;
+	background: -o-linear-gradient(top, #B0BEC7, #98AAB6);
+	filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr = '#B0BEC7', endColorStr = '#98AAB6');
+	background: -ms-linear-gradient(top, #B0BEC7, #98AAB6);
+	background: -moz-linear-gradient(top, #B0BEC7, #98AAB6);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #B0BEC7), color-stop(100%, #98AAB6));
+	background: -webkit-linear-gradient(top, #B0BEC7, #98AAB6);
+	color: white;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+div.link-mapping-test.admin div {
+	margin-bottom: 10px;
+}
+
+div.link-mapping-test.admin input.url {
+	min-width: 580px;
+	padding: 4px;
+}
+
+div.link-mapping-test.admin div.results {
+	overflow: hidden;
+	margin-bottom: 0;
+}
+
+div.link-mapping-test.admin div.result {
+	float: left;
+	margin: 10px 1%;
+	width: 18%;
+}
+
+div.link-mapping-test.admin div.result h3 {
+	margin: 0 0 10px;
+	text-decoration: underline;
+}
+
+div.link-mapping-test.admin span.test {
+	min-width: 150px;
+}
+
+div.link-mapping-test.admin span.test.disabled {
+	filter: Alpha(opacity = 40);
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+/* This is used to correct the float height issue, however will not be supported by IE8. */
+
+div.link-mapping-test.admin div.result:nth-child(5n+1) {
+    clear: both;
+}
+
+/* Correcting core layout issues when viewing the LinkMappingAdmin through the CMS. */
+
+div.ss-gridfield-buttonrow.ss-gridfield-buttonrow-before:after {
+	display: block;
+	clear: both;
+	content: '.';
+	visibility: hidden;
+}
+
+p.grid-csv-button,
+p.grid-print-button {
+	margin-top: 0;
+	margin-bottom: 16px !important;
+}

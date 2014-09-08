@@ -1,0 +1,13 @@
+---
+Name: extensions
+---
+SiteTree:
+  extensions:
+    - 'SiteTreeLinkMappingExtension'
+    - 'FallbackLinkMappingExtension'
+SiteConfig:
+  extensions:
+    - 'FallbackLinkMappingExtension'
+LinkMappingAdmin:
+  extensions:
+    - 'LinkMappingAdminTestExtension'
