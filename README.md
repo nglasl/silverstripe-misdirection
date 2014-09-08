@@ -1,8 +1,12 @@
-# SilverStripe Link Mapping
+# [misdirection](https://github.com/nglasl)
 
-This module will allow you to set up simple/regular expression link redirection mappings and customisation, either replacing the default automated URL handling or hooking into a page not found. This is useful for something such as legacy page redirection.
+_**NOTE:** This repository has been pulled together using re-factored code from an existing module._
 
-This was originally based on https://github.com/ajshort/silverstripe-linkmapping
+:bust_in_silhouette:
+
+https://github.com/ajshort/silverstripe-linkmapping
+
+	This module will allow you to set up simple/regular expression link redirection mappings and customisation, either replacing the default automated URL handling or hooking into a page not found. This is useful for something such as legacy page redirection.
 
 ## Requirements
 
