@@ -1,12 +1,14 @@
 {
 	"name": "nglasl/silverstripe-misdirection",
-	"description": "A module to allow link redirection mapping and customisation.",
+	"description": "A module for SilverStripe which will allow both simple and regular expression link redirections based on customisable mappings, either hooking into a page not found or replacing the default automated URL handling.",
 	"type": "silverstripe-module",
 	"keywords": [
 		"silverstripe",
-		"link",
-		"mapping",
 		"redirect",
+		"link mapping",
+		"rewrite",
+		"regular expression",
+		"regex",
 		"request",
 		"response"
 	],
