@@ -1,42 +1,8 @@
-/* Correcting core layout issues when viewing a LinkMapping through the CMS. */
 
-ul.redirect {
-	padding-bottom: 8px;
-	padding-left: 154px;
-}
-
-ul.redirect li.selected > div.selectiongroup_item {
-	margin-bottom: 0;
-}
-
-div.redirect-link {
-	margin-bottom: 0;
-}
-
-div.redirect-link div.fieldgroup-field,
-div.response div.fieldgroup-field {
-	float: none;
-	padding: 0 !important;
-}
-
-ul.redirect > li label,
-div.redirect-link div.fieldgroup-field input,
-div.redirect-link div.fieldgroup-field label,
-div.response div.fieldgroup-field input,
-div.response div.fieldgroup-field label {
-	vertical-align: middle;
-}
-
-ul.redirect > li input {
-	margin-top: 2px;
-}
-
-div.redirect-link div.fieldgroup-field input,
-div.response div.fieldgroup-field input {
-	display: inline;
-}
-
-/* Styling when viewing the LinkMappingAdmin through the CMS. */
+/**
+ *	The misdirection specific styling.
+ *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ */
 
 div.link-mapping-test.wrapper,
 div.link-mapping-test.admin {
@@ -82,8 +48,14 @@ div.link-mapping-test.admin div.results {
 
 div.link-mapping-test.admin div.result {
 	float: left;
-	margin: 10px 1%;
 	width: 18%;
+	margin: 10px 1%;
+}
+
+/* This is used to correct the float height issue, however will not be supported by IE8. */
+
+div.link-mapping-test.admin div.result:nth-child(5n+1) {
+	clear: both;
 }
 
 div.link-mapping-test.admin div.result h3 {
@@ -101,13 +73,7 @@ div.link-mapping-test.admin span.test.disabled {
 	cursor: not-allowed;
 }
 
-/* This is used to correct the float height issue, however will not be supported by IE8. */
-
-div.link-mapping-test.admin div.result:nth-child(5n+1) {
-    clear: both;
-}
-
-/* Correcting core layout issues when viewing the LinkMappingAdmin through the CMS. */
+/* Correcting some core layout issues. */
 
 div.ss-gridfield-buttonrow.ss-gridfield-buttonrow-before:after {
 	display: block;
@@ -120,4 +86,40 @@ p.grid-csv-button,
 p.grid-print-button {
 	margin-top: 0;
 	margin-bottom: 16px !important;
+}
+
+ul.redirect {
+	padding-left: 154px;
+	padding-bottom: 8px;
+}
+
+ul.redirect > li input {
+	margin-top: 2px;
+}
+
+ul.redirect li.selected > div.selectiongroup_item {
+	margin-bottom: 0;
+}
+
+div.redirect-link {
+	margin-bottom: 0;
+}
+
+div.redirect-link div.fieldgroup-field,
+div.response div.fieldgroup-field {
+	float: none;
+	padding: 0 !important;
+}
+
+div.redirect-link div.fieldgroup-field input,
+div.response div.fieldgroup-field input {
+	display: inline;
+}
+
+ul.redirect > li label,
+div.redirect-link div.fieldgroup-field input,
+div.redirect-link div.fieldgroup-field label,
+div.response div.fieldgroup-field input,
+div.response div.fieldgroup-field label {
+	vertical-align: middle;
 }
