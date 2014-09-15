@@ -1,32 +1,33 @@
-
 ;(function($) {
-	$(function () {
-		var checkFallbackType = function () {
-			var currentVal = $('select[name=FallbackRule]').val();
-			
-			if (currentVal) {
+	$(function() {
+
+		// Determine which fallback option display and functionality should be enabled.
+
+		function toggle() {
+
+			var rule = $('select[name=FallbackRule]').val();
+			if(rule) {
 				$('#FallbackResponse').show();
-				
-				if (currentVal === 'URL') {
-					$('#FallbackUrl').show();
-				} else {
-					$('#FallbackUrl').hide();
-				}
-			} else {
+				(rule === 'URL') ? $('#FallbackUrl').show() : $('#FallbackUrl').hide();
+			}
+			else {
 				$('#FallbackResponse').hide();
 				$('#FallbackUrl').hide();
 			}
-		}
-		// bind toggle behaviour for fallback type
+		};
+
+		// Bind the events dynamically.
+
 		$('select[name=FallbackRule]').entwine({
 			onmatch: function () {
-				checkFallbackType();
+
+				toggle();
 			},
 			onchange: function () {
-				checkFallbackType();
+
+				toggle();
 			}
 		});
-		
-		
-	})
+
+	});
 })(jQuery);
