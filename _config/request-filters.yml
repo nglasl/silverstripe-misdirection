@@ -1,5 +1,5 @@
 ---
-Name: requestfilters
+name: misdirection-request-filters
 ---
 Injector:
   RequestProcessor:

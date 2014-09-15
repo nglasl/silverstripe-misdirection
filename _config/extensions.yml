@@ -1,13 +1,13 @@
 ---
-Name: extensions
+name: misdirection-extensions
 ---
-SiteTree:
-  extensions:
-    - 'SiteTreeLinkMappingExtension'
-    - 'FallbackLinkMappingExtension'
-SiteConfig:
-  extensions:
-    - 'FallbackLinkMappingExtension'
 LinkMappingAdmin:
   extensions:
     - 'LinkMappingAdminTestExtension'
+SiteTree:
+  extensions:
+    - 'SiteTreeLinkMappingExtension'
+    - 'LinkMappingFallbackExtension'
+SiteConfig:
+  extensions:
+    - 'LinkMappingFallbackExtension'
