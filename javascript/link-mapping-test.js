@@ -65,7 +65,7 @@
 					$('div.link-mapping-test.admin div.results').html(output);
 				}
 			);
-		}
+		};
 
 		// Bind the events dynamically.
 
