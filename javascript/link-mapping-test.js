@@ -28,7 +28,7 @@
 
 		function retrieveLinkMappingChain(map) {
 
-			$.getJSON('admin/link-mappings/LinkMapping/getLinkMappingChain',
+			$.getJSON('admin/misdirection/LinkMapping/getLinkMappingChain',
 				{
 					map: map
 				},
