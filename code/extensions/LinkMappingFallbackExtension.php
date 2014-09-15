@@ -18,7 +18,8 @@ class LinkMappingFallbackExtension extends DataExtension {
 	);
 	
 	protected function updateFields(FieldList $fields) {
-		Requirements::javascript('linkmapping/javascript/link-mapping-fallbacks.js');
+
+		Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping-fallback.js');
 		
 		// Allow customisation of fallback rules.
 		$fields->addFieldToTab('Root.LinkMapping', HeaderField::create(
