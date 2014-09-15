@@ -10,7 +10,7 @@ class LinkMappingTest implements GridField_HTMLProvider {
 	public function getHTMLFragments($gridfield) {
 
 		Requirements::css(MISDIRECTION_PATH . '/css/link-mapping.css');
-		Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping.js');
+		Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping-test.js');
 		return array(
 			'before' => "<div class='link-mapping-test wrapper'>
 				<div class='link-mapping-test admin'>
