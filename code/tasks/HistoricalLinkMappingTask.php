@@ -233,7 +233,7 @@ class HistoricalLinkMappingTask extends BuildTask {
 				if($query->count('ID') == 0) {
 					echo "<div>{$siteTreeID} - {$URL}</div><br>";
 					if($this->live) {
-						SiteTree::create_link_mapping($URL, $siteTreeID);
+						SiteTreeLinkMappingExtension::create_link_mapping($URL, $siteTreeID);
 					}
 				}
 			}
