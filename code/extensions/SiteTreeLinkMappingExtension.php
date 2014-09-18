@@ -13,6 +13,36 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 	private static $has_one = array(
 		'VanityMapping' => 'LinkMapping'
 	);
+
+	/**
+	 *	Create a new link mapping from a URL segment to a site tree element by ID.
+	 *	@param <NEW_LINK_MAPPING_URL> string
+	 *	@param integer
+	 *	@return LinkMapping
+	 */
+
+	public static function create_link_mapping($URLsegment, $redirectPageID, $priority = 1) {
+
+		// Make sure that the link mapping doesn't already exist, and that it will not be infinitely recursive.
+
+		$existing = LinkMapping::get()->filter(array(
+			'MappedLink' => $URLsegment,
+			'RedirectPageID' => $redirectPageID
+		))->first();
+		if($existing) {
+			return $existing;
+		}
+
+		// Create the new link mapping with appropriate defaults.
+
+		$mapping = LinkMapping::create();
+		$mapping->MappedLink = $URLsegment;
+		$mapping->RedirectType = 'Page';
+		$mapping->RedirectPageID = $redirectPageID;
+		$mapping->Priority = $priority;
+		$mapping->write();
+		return $mapping;
+	}
 	
 	public function updateSettingsFields(FieldList $fields) {
 
@@ -68,7 +98,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 			// Instantiate a new link mapping data object, or retrieve an existing one which matches.
 
-			$mapping = $this->createLinkMapping($vanityURL, $this->owner->ID, 2);
+			$mapping = self::create_link_mapping($vanityURL, $this->owner->ID, 2);
 			$this->owner->VanityMappingID = $mapping->ID;
 		}
 	}
@@ -100,7 +130,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 					// Create a link mapping for this site tree element.
 
-					$this->createLinkMapping($URLsegment, $this->owner->ID);
+					self::create_link_mapping($URLsegment, $this->owner->ID);
 
 					// Purge any recursive link mappings where the redirect link now points back to the mapped link.
 
@@ -149,7 +179,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 		foreach($children as $child) {
 			$URLsegment = Controller::join_links($baseURL, $child->URLSegment);
-			$this->createLinkMapping($URLsegment, $child->ID);
+			self::create_link_mapping($URLsegment, $child->ID);
 
 			// Purge any recursive link mappings where the redirect link now points back to the mapped link.
 
@@ -162,36 +192,6 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 				$this->recursiveLinkMapping($URLsegment, $recursiveChildren);
 			}
 		}
-	}
-
-	/**
-	 *	Create a new link mapping from a URL segment to a site tree element by ID.
-	 *	@param <NEW_LINK_MAPPING_URL> string
-	 *	@param integer
-	 *	@return LinkMapping
-	 */
-
-	public function createLinkMapping($URLsegment, $redirectPageID, $priority = 1) {
-
-		// Make sure that the link mapping doesn't already exist, and that it will not be infinitely recursive.
-
-		$existing = LinkMapping::get()->filter(array(
-			'MappedLink' => $URLsegment,
-			'RedirectPageID' => $redirectPageID
-		))->first();
-		if($existing) {
-			return $existing;
-		}
-
-		// Create the new link mapping with appropriate defaults.
-
-		$mapping = LinkMapping::create();
-		$mapping->MappedLink = $URLsegment;
-		$mapping->RedirectType = 'Page';
-		$mapping->RedirectPageID = $redirectPageID;
-		$mapping->Priority = $priority;
-		$mapping->write();
-		return $mapping;
 	}
 
 	/**
