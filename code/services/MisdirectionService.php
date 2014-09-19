@@ -53,7 +53,7 @@ class MisdirectionService {
 
 	public function getMapping($URL, $host = null) {
 
-		$URL = $this->unify(Director::makeRelative($URL));
+		$URL = self::unify(Director::makeRelative($URL));
 		$parts = explode('?', $URL);
 		$base = Convert::raw2sql($parts[0]);
 
