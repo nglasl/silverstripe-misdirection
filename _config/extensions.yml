@@ -1,9 +1,9 @@
 ---
 name: misdirection-extensions
 ---
-LinkMappingAdmin:
+MisdirectionAdmin:
   extensions:
-    - 'LinkMappingAdminTestExtension'
+    - 'MisdirectionAdminTestExtension'
 SiteTree:
   extensions:
     - 'SiteTreeLinkMappingExtension'

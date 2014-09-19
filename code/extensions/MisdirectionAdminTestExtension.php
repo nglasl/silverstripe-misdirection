@@ -5,7 +5,7 @@
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
-class LinkMappingAdminTestExtension extends Extension {
+class MisdirectionAdminTestExtension extends Extension {
 
 	public function updateEditForm(&$form) {
 

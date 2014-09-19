@@ -26,7 +26,7 @@
 		function test(input) {
 
 			var URL = input ? input.val() : $('div.link-mapping-test.admin input.url').val();
-			$.getJSON('admin/misdirection/LinkMapping/getLinkMappingChain', {
+			$.getJSON('admin/misdirection/LinkMapping/getMappingChain', {
 					map: URL
 				},
 				function(JSON) {

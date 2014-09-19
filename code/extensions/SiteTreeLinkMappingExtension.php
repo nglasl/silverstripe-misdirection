@@ -8,12 +8,6 @@
 
 class SiteTreeLinkMappingExtension extends DataExtension {
 
-	public $service;
-
-	private static $dependencies = array(
-		'service' => '%$MisdirectionService',
-	);
-
 	// Allow direct link mapping customisation from the pages themselves.
 
 	private static $has_one = array(
@@ -74,7 +68,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 			// Instantiate a new link mapping data object, or retrieve an existing one which matches.
 
-			$mapping = $this->service->createMapping($vanityURL, $this->owner->ID, 2);
+			$mapping = singleton('MisdirectionService')->createMapping($vanityURL, $this->owner->ID, 2);
 			$this->owner->VanityMappingID = $mapping->ID;
 		}
 	}
@@ -106,7 +100,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 					// Create a link mapping for this site tree element.
 
-					$this->service->createMapping($URLsegment, $this->owner->ID);
+					singleton('MisdirectionService')->createMapping($URLsegment, $this->owner->ID);
 
 					// Purge any recursive link mappings where the redirect link now points back to the mapped link.
 
@@ -139,7 +133,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 			));
 			foreach($mappings as $mapping) {
 				$mapping->RedirectType = 'Link';
-				$mapping->RedirectLink = LinkMapping::unify_link(Director::makeRelative(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link()));
+				$mapping->RedirectLink = MisdirectionService::unify(Director::makeRelative(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link()));
 				$mapping->write();
 			}
 		}
@@ -155,7 +149,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 		foreach($children as $child) {
 			$URLsegment = Controller::join_links($baseURL, $child->URLSegment);
-			$this->service->createMapping($URLsegment, $child->ID);
+			singleton('MisdirectionService')->createMapping($URLsegment, $child->ID);
 
 			// Purge any recursive link mappings where the redirect link now points back to the mapped link.
 
@@ -181,7 +175,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 		// Make sure the page redirect link matches the mapped link before purging.
 
 		LinkMapping::get()->filter(array(
-			'MappedLink' => LinkMapping::unify_link(Director::makeRelative($pageLink)),
+			'MappedLink' => MisdirectionService::unify(Director::makeRelative($pageLink)),
 			'RedirectType' => 'Page',
 			'RedirectPageID' => $redirectPageID
 		))->removeAll();

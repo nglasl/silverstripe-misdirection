@@ -8,6 +8,12 @@
 
 class LinkMappingRequestFilter implements RequestFilter {
 
+	public $service;
+
+	private static $dependencies = array(
+		'service' => '%$MisdirectionService',
+	);
+
 	private static $replace_default = true;
 	private static $maximum_requests = 9;
 
@@ -25,7 +31,7 @@ class LinkMappingRequestFilter implements RequestFilter {
 		// Allow customisation around whether the default SS automated redirect is replaced, where a page not found (404) will always attempt to trigger a link mapping.
 
 		$status = $response->getStatusCode();
-		if((Config::inst()->get('LinkMappingRequestFilter', 'replace_default') || ($status === 404)) && ($map = LinkMapping::get_link_mapping_by_request($request))) {
+		if((Config::inst()->get('LinkMappingRequestFilter', 'replace_default') || ($status === 404)) && ($map = $this->service->getMappingByRequest($request))) {
 
 			// Update the redirect response code appropriately.
 
