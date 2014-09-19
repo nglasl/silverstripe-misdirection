@@ -56,7 +56,7 @@ class MisdirectionAdmin extends ModelAdmin {
 			$request = clone $this->getRequest();
 			$request->setUrl($request->getVar('map'));
 
-			// Retrieve the link mapping recursion stack.
+			// Retrieve the link mapping recursion stack JSON.
 
 			$testing = true;
 			$mappings = singleton('MisdirectionService')->getMappingByRequest($request, $testing);

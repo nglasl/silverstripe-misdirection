@@ -92,8 +92,7 @@ class MisdirectionService {
 					$filtered->push($regexMatch);
 				}
 			}
-			$filtered->merge($matches);
-			$matches = $filtered;
+			$matches = $filtered->merge($matches);
 		}
 
 		// Make sure the link mappings are ordered by priority and specificity.
@@ -118,12 +117,13 @@ class MisdirectionService {
 
 				// Ignore GET parameter matching for regular expressions, considering the special characters.
 
-				$matchParameters = explode('?', $match->MappedLink);
-				if(($match->LinkType === 'Simple') && isset($matchParameters[1])) {
+				$matchParts = explode('?', $match->MappedLink);
+				if(($match->LinkType === 'Simple') && isset($matchParts[1])) {
 
 					// Make sure the GET parameters match in any order.
 
-					parse_str($matchParameters[1], $matchParameters);
+					$matchParameters = array();
+					parse_str($matchParts[1], $matchParameters);
 					if($matchParameters == $queryParameters) {
 						$match->setMatchedURL($parts[0]);
 						return $match;
@@ -155,7 +155,7 @@ class MisdirectionService {
 
 	public function getRecursiveMapping($map, $host = null, $testing = false) {
 
-		// Keep track of the link mapping recursion stack.
+		// Keep track of the link mapping recursion.
 
 		$counter = 1;
 		$redirect = $map->getLink();
