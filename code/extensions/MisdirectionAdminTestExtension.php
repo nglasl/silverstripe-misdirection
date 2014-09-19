@@ -9,13 +9,18 @@ class MisdirectionAdminTestExtension extends Extension {
 
 	public function updateEditForm(&$form) {
 
-		$gridfield = $form->fields->items[0];
-		if(isset($gridfield)) {
-			$configuration = $gridfield->config;
+		// Restrict the testing interface to administrators.
 
-			// Add the required HTML fragment.
+		$user = Member::currentUserID();
+		if(Permission::checkMember($user, 'ADMIN')) {
+			$gridfield = $form->fields->items[0];
+			if(isset($gridfield)) {
+				$configuration = $gridfield->config;
 
-			$configuration->addComponent(new LinkMappingTest());
+				// Add the required HTML fragment.
+
+				$configuration->addComponent(new LinkMappingTest());
+			}
 		}
 	}
 
