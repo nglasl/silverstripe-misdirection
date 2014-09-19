@@ -20,7 +20,7 @@ class MisdirectionService {
 	}
 
 	/**
-	 *	Retrieve the appropriate link mapping for the current request, with the ability to enable testing and return the recursion stack.
+	 *	Retrieve the appropriate link mapping for a request, with the ability to enable testing and return the recursion stack.
 	 *
 	 *	@parameter <{REQUEST}> ss http request
 	 *	@parameter <{RETURN_STACK}> boolean
