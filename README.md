@@ -39,6 +39,12 @@ LinkMappingRequestFilter:
   maximum_requests: 9
 ```
 
+#### Historical Link Mapping Task
+
+The following may be used to instantiate a link mapping for each site tree version URL, when replacing the default automated URL handling (currently only supported by MySQL).
+
+`/dev/tasks/HistoricalLinkMappingTask`
+
 ### Link Mappings
 
 #### Priority
