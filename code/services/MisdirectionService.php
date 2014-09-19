@@ -92,7 +92,8 @@ class MisdirectionService {
 					$filtered->push($regexMatch);
 				}
 			}
-			$matches = $filtered->merge($matches);
+			$filtered->merge($matches);
+			$matches = $filtered;
 		}
 
 		// Make sure the link mappings are ordered by priority and specificity.
