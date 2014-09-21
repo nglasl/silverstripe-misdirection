@@ -202,7 +202,7 @@ class MisdirectionService {
 	 *	@return link mapping
 	 */
 
-	public function createMapping($URL, $redirectID, $priority = 1) {
+	public function createPageMapping($URL, $redirectID, $priority = 1) {
 
 		// Retrieve an already existing link mapping if one exists.
 
@@ -220,6 +220,38 @@ class MisdirectionService {
 		$mapping->MappedLink = $URL;
 		$mapping->RedirectType = 'Page';
 		$mapping->RedirectPageID = $redirectID;
+		$mapping->Priority = $priority;
+		$mapping->write();
+		return $mapping;
+	}
+
+	/**
+	 *	Instantiate a new link mapping, redirecting a URL towards another URL.
+	 *
+	 *	@parameter <{MAPPING_URL}> string
+	 *	@parameter <{MAPPING_REDIRECT_URL}> integer
+	 *	@parameter <{MAPPING_PRIORITY}> integer
+	 *	@return link mapping
+	 */
+
+	public function createURLMapping($URL, $redirectURL, $priority = 1) {
+
+		// Retrieve an already existing link mapping if one exists.
+
+		$existing = LinkMapping::get()->filter(array(
+			'MappedLink' => $URL,
+			'RedirectLink' => $redirectURL
+		))->first();
+		if($existing) {
+			return $existing;
+		}
+
+		// Instantiate the new link mapping with appropriate default values.
+
+		$mapping = LinkMapping::create();
+		$mapping->MappedLink = $URL;
+		$mapping->RedirectType = 'Link';
+		$mapping->RedirectLink = $redirectURL;
 		$mapping->Priority = $priority;
 		$mapping->write();
 		return $mapping;

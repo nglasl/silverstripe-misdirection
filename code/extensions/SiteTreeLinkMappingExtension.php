@@ -68,7 +68,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 			// Instantiate a new link mapping data object, or retrieve an existing one which matches.
 
-			$mapping = singleton('MisdirectionService')->createMapping($vanityURL, $this->owner->ID, 2);
+			$mapping = singleton('MisdirectionService')->createPageMapping($vanityURL, $this->owner->ID, 2);
 			$this->owner->VanityMappingID = $mapping->ID;
 		}
 	}
@@ -100,7 +100,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 					// Create a link mapping for this site tree element.
 
-					singleton('MisdirectionService')->createMapping($URLsegment, $this->owner->ID);
+					singleton('MisdirectionService')->createPageMapping($URLsegment, $this->owner->ID);
 
 					// Purge any recursive link mappings where the redirect link now points back to the mapped link.
 
@@ -149,7 +149,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 		foreach($children as $child) {
 			$URLsegment = Controller::join_links($baseURL, $child->URLSegment);
-			singleton('MisdirectionService')->createMapping($URLsegment, $child->ID);
+			singleton('MisdirectionService')->createPageMapping($URLsegment, $child->ID);
 
 			// Purge any recursive link mappings where the redirect link now points back to the mapped link.
 

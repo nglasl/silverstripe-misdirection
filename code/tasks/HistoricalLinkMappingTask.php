@@ -233,7 +233,7 @@ class HistoricalLinkMappingTask extends BuildTask {
 				if($query->count('ID') == 0) {
 					echo "<div>{$siteTreeID} - {$URL}</div><br>";
 					if($this->live) {
-						singleton('MisdirectionService')->createMapping($URL, $siteTreeID);
+						singleton('MisdirectionService')->createPageMapping($URL, $siteTreeID);
 					}
 				}
 			}
