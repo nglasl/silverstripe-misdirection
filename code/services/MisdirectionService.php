@@ -208,6 +208,7 @@ class MisdirectionService {
 
 		$existing = LinkMapping::get()->filter(array(
 			'MappedLink' => $URL,
+			'RedirectType' => 'Page',
 			'RedirectPageID' => $redirectID
 		))->first();
 		if($existing) {
@@ -229,7 +230,7 @@ class MisdirectionService {
 	 *	Instantiate a new link mapping, redirecting a URL towards another URL.
 	 *
 	 *	@parameter <{MAPPING_URL}> string
-	 *	@parameter <{MAPPING_REDIRECT_URL}> integer
+	 *	@parameter <{MAPPING_REDIRECT_URL}> string
 	 *	@parameter <{MAPPING_PRIORITY}> integer
 	 *	@return link mapping
 	 */
@@ -240,6 +241,7 @@ class MisdirectionService {
 
 		$existing = LinkMapping::get()->filter(array(
 			'MappedLink' => $URL,
+			'RedirectType' => 'Link',
 			'RedirectLink' => $redirectURL
 		))->first();
 		if($existing) {
