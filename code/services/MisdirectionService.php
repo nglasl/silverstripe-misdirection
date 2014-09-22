@@ -194,6 +194,97 @@ class MisdirectionService {
 	}
 
 	/**
+	 *	Determine the fallback for a URL when using the CMS module.
+	 *
+	 *	@parameter <{URL}> string
+	 */
+
+	public function determineFallback($URL) {
+
+		// Make sure the URL has at least two segments, so the fallback may be determined.
+
+		$segments = explode('/', self::unify($URL));
+		if(ClassInfo::exists('SiteTree') && (count($segments) > 0)) {
+
+			// Instantiate the required variables.
+
+			$applicableRule = null;
+			$specificURL = null;
+			$thisPage = null;
+			$nearestParent = null;
+			$responseCode = 303;
+
+			// Retrieve the default site configuration fallback.
+
+			$config = SiteConfig::current_site_config();
+			if($config && $config->FallbackRule) {
+				$thisPage = $nearestParent = Director::baseURL();
+				$applicableRule = $config->FallbackRule;
+				$specificURL = $config->FallbackUrl;
+				$responseCode = $config->FallbackResponse;
+			}
+
+			// Determine the page specific fallback.
+
+			$parentID = 0;
+			$apply = false;
+			for($iteration = 0; $iteration < count($segments); $iteration++) {
+				$page = SiteTree::get()->filter(array(
+					'URLSegment' => $segments[$iteration],
+					'ParentID' => $parentID
+				))->first();
+				if($page) {
+
+					// Determine the home page URL when appropriate.
+
+					$link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link();
+					$nearestParent = $link;
+
+					// Keep track of the current page fallback.
+
+					if($page->FallbackRule) {
+						$parentID = $page->ID;
+						$applicableRule = $page->FallbackRule;
+						$specificURL = $page->FallbackUrl;
+						$thisPage = $link;
+						$responseCode = $page->FallbackResponse;
+					}
+				}
+				else {
+
+					// The bottom of the chain has been reached.
+
+					$apply = true;
+					break;
+				}
+			}
+
+			// Determine the applicable fallback.
+
+			if($apply && $applicableRule) {
+				$linkTo = null;
+				switch($applicableRule) {
+					case 'URL':
+						$linkTo = $specificURL;
+						break;
+					case 'ThisPage':
+						$linkTo = $thisPage;
+						break;
+					case 'Nearest':
+						$linkTo = $nearestParent;
+						break;
+				}
+				if($linkTo) {
+					return array(
+						'link' => $linkTo,
+						'code' => $responseCode
+					);
+				}
+			}
+		}
+	}
+
+	/**
 	 *	Instantiate a new link mapping, redirecting a URL towards a site tree element.
 	 *
 	 *	@parameter <{MAPPING_URL}> string

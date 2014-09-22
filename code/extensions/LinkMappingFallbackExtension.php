@@ -22,7 +22,7 @@ class LinkMappingFallbackExtension extends DataExtension {
 		Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping-fallback.js');
 		
 		// Allow customisation of fallback rules.
-		$fields->addFieldToTab('Root.LinkMapping', HeaderField::create(
+		$fields->addFieldToTab('Root.Misdirection', HeaderField::create(
 			'FallbackHeader',
 			_t('LinkMapping.FallbackHeader', 'Fallbacks')
 		));
@@ -49,9 +49,9 @@ class LinkMappingFallbackExtension extends DataExtension {
 			)->setRightTitle($info)
 			 ->setHasEmptyDefault(true);
 		
-		$fields->addFieldToTab('Root.LinkMapping', $field);
-		$fields->addFieldToTab('Root.LinkMapping', TextField::create('FallbackUrl', _t('LinkMapping.FALLBACK_URL', 'Fallback URL')));
-		$fields->addFieldToTab('Root.LinkMapping', DropdownField::create(
+		$fields->addFieldToTab('Root.Misdirection', $field);
+		$fields->addFieldToTab('Root.Misdirection', TextField::create('FallbackUrl', _t('LinkMapping.FALLBACK_URL', 'Fallback URL')));
+		$fields->addFieldToTab('Root.Misdirection', DropdownField::create(
 				'FallbackResponse', 
 				_t('LinkMapping.FALLBACK_RESPONSE', 'Response code'), 
 				$redirectCodes
