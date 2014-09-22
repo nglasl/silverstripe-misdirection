@@ -197,6 +197,7 @@ class MisdirectionService {
 	 *	Determine the fallback for a URL when using the CMS module.
 	 *
 	 *	@parameter <{URL}> string
+	 *	@return array(string, integer)
 	 */
 
 	public function determineFallback($URL) {
@@ -277,11 +278,12 @@ class MisdirectionService {
 				if($linkTo) {
 					return array(
 						'link' => $linkTo,
-						'code' => $responseCode
+						'code' => (int)$responseCode
 					);
 				}
 			}
 		}
+		return null;
 	}
 
 	/**
