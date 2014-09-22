@@ -35,14 +35,14 @@ class LinkMappingRequestFilter implements RequestFilter {
 
 			// Update the response code where appropriate.
 
-			$responseCode = (int)$map->ResponseCode;
-			if($responseCode === 0) {
+			$responseCode = $map->ResponseCode;
+			if($responseCode == 0) {
 				$responseCode = 303;
 			}
-			else if(($responseCode === 301) && $map->ForwardPOSTRequest) {
+			else if(($responseCode == 301) && $map->ForwardPOSTRequest) {
 				$responseCode = 308;
 			}
-			else if(($responseCode === 303) && $map->ForwardPOSTRequest) {
+			else if(($responseCode == 303) && $map->ForwardPOSTRequest) {
 				$responseCode = 307;
 			}
 
@@ -53,8 +53,8 @@ class LinkMappingRequestFilter implements RequestFilter {
 
 		// Determine the fallback when using the CMS module.
 
-		else if(($status === 404) && ($option = $this->service->determineFallback($request->getURL()))) {
-			$response->redirect($option['link'], $option['code']);
+		else if(($status === 404) && ($fallback = $this->service->determineFallback($request->getURL()))) {
+			$response->redirect($fallback['link'], $fallback['code']);
 		}
 		return true;
 	}
