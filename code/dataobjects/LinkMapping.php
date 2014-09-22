@@ -215,7 +215,7 @@ class LinkMapping extends DataObject {
 	public function getRedirectPageLink() {
 
 		return (($this->RedirectType !== 'Link') && ClassInfo::exists('SiteTree')) ? (
-			(($page = $this->getRedirectPage()) && (($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) ? (
+			(($page = $this->getRedirectPage()) && (($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) ? MisdirectionService::unify(
 				($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link()) : '-'
 		) : ($this->RedirectLink ? $this->RedirectLink : '-');
 	}
