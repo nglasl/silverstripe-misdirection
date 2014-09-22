@@ -19,6 +19,8 @@ class MisdirectionAdminTestExtension extends Extension {
 
 				// Add the required HTML fragment.
 
+				Requirements::css(MISDIRECTION_PATH . '/css/link-mapping.css');
+				Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping-test.js');
 				$configuration->addComponent(new LinkMappingTest());
 			}
 		}

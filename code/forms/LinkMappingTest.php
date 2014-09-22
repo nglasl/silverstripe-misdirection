@@ -1,16 +1,18 @@
 <?php
 
 /**
- *	Allow AJAX link mapping chain testing when viewing the LinkMappingAdmin.
+ *	Misdirection testing interface used to view the link mapping recursion stack.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
 class LinkMappingTest implements GridField_HTMLProvider {
 
+	/**
+	 *	Render the URL input and test button.
+	 */
+
 	public function getHTMLFragments($gridfield) {
 
-		Requirements::css(MISDIRECTION_PATH . '/css/link-mapping.css');
-		Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping-test.js');
 		return array(
 			'before' => "<div class='link-mapping-test wrapper'>
 				<div class='link-mapping-test admin'>
