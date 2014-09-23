@@ -13,7 +13,7 @@ class LinkMappingRequestFilter implements RequestFilter {
 		'service' => '%$MisdirectionService'
 	);
 
-	private static $replace_default = true;
+	private static $replace_default = false;
 
 	private static $maximum_requests = 9;
 
@@ -24,9 +24,17 @@ class LinkMappingRequestFilter implements RequestFilter {
 
 	/**
 	 *	Attempt to redirect towards the highest priority link mapping that may have been defined.
+	 *
+	 *	@URLparameter direct <{BYPASS_LINK_MAPPINGS}> boolean
 	 */
 
 	public function postRequest(SS_HTTPRequest $request, SS_HTTPResponse $response, DataModel $model) {
+
+		// Bypass the request filter when using the GET parameter.
+
+		if($request->getVar('direct')) {
+			return true;
+		}
 
 		// Either hook into a page not found or replace the default automated URL handling.
 
@@ -54,8 +62,21 @@ class LinkMappingRequestFilter implements RequestFilter {
 		// Determine the fallback when using the CMS module.
 
 		else if(($status === 404) && ($fallback = $this->service->determineFallback($request->getURL()))) {
-			$response->redirect($fallback['link'], $fallback['code']);
+
+			// Update the response code where appropriate.
+
+			$responseCode = $fallback['code'];
+			if($responseCode === 0) {
+				$responseCode = 303;
+			}
+
+			// Update the response using the fallback, enforcing no further redirection.
+
+			$response->redirect(HTTP::setGetVar('direct', true, Controller::join_links(Director::absoluteBaseURL(), $fallback['link'])), $responseCode);
 		}
+
+		// Continue processing the response.
+
 		return true;
 	}
 

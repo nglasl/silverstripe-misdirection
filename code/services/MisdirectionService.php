@@ -202,13 +202,13 @@ class MisdirectionService {
 
 	public function determineFallback($URL) {
 
-		// Make sure the URL has at least two segments, so the fallback may be determined.
+		// Make sure the CMS module exists.
 
-		$segments = explode('/', self::unify($URL));
-		if(ClassInfo::exists('SiteTree') && (count($segments) > 0)) {
+		if(ClassInfo::exists('SiteTree') && $URL) {
 
 			// Instantiate the required variables.
 
+			$segments = explode('/', self::unify($URL));
 			$applicableRule = null;
 			$specificURL = null;
 			$thisPage = null;

@@ -25,7 +25,7 @@ This module is designed to function with or without the CMS module present.
 
 ### Automated URL Handling
 
-SilverStripe's default automated URL handling will be disabled when using this module out of the box, however it may be enabled again through configuration.
+SilverStripe's default automated URL handling may be disabled through configuration when using this module.
 
 ```yml
 LinkMappingRequestFilter:
@@ -55,6 +55,10 @@ When multiple link mappings end up being matched, the one to be used is determin
 LinkMapping:
   priority: 'DESC'
 ```
+
+#### Bypass
+
+You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL.
 
 #### Testing
 
