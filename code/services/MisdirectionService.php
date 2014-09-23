@@ -194,7 +194,7 @@ class MisdirectionService {
 	}
 
 	/**
-	 *	Determine the fallback for a URL when using the CMS module.
+	 *	Determine the fallback for a URL when the CMS module is present.
 	 *
 	 *	@parameter <{URL}> string
 	 *	@return array(string, integer)
@@ -202,7 +202,7 @@ class MisdirectionService {
 
 	public function determineFallback($URL) {
 
-		// Make sure the CMS module exists.
+		// Make sure the CMS module is present.
 
 		if(ClassInfo::exists('SiteTree') && $URL) {
 

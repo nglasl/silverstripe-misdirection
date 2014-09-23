@@ -59,7 +59,7 @@ class LinkMappingRequestFilter implements RequestFilter {
 			$response->redirect($map->getLink(), $responseCode);
 		}
 
-		// Determine the fallback when using the CMS module.
+		// Determine the fallback when the CMS module is present.
 
 		else if(($status === 404) && ($fallback = $this->service->determineFallback($request->getURL()))) {
 

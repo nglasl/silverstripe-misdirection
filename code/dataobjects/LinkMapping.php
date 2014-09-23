@@ -7,7 +7,7 @@
  */
 class LinkMapping extends DataObject {
 
-	// Define the redirect page through DB fields if the CMS module doesn't exist.
+	// Define the redirect page through DB fields if the CMS module is not present.
 
 	private static $db = array(
 		'LinkType' => "Enum('Simple, Regular Expression', 'Simple')",
