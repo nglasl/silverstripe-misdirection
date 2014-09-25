@@ -111,6 +111,10 @@ div.response div.fieldgroup-field {
 	padding: 0 !important;
 }
 
+div.redirect-link div.fieldgroup-field.last {
+	padding-bottom: 8px !important;
+}
+
 div.redirect-link div.fieldgroup-field input,
 div.response div.fieldgroup-field input {
 	display: inline;

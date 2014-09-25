@@ -112,9 +112,9 @@ class MisdirectionService {
 		}
 		foreach($matches as $match) {
 
-			// Make sure the link mapping matches the current stage.
+			// Make sure the link mapping is live on the current stage.
 
-			if($match->getStage() !== 'Stage') {
+			if($match->isLive() !== 'false') {
 
 				// Ignore GET parameter matching for regular expressions, considering the special characters.
 
