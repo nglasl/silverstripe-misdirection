@@ -199,10 +199,9 @@ class LinkMapping extends DataObject {
 		$result = parent::validate();
 		if($this->ValidateExternal && $this->RedirectLink) {
 
-			// Use third party validation against an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
+			// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
 
-			$this->RedirectLink = trim($this->RedirectLink, '!"#$%&\'()*+,-./@:;<=>[\\]^_`{|}~');
-			preg_match('%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu', $this->RedirectLink) ? $result->valid() : $result->error('Validation Failed!');
+			MisdirectionService::is_external_URL($this->RedirectLink) ? $result->valid() : $result->error('Validation Failed!');
 		}
 		return $result;
 	}
@@ -243,22 +242,18 @@ class LinkMapping extends DataObject {
 			// Determine the home page URL when appropriate.
 
 			if(($page = $this->getRedirectPage()) && ($link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) {
-
-				// Unify the URL.
-
-				return MisdirectionService::unify($link);
+				return $link;
 			}
 		}
 		else {
 
 			// Apply the regular expression pattern replacement.
 
-			$link = (($this->LinkType === 'Regular Expression') && $this->matchedURL) ? preg_replace("|{$this->MappedLink}|i", $this->RedirectLink, $this->matchedURL) : $this->RedirectLink;
-			if($link) {
+			if($link = (($this->LinkType === 'Regular Expression') && $this->matchedURL) ? preg_replace("|{$this->MappedLink}|i", $this->RedirectLink, $this->matchedURL) : $this->RedirectLink) {
 
-				// Prepend the base URL to prevent regular expression forward slash issues.
+				// When appropriate, prepend the base URL to match a page redirection.
 
-				return MisdirectionService::unify(Controller::join_links(Director::baseURL(), $link));
+				return MisdirectionService::is_external_URL($link) ? $link : Controller::join_links(Director::baseURL(), $link);
 			}
 		}
 
@@ -275,7 +270,7 @@ class LinkMapping extends DataObject {
 
 	public function getLinkSummary() {
 
-		return ($link = $this->getLink()) ? $link : '-';
+		return ($link = $this->getLink()) ? MisdirectionService::unify($link) : '-';
 	}
 
 	/**

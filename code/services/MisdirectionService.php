@@ -20,6 +20,19 @@ class MisdirectionService {
 	}
 
 	/**
+	 *	Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
+	 *
+	 *	@parameter <{URL}> string
+	 *	@return boolean
+	 */
+
+	public static function is_external_URL($URL) {
+
+		$URL = trim($URL, '/?!"#$%&\'()*+,-.@:;<=>[\\]^_`{|}~');
+		return preg_match('%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu', $URL);
+	}
+
+	/**
 	 *	Retrieve the appropriate link mapping for a request, with the ability to enable testing and return the recursion stack.
 	 *
 	 *	@parameter <{REQUEST}> ss http request
@@ -162,7 +175,7 @@ class MisdirectionService {
 		$redirect = $map->getLink();
 		$chain = array(array_merge(array(
 			'Counter' => $counter,
-			'RedirectLink' => $redirect
+			'RedirectLink' => $map->getLinkSummary()
 		), $map->toMap()));
 
 		// Determine the next link mapping.
@@ -183,7 +196,7 @@ class MisdirectionService {
 			$redirect = $next->getLink();
 			$chain[] = array_merge(array(
 				'Counter' => ++$counter,
-				'RedirectLink' => $redirect
+				'RedirectLink' => $map->getLinkSummary()
 			), $next->toMap());
 			$map = $next;
 		}
