@@ -283,6 +283,9 @@ class MisdirectionService {
 				}
 			}
 		}
+
+		// No fallback has been found.
+
 		return null;
 	}
 

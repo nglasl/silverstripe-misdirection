@@ -227,7 +227,7 @@ class LinkMapping extends DataObject {
 
 	public function getRedirectPage() {
 
-		return (ClassInfo::exists('SiteTree') && ($this->RedirectType === 'Page') && $this->RedirectPageID) ? SiteTree::get_by_id('SiteTree', $this->RedirectPageID) : null;
+		return (ClassInfo::exists('SiteTree') && $this->RedirectPageID) ? SiteTree::get_by_id('SiteTree', $this->RedirectPageID) : null;
 	}
 
 	/**
@@ -237,32 +237,6 @@ class LinkMapping extends DataObject {
 	 */
 
 	public function getLink() {
-
-		if($page = $this->getRedirectPage()) {
-
-			// Determine the home page URL when appropriate.
-
-			return ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link();
-		}
-		else {
-
-			// Apply the regular expression pattern replacement.
-
-			$link = ($this->LinkType === 'Regular Expression') ? preg_replace("|{$this->MappedLink}|i", $this->RedirectLink, $this->matchedURL) : $this->RedirectLink;
-
-			// Prepend the base URL to prevent regular expression forward slash issues.
-
-			return Controller::join_links(Director::baseURL(), $link);
-		}
-	}
-
-	/**
-	 *	Retrieve the redirection URL for display purposes.
-	 *
-	 *	@return string
-	 */
-
-	public function getLinkSummary() {
 
 		if($this->RedirectType === 'Page') {
 
@@ -274,13 +248,34 @@ class LinkMapping extends DataObject {
 
 				return MisdirectionService::unify($link);
 			}
-			else {
-				return '-';
-			}
 		}
 		else {
-			return $this->RedirectLink ? $this->RedirectLink : '-';
+
+			// Apply the regular expression pattern replacement.
+
+			$link = (($this->LinkType === 'Regular Expression') && $this->matchedURL) ? preg_replace("|{$this->MappedLink}|i", $this->RedirectLink, $this->matchedURL) : $this->RedirectLink;
+			if($link) {
+
+				// Prepend the base URL to prevent regular expression forward slash issues.
+
+				return MisdirectionService::unify(Controller::join_links(Director::baseURL(), $link));
+			}
 		}
+
+		// No redirection URL has been found.
+
+		return null;
+	}
+
+	/**
+	 *	Retrieve the redirection URL for display purposes.
+	 *
+	 *	@return string
+	 */
+
+	public function getLinkSummary() {
+
+		return ($link = $this->getLink()) ? $link : '-';
 	}
 
 	/**
@@ -302,7 +297,7 @@ class LinkMapping extends DataObject {
 
 	public function getRedirectPageTitle() {
 
-		return ($page = $this->getRedirectPage()) ? $page->Title : '-';
+		return (($this->RedirectType === 'Page') && ($page = $this->getRedirectPage())) ? $page->Title : '-';
 	}
 
 	/**

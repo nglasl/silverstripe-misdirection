@@ -133,7 +133,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 			));
 			foreach($mappings as $mapping) {
 				$mapping->RedirectType = 'Link';
-				$mapping->RedirectLink = MisdirectionService::unify(Director::makeRelative(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link()));
+				$mapping->RedirectLink = Director::makeRelative(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link());
 				$mapping->write();
 			}
 		}
