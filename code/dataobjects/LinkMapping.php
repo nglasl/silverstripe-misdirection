@@ -72,6 +72,54 @@ class LinkMapping extends DataObject {
 	}
 
 	/**
+	 *	CMS users with appropriate access may view any mappings.
+	 *
+	 *	@parameter <{CURRENT_MEMBER}> member
+	 *	@return boolean
+	 */
+
+	public function canView($member = null) {
+
+		return true;
+	}
+
+	/**
+	 *	CMS administrators may edit any mappings.
+	 *
+	 *	@parameter <{CURRENT_MEMBER}> member
+	 *	@return boolean
+	 */
+
+	public function canEdit($member = null) {
+
+		return Permission::checkMember($member, 'ADMIN');
+	}
+
+	/**
+	 *	CMS administrators may create any mappings.
+	 *
+	 *	@parameter <{CURRENT_MEMBER}> member
+	 *	@return boolean
+	 */
+
+	public function canCreate($member = null) {
+
+		return Permission::checkMember($member, 'ADMIN');
+	}
+
+	/**
+	 *	CMS administrators may delete any mappings.
+	 *
+	 *	@parameter <{CURRENT_MEMBER}> member
+	 *	@return boolean
+	 */
+
+	public function canDelete($member = null) {
+
+		return Permission::checkMember($member, 'ADMIN');
+	}
+
+	/**
 	 *	Display CMS link mapping configuration.
 	 */
 
@@ -153,9 +201,11 @@ class LinkMapping extends DataObject {
 
 		// Use third party validation against an external URL.
 
-		$redirect->push(CheckboxField::create(
-			'ValidateExternal'
-		));
+		if($this->canEdit()) {
+			$redirect->push(CheckboxField::create(
+				'ValidateExternal'
+			));
+		}
 
 		// Retrieve the response code selection.
 
