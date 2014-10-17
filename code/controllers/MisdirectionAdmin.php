@@ -51,10 +51,9 @@ class MisdirectionAdmin extends ModelAdmin {
 		$user = Member::currentUserID();
 		if(Permission::checkMember($user, 'ADMIN')) {
 
-			// Instantiate a duplicate request to handle the link mapping.
+			// Instantiate a request to handle the link mapping.
 
-			$request = clone $this->getRequest();
-			$request->setUrl($request->getVar('map'));
+			$request = new SS_HTTPRequest('GET', $this->getRequest()->getVar('map'));
 
 			// Retrieve the link mapping recursion stack JSON.
 
