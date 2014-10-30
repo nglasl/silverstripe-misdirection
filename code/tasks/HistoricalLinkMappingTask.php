@@ -178,7 +178,7 @@ class HistoricalLinkMappingTask extends BuildTask {
 
 	protected function childPages($ID) {
 
-		$query = new SQLQuery('*', $this->replay_table, 'ParentID = ' . intval($ID));
+		$query = new SQLQuery('*', $this->replay_table, 'ParentID = ' . (int)$ID);
 		return $query->execute();
 	}
 

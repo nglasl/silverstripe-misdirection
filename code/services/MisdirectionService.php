@@ -329,8 +329,8 @@ class MisdirectionService {
 		$mapping = LinkMapping::create();
 		$mapping->MappedLink = $URL;
 		$mapping->RedirectType = 'Page';
-		$mapping->RedirectPageID = $redirectID;
-		$mapping->Priority = $priority;
+		$mapping->RedirectPageID = (int)$redirectID;
+		$mapping->Priority = (int)$priority;
 		$mapping->write();
 		return $mapping;
 	}
@@ -363,7 +363,7 @@ class MisdirectionService {
 		$mapping->MappedLink = $URL;
 		$mapping->RedirectType = 'Link';
 		$mapping->RedirectLink = $redirectURL;
-		$mapping->Priority = $priority;
+		$mapping->Priority = (int)$priority;
 		$mapping->write();
 		return $mapping;
 	}
