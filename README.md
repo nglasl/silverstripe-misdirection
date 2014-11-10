@@ -27,14 +27,14 @@ This module is designed to function with or without the CMS module present.
 
 SilverStripe's default automated URL handling may be disabled through configuration when using this module.
 
-```yml
+```yaml
 LinkMappingRequestFilter:
   replace_default: false
 ```
 
 When a certain depth of link mappings has been reached, the server will return with a 404 response to prevent inefficient mappings or infinite recursion. The following is the default configuration:
 
-```yml
+```yaml
 LinkMappingRequestFilter:
   maximum_requests: 9
 ```
@@ -51,7 +51,7 @@ The following may be used to instantiate a link mapping for each site tree versi
 
 When multiple link mappings end up being matched, the one to be used is determined based on a priority field and how specific the definition is. Link mappings with identical priority will fall back to the oldest mapping by default.
 
-```yml
+```yaml
 LinkMapping:
   priority: 'DESC'
 ```
