@@ -1,5 +1,5 @@
 ;(function($) {
-	$(function() {
+	$(window).load(function() {
 
 		// Determine whether the test button display and functionality should be enabled.
 

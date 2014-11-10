@@ -1,5 +1,5 @@
 ;(function($) {
-	$(function() {
+	$(window).load(function() {
 
 		// Determine which fallback option display and functionality should be enabled.
 
