@@ -20,6 +20,21 @@ class MisdirectionAdmin extends ModelAdmin {
 	);
 
 	/**
+	 *	Update the custom summary fields to be sortable.
+	 */
+
+	public function getEditForm($ID = null, $fields = null) {
+
+		$form = parent::getEditForm($ID, $fields);
+		$gridfield = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
+		$gridfield->getConfig()->getComponentByType('GridFieldSortableHeader')->setFieldSorting(array(
+			'RedirectTypeSummary' => 'RedirectType',
+			'Host' => 'HostnameRestriction'
+		));
+		return $form;
+	}
+
+	/**
 	 *	Display an error page on invalid request.
 	 *
 	 *	@parameter <{ERROR_CODE}> integer
