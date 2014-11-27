@@ -27,44 +27,43 @@
 
 			var URL = input ? input.val() : $('div.link-mapping-test.admin input.url').val();
 			$.getJSON('admin/misdirection/LinkMapping/getMappingChain', {
-					map: URL
-				},
-				function(JSON) {
+				map: URL
+			},
+			function(JSON) {
 
-					var output = '';
-					if(JSON) {
+				var output = '';
+				if(JSON) {
 
-						// Construct the link mapping chain HTML representation.
+					// Construct the link mapping chain HTML representation.
 
-						$.each(JSON, function(index, object) {
+					$.each(JSON, function(index, object) {
 
-							output += "<div class='result'>";
-							if(object['ResponseCode'] !== 404) {
-								output += '<h3><strong>' + object['Counter'] + '</strong></h3>';
-								output += '<div><strong>Link Type</strong> ' + object['LinkType'] + '</div>';
-								output += '<div><strong>Mapped Link</strong> ' + object['MappedLink'] + '</div>';
-								output += '<div><strong>Redirect Link</strong> ' + object['RedirectLink'] + '</div>';
-								output += '<div><strong>Response Code</strong> ' + object['ResponseCode'] + '</div>';
-								output += '<div><strong>Priority</strong> ' + object['Priority'] + '</div>';
-							}
-							else {
-								output += '<h3><strong>Maximum</strong></h3>';
-								output += '<div><strong>Response Code</strong> ' + object['ResponseCode'] + '</div>';
-							}
-							output += '</div>';
-						});
-					}
-					else {
 						output += "<div class='result'>";
-						output += '<h3><strong>No Matches</strong></h3>';
+						if(object['ResponseCode'] !== 404) {
+							output += '<h3><strong>' + object['Counter'] + '</strong></h3>';
+							output += '<div><strong>Link Type</strong> ' + object['LinkType'] + '</div>';
+							output += '<div><strong>Mapped Link</strong> ' + object['MappedLink'] + '</div>';
+							output += '<div><strong>Redirect Link</strong> ' + object['RedirectLink'] + '</div>';
+							output += '<div><strong>Response Code</strong> ' + object['ResponseCode'] + '</div>';
+							output += '<div><strong>Priority</strong> ' + object['Priority'] + '</div>';
+						}
+						else {
+							output += '<h3><strong>Maximum</strong></h3>';
+							output += '<div><strong>Response Code</strong> ' + object['ResponseCode'] + '</div>';
+						}
 						output += '</div>';
-					}
-
-					// Render the link mapping chain.
-
-					$('div.link-mapping-test.admin div.results').html(output);
+					});
 				}
-			);
+				else {
+					output += "<div class='result'>";
+					output += '<h3><strong>No Matches</strong></h3>';
+					output += '</div>';
+				}
+
+				// Render the link mapping chain.
+
+				$('div.link-mapping-test.admin div.results').html(output);
+			});
 		};
 
 		// Bind the events dynamically.
