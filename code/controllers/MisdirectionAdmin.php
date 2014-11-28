@@ -57,6 +57,7 @@ class MisdirectionAdmin extends ModelAdmin {
 	 *	Retrieve the JSON link mapping recursion stack for the testing interface.
 	 *
 	 *	@URLparameter map <{TEST_URL}> string
+	 *	@return JSON
 	 */
 
 	public function getMappingChain() {
