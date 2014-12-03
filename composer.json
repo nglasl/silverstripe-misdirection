@@ -19,7 +19,6 @@
 		"email": "nathan@silverstripe.com.au"
 	}],
 	"require": {
-		"silverstripe/cms": "3.1.*",
 		"silverstripe/framework": "3.1.*"
 	},
 	"extra": {
