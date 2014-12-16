@@ -24,7 +24,7 @@ class LinkMappingFallbackExtension extends DataExtension {
 		// Allow customisation of fallback rules.
 		$fields->addFieldToTab('Root.Misdirection', HeaderField::create(
 			'FallbackHeader',
-			_t('LinkMapping.FallbackHeader', 'Fallbacks')
+			_t('LinkMapping.FallbackHeader', 'Fallback')
 		));
 		$options = array(
 			'URL'		=> _t('LinkMapping.STRAIGHT_URL', 'Specific URL'),
@@ -44,22 +44,21 @@ class LinkMappingFallbackExtension extends DataExtension {
 		$info = _t('LinkMapping.FALLBACK_DETAILS', 'Select a method to use for handling any missing child page');
 		$field = DropdownField::create(
 				'FallbackRule', 
-				_t('LinkMapping.FALLBACK_RULE', 'Fallback rule'), 
+				_t('LinkMapping.FALLBACK_RULE', 'Rule'),
 				$options
-			)->setRightTitle($info)
-			 ->setHasEmptyDefault(true);
+			)->setRightTitle($info)->setHasEmptyDefault(true)->addExtraClass('fallback-rule');
 		
 		$fields->addFieldToTab('Root.Misdirection', $field);
-		$fields->addFieldToTab('Root.Misdirection', TextField::create('FallbackUrl', _t('LinkMapping.FALLBACK_URL', 'Fallback URL')));
+		$fields->addFieldToTab('Root.Misdirection', TextField::create('FallbackUrl', _t('LinkMapping.FALLBACK_URL', 'To URL'))->addExtraClass('fallback-to'));
 		$fields->addFieldToTab('Root.Misdirection', DropdownField::create(
 				'FallbackResponse', 
-				_t('LinkMapping.FALLBACK_RESPONSE', 'Response code'), 
+				_t('LinkMapping.FALLBACK_RESPONSE', 'Response Code'),
 				$redirectCodes
-			)->setHasEmptyDefault(true)
+			)->setHasEmptyDefault(true)->addExtraClass('fallback-response')
 		);
 	}
 
-	public function updateCMSFields(\FieldList $fields) {
+	public function updateCMSFields(FieldList $fields) {
 		if ($this->owner instanceof SiteConfig) {
 			return $this->updateFields($fields);
 		}

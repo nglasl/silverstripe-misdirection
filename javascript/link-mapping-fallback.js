@@ -5,20 +5,20 @@
 
 		function toggle() {
 
-			var rule = $('select[name=FallbackRule]').val();
+			var rule = $('select.fallback-rule').val();
 			if(rule) {
-				$('#FallbackResponse').show();
-				(rule === 'URL') ? $('#FallbackUrl').show() : $('#FallbackUrl').hide();
+				$('div.fallback-response').show();
+				(rule === 'URL') ? $('div.fallback-to').show() : $('div.fallback-to').hide();
 			}
 			else {
-				$('#FallbackResponse').hide();
-				$('#FallbackUrl').hide();
+				$('div.fallback-response').hide();
+				$('div.fallback-to').hide();
 			}
 		};
 
 		// Bind the events dynamically.
 
-		$('select[name=FallbackRule]').entwine({
+		$('select.fallback-rule').entwine({
 			onmatch: function () {
 
 				toggle();
