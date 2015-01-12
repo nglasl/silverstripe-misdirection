@@ -1,33 +1,31 @@
 ;(function($) {
-	$(window).load(function() {
 
-		// Determine which fallback option display and functionality should be enabled.
+	// Determine which fallback option display and functionality should be enabled.
 
-		function toggle() {
+	function toggle() {
 
-			var rule = $('select.fallback-rule').val();
-			if(rule) {
-				$('div.fallback-response').show();
-				(rule === 'URL') ? $('div.fallback-to').show() : $('div.fallback-to').hide();
-			}
-			else {
-				$('div.fallback-response').hide();
-				$('div.fallback-to').hide();
-			}
-		};
+		var rule = $('select.fallback-rule').val();
+		if(rule) {
+			$('div.fallback-response').show();
+			(rule === 'URL') ? $('div.fallback-to').show() : $('div.fallback-to').hide();
+		}
+		else {
+			$('div.fallback-response').hide();
+			$('div.fallback-to').hide();
+		}
+	};
 
-		// Bind the events dynamically.
+	// Bind the events dynamically.
 
-		$('select.fallback-rule').entwine({
-			onmatch: function () {
+	$('select.fallback-rule').entwine({
+		onmatch: function () {
 
-				toggle();
-			},
-			onchange: function () {
+			toggle();
+		},
+		onchange: function () {
 
-				toggle();
-			}
-		});
-
+			toggle();
+		}
 	});
+
 })(jQuery);
