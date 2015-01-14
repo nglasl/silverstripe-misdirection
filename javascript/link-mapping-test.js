@@ -76,6 +76,23 @@
 
 				enable($(this));
 				$('#Form_EditForm').removeClass('changed');
+			},
+			onkeydown: function(event) {
+
+				var input = $(this);
+
+				// Trigger a test request on pressing enter.
+
+				if(event.keyCode === 13) {
+					if(input.val().length > 0) {
+						test();
+
+						// Trigger an interface update.
+
+						$(this).change();
+					}
+					return false;
+				}
 			}
 		});
 
