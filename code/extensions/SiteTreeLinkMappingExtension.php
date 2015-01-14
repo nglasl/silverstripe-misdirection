@@ -18,12 +18,12 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 		// Allow direct link mapping customisation using a vanity URL.
 
-		$fields->addFieldToTab('Root.LinkMapping', HeaderField::create(
+		$fields->addFieldToTab('Root.Misdirection', HeaderField::create(
 			'VanityHeader',
 			_t('LinkMapping.VanityHeader', 'Shortcut')
 		));
 		$vanityInfo = _t('LinkMapping.VANITY_DETAILS', 'Matching link mappings with higher priority will take precedence over this');
-		$fields->addFieldToTab('Root.LinkMapping', TextField::create(
+		$fields->addFieldToTab('Root.Misdirection', TextField::create(
 			'VanityURL',
 			'Vanity URL',
 			$this->owner->VanityMapping()->MappedLink

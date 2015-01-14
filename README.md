@@ -59,7 +59,7 @@ LinkMapping:
 
 #### Bypass
 
-You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL.
+You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL, which may prove useful when locked out by erroneous link mappings.
 
 #### Testing
 
