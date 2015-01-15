@@ -18,6 +18,7 @@
 				button.addClass('disabled');
 			});
 		}
+		$('#Form_EditForm').removeClass('changed');
 	};
 
 	// Test the link mapping chain for a given URL.
@@ -75,7 +76,6 @@
 			onchange: function() {
 
 				enable($(this));
-				$('#Form_EditForm').removeClass('changed');
 			},
 			onkeydown: function(event) {
 
@@ -89,7 +89,7 @@
 
 						// Trigger an interface update.
 
-						$(this).change();
+						input.change();
 					}
 					return false;
 				}
