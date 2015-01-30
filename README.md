@@ -9,7 +9,7 @@ _**NOTE:** This repository has been pulled together using re-factored code from 
 
 :bust_in_silhouette:
 
-https://github.com/ajshort/silverstripe-linkmapping
+https://github.com/silverstripe-australia/silverstripe-linkmapping
 
 ## Requirements
 
