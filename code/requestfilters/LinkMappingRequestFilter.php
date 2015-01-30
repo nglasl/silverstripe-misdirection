@@ -13,7 +13,17 @@ class LinkMappingRequestFilter implements RequestFilter {
 		'service' => '%$MisdirectionService'
 	);
 
+	/**
+	 *	The configuration for the default automated URL handling.
+	 */
+
+	private static $enforce_misdirection = true;
+
 	private static $replace_default = false;
+
+	/**
+	 *	The maximum number of consecutive misdirections.
+	 */
 
 	private static $maximum_requests = 9;
 
@@ -30,16 +40,45 @@ class LinkMappingRequestFilter implements RequestFilter {
 
 	public function postRequest(SS_HTTPRequest $request, SS_HTTPResponse $response, DataModel $model) {
 
-		// Bypass the request filter when using the GET parameter.
+		// Bypass the request filter when requesting specific director rules such as "/admin" or "/dev".
+
+		$requestURL = $request->getURL();
+		foreach(Config::inst()->get('Director', 'rules') as $segment => $controller) {
+
+			// Retrieve the specific director rules.
+
+			if(($position = strpos($segment, '$')) !== false) {
+				$segment = rtrim(substr($segment, 0, $position), '/');
+			}
+
+			// Determine if the current request matches a specific director rule.
+
+			if($segment && (strpos($requestURL, $segment) === 0)) {
+
+				// Continue processing the response.
+
+				return true;
+			}
+		}
+
+		// Bypass the request filter when using the direct GET parameter.
 
 		if($request->getVar('direct')) {
+
+			// Continue processing the response.
+
 			return true;
 		}
 
-		// Either hook into a page not found or replace the default automated URL handling.
+		// Determine the default automated URL handling response status.
 
 		$status = $response->getStatusCode();
-		if((($status === 404) || Config::inst()->get('LinkMappingRequestFilter', 'replace_default')) && ($map = $this->service->getMappingByRequest($request))) {
+		$success = (($status >= 200) && ($status < 300));
+		$error = ($status === 404);
+
+		// Either hook into a page not found, or when enforced, replace the default automated URL handling.
+
+		if(($error || Config::inst()->get('LinkMappingRequestFilter', 'enforce_misdirection')) && ($map = $this->service->getMappingByRequest($request))) {
 
 			// Update the response code where appropriate.
 
@@ -59,9 +98,9 @@ class LinkMappingRequestFilter implements RequestFilter {
 			$response->redirect($map->getLink(), $responseCode);
 		}
 
-		// Determine the fallback when the CMS module is present.
+		// Determine a page not found fallback, when the CMS module is present.
 
-		else if(($status === 404) && ($fallback = $this->service->determineFallback($request->getURL()))) {
+		else if($error && ($fallback = $this->service->determineFallback($requestURL))) {
 
 			// Update the response code where appropriate.
 
@@ -73,6 +112,16 @@ class LinkMappingRequestFilter implements RequestFilter {
 			// Update the response using the fallback, enforcing no further redirection.
 
 			$response->redirect(HTTP::setGetVar('direct', true, Controller::join_links(Director::absoluteBaseURL(), $fallback['link'])), $responseCode);
+		}
+
+		// When enabled, replace the default automated URL handling with a page not found.
+
+		else if(!$error && !$success && Config::inst()->get('LinkMappingRequestFilter', 'replace_default')) {
+			$response->setStatusCode(404);
+
+			// Retrieve the appropriate page not found response.
+
+			(ClassInfo::exists('SiteTree') && ($page = ErrorPage::response_for(404))) ? $response->setBody($page->getBody()) : $response->setBody('No URL was matched!');
 		}
 
 		// Continue processing the response.

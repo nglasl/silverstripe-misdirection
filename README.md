@@ -26,11 +26,18 @@ This module is designed to function with or without the CMS module present.
 
 ### Automated URL Handling
 
-SilverStripe's default automated URL handling may be disabled through configuration when using this module.
+To disable link mappings from taking precedence over the default automated URL handling..
 
 ```yaml
 LinkMappingRequestFilter:
-  replace_default: false
+  enforce_misdirection: false
+```
+
+To disable the automated URL handling completely..
+
+```yaml
+LinkMappingRequestFilter:
+  replace_default: true
 ```
 
 When a certain depth of link mappings has been reached, the server will return with a 404 response to prevent inefficient mappings or infinite recursion. The following is the default configuration:
