@@ -1,6 +1,6 @@
 # [misdirection](https://github.com/nglasl)
 
-_The current release is **1.0.2**_
+_The current release is **1.0.3**_
 
 	This module will allow you to set up simple/regular expression link redirection
 	mappings and customisation, either replacing the default automated URL handling or hooking into a page not found. This is useful for something such as legacy page redirection.
