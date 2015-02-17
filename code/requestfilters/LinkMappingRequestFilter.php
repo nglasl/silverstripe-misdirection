@@ -78,7 +78,9 @@ class LinkMappingRequestFilter implements RequestFilter {
 
 		// Either hook into a page not found, or when enforced, replace the default automated URL handling.
 
-		if(($error || Config::inst()->get('LinkMappingRequestFilter', 'enforce_misdirection')) && ($map = $this->service->getMappingByRequest($request))) {
+		$enforce = Config::inst()->get('LinkMappingRequestFilter', 'enforce_misdirection');
+		$replace = Config::inst()->get('LinkMappingRequestFilter', 'replace_default');
+		if(($error || $enforce || $replace) && ($map = $this->service->getMappingByRequest($request))) {
 
 			// Update the response code where appropriate.
 
@@ -116,7 +118,7 @@ class LinkMappingRequestFilter implements RequestFilter {
 
 		// When enabled, replace the default automated URL handling with a page not found.
 
-		else if(!$error && !$success && Config::inst()->get('LinkMappingRequestFilter', 'replace_default')) {
+		else if(!$error && !$success && $replace) {
 			$response->setStatusCode(404);
 
 			// Retrieve the appropriate page not found response.
