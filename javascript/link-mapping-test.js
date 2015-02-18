@@ -79,18 +79,17 @@
 			},
 			onkeydown: function(event) {
 
-				var input = $(this);
-
 				// Trigger a test request on pressing enter.
 
 				if(event.keyCode === 13) {
+					var input = $(this);
 					if(input.val().length > 0) {
 						test();
-
-						// Trigger an interface update.
-
-						input.change();
 					}
+
+					// Trigger an interface update.
+
+					input.change();
 					return false;
 				}
 			}
