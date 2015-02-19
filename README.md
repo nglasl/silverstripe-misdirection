@@ -1,4 +1,4 @@
-# [misdirection](https://github.com/nglasl)
+# [misdirection](https://packagist.org/packages/nglasl/silverstripe-misdirection)
 
 _The current release is **1.0.4**_
 
