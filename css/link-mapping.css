@@ -46,6 +46,11 @@ div.link-mapping-test.admin div.results {
 	margin-bottom: 0;
 }
 
+div.link-mapping-test.admin div.results.loading {
+	min-height: 46px;
+	background: url('../images/loading.gif') no-repeat left top;
+}
+
 div.link-mapping-test.admin div.result {
 	float: left;
 	width: 18%;

@@ -25,6 +25,14 @@
 
 	function test(input) {
 
+		// Trigger an interface update to reflect the pending request.
+
+		var results = $('div.link-mapping-test.admin div.results');
+		results.html('');
+		results.addClass('loading');
+
+		// Test the link mapping chain.
+
 		var URL = input ? input.val() : $('div.link-mapping-test.admin input.url').val();
 		$.getJSON('admin/misdirection/LinkMapping/getMappingChain', {
 			map: URL
@@ -62,7 +70,8 @@
 
 			// Render the link mapping chain.
 
-			$('div.link-mapping-test.admin div.results').html(output);
+			results.removeClass('loading');
+			results.html(output);
 		});
 	};
 
