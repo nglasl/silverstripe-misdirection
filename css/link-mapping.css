@@ -94,12 +94,6 @@ div.ss-gridfield-buttonrow.ss-gridfield-buttonrow-before:after {
 	visibility: hidden;
 }
 
-#Form_EditForm_LinkMapping p.grid-csv-button,
-#Form_EditForm_LinkMapping p.grid-print-button {
-	margin-top: 0;
-	margin-bottom: 16px !important;
-}
-
 ul.redirect {
 	padding-left: 154px;
 	padding-bottom: 8px;
