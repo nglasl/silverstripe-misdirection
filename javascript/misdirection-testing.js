@@ -4,8 +4,8 @@
 
 	function enable(input) {
 
-		var URL = input ? input.val() : $('div.link-mapping-test.admin input.url').val();
-		var button = $('div.link-mapping-test.admin span.test');
+		var URL = input ? input.val() : $('div.misdirection-testing.admin input.url').val();
+		var button = $('div.misdirection-testing.admin span.test');
 		if(URL.length > 0) {
 			button.fadeTo(250, 1, function() {
 
@@ -27,13 +27,13 @@
 
 		// Trigger an interface update to reflect the pending request.
 
-		var results = $('div.link-mapping-test.admin div.results');
+		var results = $('div.misdirection-testing.admin div.results');
 		results.html('');
 		results.addClass('loading');
 
 		// Test the link mapping chain.
 
-		var URL = input ? input.val() : $('div.link-mapping-test.admin input.url').val();
+		var URL = input ? input.val() : $('div.misdirection-testing.admin input.url').val();
 		$.getJSON('admin/misdirection/LinkMapping/getMappingChain', {
 			map: URL
 		},
@@ -81,7 +81,7 @@
 
 		// Trigger an interface update on key press.
 
-		$('div.link-mapping-test.admin input.url').entwine({
+		$('div.misdirection-testing.admin input.url').entwine({
 			onchange: function() {
 
 				enable($(this));
@@ -106,7 +106,7 @@
 
 		// Trigger an interface update and handle any test request.
 
-		$('div.link-mapping-test.admin span.test').entwine({
+		$('div.misdirection-testing.admin span.test').entwine({
 			onmouseenter: function() {
 
 				enable();

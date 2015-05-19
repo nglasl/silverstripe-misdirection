@@ -14,8 +14,8 @@ class MisdirectionTesting implements GridField_HTMLProvider {
 	public function getHTMLFragments($gridfield) {
 
 		return array(
-			'before' => "<div class='link-mapping-test wrapper'>
-				<div class='link-mapping-test admin'>
+			'before' => "<div class='misdirection-testing wrapper'>
+				<div class='misdirection-testing admin'>
 					<div><strong>Test Link Mappings</strong></div>
 					<div><input class='url' spellcheck='false'/></div>
 					<div class='results'></div>

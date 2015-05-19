@@ -4,8 +4,8 @@
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
-div.link-mapping-test.wrapper,
-div.link-mapping-test.admin {
+div.misdirection-testing.wrapper,
+div.misdirection-testing.admin {
 	padding: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -14,13 +14,13 @@ div.link-mapping-test.admin {
 
 /* IE9 border radius and background gradient compatibility. */
 
-div.link-mapping-test.wrapper {
+div.misdirection-testing.wrapper {
 	margin-bottom: 16px;
 	padding: 0;
 	overflow: hidden;
 }
 
-div.link-mapping-test.admin {
+div.misdirection-testing.admin {
 	background: #B0BEC7;
 	background: -o-linear-gradient(top, #B0BEC7, #98AAB6);
 	filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr = '#B0BEC7', endColorStr = '#98AAB6');
@@ -32,16 +32,16 @@ div.link-mapping-test.admin {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
-div.link-mapping-test.admin div {
+div.misdirection-testing.admin div {
 	margin-bottom: 10px;
 }
 
-div.link-mapping-test.admin input.url {
+div.misdirection-testing.admin input.url {
 	min-width: 580px;
 	padding: 4px;
 }
 
-div.link-mapping-test.admin div.results {
+div.misdirection-testing.admin div.results {
 	overflow: hidden;
 	margin-bottom: 0;
 }
@@ -53,12 +53,12 @@ body:after {
 	content: url('../images/loading.gif');
 }
 
-div.link-mapping-test.admin div.results.loading {
+div.misdirection-testing.admin div.results.loading {
 	min-height: 46px;
 	background: url('../images/loading.gif') no-repeat left top;
 }
 
-div.link-mapping-test.admin div.result {
+div.misdirection-testing.admin div.result {
 	float: left;
 	width: 18%;
 	margin: 10px 1%;
@@ -66,20 +66,20 @@ div.link-mapping-test.admin div.result {
 
 /* This is used to correct the float height issue, however will not be supported by IE8. */
 
-div.link-mapping-test.admin div.result:nth-child(5n+1) {
+div.misdirection-testing.admin div.result:nth-child(5n+1) {
 	clear: both;
 }
 
-div.link-mapping-test.admin div.result h3 {
+div.misdirection-testing.admin div.result h3 {
 	margin: 0 0 10px;
 	text-decoration: underline;
 }
 
-div.link-mapping-test.admin span.test {
+div.misdirection-testing.admin span.test {
 	min-width: 150px;
 }
 
-div.link-mapping-test.admin span.test.disabled {
+div.misdirection-testing.admin span.test.disabled {
 	filter: Alpha(opacity = 40);
 	opacity: 0.4;
 	cursor: not-allowed;

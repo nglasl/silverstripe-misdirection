@@ -22,7 +22,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 	private static $replace_default = false;
 
 	/**
-	 *	The maximum number of consecutive misdirections.
+	 *	The maximum number of consecutive link mappings.
 	 */
 
 	private static $maximum_requests = 9;
@@ -43,7 +43,8 @@ class MisdirectionRequestFilter implements RequestFilter {
 		// Bypass the request filter when requesting specific director rules such as "/admin" or "/dev".
 
 		$requestURL = $request->getURL();
-		foreach(Config::inst()->get('Director', 'rules') as $segment => $controller) {
+		$configuration = Config::inst();
+		foreach($configuration->get('Director', 'rules') as $segment => $controller) {
 
 			// Retrieve the specific director rules.
 
@@ -78,8 +79,8 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 		// Either hook into a page not found, or when enforced, replace the default automated URL handling.
 
-		$enforce = Config::inst()->get('MisdirectionRequestFilter', 'enforce_misdirection');
-		$replace = Config::inst()->get('MisdirectionRequestFilter', 'replace_default');
+		$enforce = $configuration->get('MisdirectionRequestFilter', 'enforce_misdirection');
+		$replace = $configuration->get('MisdirectionRequestFilter', 'replace_default');
 		if(($error || $enforce || $replace) && ($map = $this->service->getMappingByRequest($request))) {
 
 			// Update the response code where appropriate.
