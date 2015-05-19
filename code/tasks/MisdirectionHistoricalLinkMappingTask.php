@@ -24,7 +24,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 	 *	The array of link mappings to be instantiated.
 	 */
 
-	protected $linkmappings = array();
+	protected $linkMappings = array();
 
 	/**
 	 *	The table created when disabling the temporary table usage.
@@ -34,7 +34,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 	protected static $use_temporary_table = true;
 
-	protected $replay_table = '';
+	protected $replayTable = '';
 
 	protected static $db_columns = array(
 		'ID' => 'Int',
@@ -125,8 +125,8 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 	protected function addMappingToList($URL, $ID) {
 
-		$this->linkmappings[$URL] = $ID;
-		DB::query("UPDATE {$this->replay_table} SET FullURL = '{$URL}' WHERE ID = {$ID};");
+		$this->linkMappings[$URL] = $ID;
+		DB::query("UPDATE {$this->replayTable} SET FullURL = '{$URL}' WHERE ID = {$ID};");
 	}
 
 	protected function addRecord($record) {
@@ -135,7 +135,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 			// This is only used retain the latest version of the record.
 
-			$sql = "REPLACE INTO {$this->replay_table}({$this->replaceColumnString}) VALUES('{$record['RecordID']}', '{$record['ID']}', '{$record['ParentID']}', '" . Convert::raw2sql($record['URLSegment']) . "', '{$record['Version']}');";
+			$sql = "REPLACE INTO {$this->replayTable}({$this->replaceColumnString}) VALUES('{$record['RecordID']}', '{$record['ID']}', '{$record['ParentID']}', '" . Convert::raw2sql($record['URLSegment']) . "', '{$record['Version']}');";
 			DB::query($sql);
 		}
 	}
@@ -164,7 +164,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 	protected function getReplayRecordByID($ID) {
 
-		$query = new SQLQuery('*', $this->replay_table, "ID = {$ID}");
+		$query = new SQLQuery('*', $this->replayTable, "ID = {$ID}");
 		$records = $query->execute();
 		return $records->first();
 	}
@@ -178,7 +178,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 	protected function childPages($ID) {
 
-		$query = new SQLQuery('*', $this->replay_table, 'ParentID = ' . (int)$ID);
+		$query = new SQLQuery('*', $this->replayTable, 'ParentID = ' . (int)$ID);
 		return $query->execute();
 	}
 
@@ -208,7 +208,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 			// Retrieve the parent element which was most recently published.
 
-			$parentQuery = new SQLQuery('ID, ParentID, URLSegment, Version', $this->replay_table, "ID = {$parentID}", null, null, null, 1);
+			$parentQuery = new SQLQuery('ID, ParentID, URLSegment, Version', $this->replayTable, "ID = {$parentID}", null, null, null, 1);
 			$parent = $parentQuery->execute()->first();
 			return $this->getURLForRecord($parent, $URL);
 		}
@@ -221,7 +221,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 	protected function checkAndCreateMappings() {
 
 		$livePages = SiteTree::get()->map()->toArray();
-		foreach($this->linkmappings as $URL => $siteTreeID) {
+		foreach($this->linkMappings as $URL => $siteTreeID) {
 
 			// Check that the destination page is live.
 
@@ -229,7 +229,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 				// Check that the URL is not the current live URL.
 
-				$query = new SQLQuery('ID', $this->replay_table, "FullURL = '{$URL}'");
+				$query = new SQLQuery('ID', $this->replayTable, "FullURL = '{$URL}'");
 				if($query->count('ID') == 0) {
 					echo "<div>{$siteTreeID} - {$URL}</div><br>";
 					if($this->live) {
@@ -257,7 +257,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 			$options = self::$use_temporary_table ? array(
 				'temporary' => true
 			) : null;
-			$this->replay_table = DB::createTable(self::$default_table, self::$db_columns, null, $options);
+			$this->replayTable = DB::createTable(self::$default_table, self::$db_columns, null, $options);
 		}
 		else {
 
