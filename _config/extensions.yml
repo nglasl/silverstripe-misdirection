@@ -3,11 +3,11 @@ name: misdirection-extensions
 ---
 MisdirectionAdmin:
   extensions:
-    - 'MisdirectionAdminTestExtension'
+    - 'MisdirectionAdminTestingExtension'
 SiteTree:
   extensions:
-    - 'SiteTreeLinkMappingExtension'
-    - 'LinkMappingFallbackExtension'
+    - 'MisdirectionSiteTreeExtension'
+    - 'MisdirectionFallbackExtension'
 SiteConfig:
   extensions:
-    - 'LinkMappingFallbackExtension'
+    - 'MisdirectionFallbackExtension'

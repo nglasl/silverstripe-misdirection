@@ -134,7 +134,7 @@ class LinkMapping extends DataObject {
 	public function getCMSFields() {
 
 		$fields = parent::getCMSFields();
-		Requirements::css(MISDIRECTION_PATH . '/css/link-mapping.css');
+		Requirements::css(MISDIRECTION_PATH . '/css/misdirection.css');
 
 		// Remove any fields that are not required in their default state.
 

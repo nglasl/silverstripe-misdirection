@@ -8,9 +8,9 @@
  *	@URLparameter live <{CREATE_LINK_MAPPINGS}> boolean
  */
 
-class HistoricalLinkMappingTask extends BuildTask {
+class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
-	protected $title = 'Historical Link Mapping';
+	protected $title = 'Misdirection Historical Link Mapping';
 
 	protected $description = 'Instantiate a link mapping for each site tree version URL, recursively replaying the publish into a temporary table.';
 
@@ -30,7 +30,7 @@ class HistoricalLinkMappingTask extends BuildTask {
 	 *	The table created when disabling the temporary table usage.
 	 */
 
-	protected static $default_table = 'LinkMapping_replay';
+	protected static $default_table = 'LinkMapping_Replay';
 
 	protected static $use_temporary_table = true;
 

@@ -5,7 +5,7 @@
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
-class LinkMappingTest implements GridField_HTMLProvider {
+class MisdirectionTesting implements GridField_HTMLProvider {
 
 	/**
 	 *	Render the URL input and test button.

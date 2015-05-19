@@ -1,17 +1,17 @@
 <?php
 
 /**
- *	Allow AJAX link mapping chain testing when viewing the LinkMappingAdmin.
+ *	Allow AJAX link mapping chain testing when viewing the MisdirectionAdmin.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
-class MisdirectionAdminTestExtension extends Extension {
+class MisdirectionAdminTestingExtension extends Extension {
 
 	public function updateEditForm(&$form) {
 
 		// Restrict the testing interface to administrators.
 
-		Requirements::css(MISDIRECTION_PATH . '/css/link-mapping.css');
+		Requirements::css(MISDIRECTION_PATH . '/css/misdirection.css');
 		$user = Member::currentUserID();
 		if(Permission::checkMember($user, 'ADMIN')) {
 			$gridfield = $form->fields->items[0];
@@ -20,8 +20,8 @@ class MisdirectionAdminTestExtension extends Extension {
 
 				// Add the required HTML fragment.
 
-				Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping-test.js');
-				$configuration->addComponent(new LinkMappingTest());
+				Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-testing.js');
+				$configuration->addComponent(new MisdirectionTesting());
 			}
 		}
 	}

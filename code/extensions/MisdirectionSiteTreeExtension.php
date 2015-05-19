@@ -6,7 +6,7 @@
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
-class SiteTreeLinkMappingExtension extends DataExtension {
+class MisdirectionSiteTreeExtension extends DataExtension {
 
 	// Allow direct link mapping customisation from the pages themselves.
 
@@ -76,7 +76,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 	public function onAfterWrite() {
 
 		parent::onAfterWrite();
-		if(Config::inst()->get('LinkMappingRequestFilter', 'replace_default')) {
+		if(Config::inst()->get('MisdirectionRequestFilter', 'replace_default')) {
 
 			// Make sure that the URL segment or parent ID has been updated.
 
@@ -123,7 +123,7 @@ class SiteTreeLinkMappingExtension extends DataExtension {
 
 		// When this site tree element has been removed from both staging and live.
 
-		if(Config::inst()->get('LinkMappingRequestFilter', 'replace_default') && $this->owner->getIsDeletedFromStage() && !$this->owner->isPublished()) {
+		if(Config::inst()->get('MisdirectionRequestFilter', 'replace_default') && $this->owner->getIsDeletedFromStage() && !$this->owner->isPublished()) {
 
 			// Convert any link mappings that are directly associated with this page.
 

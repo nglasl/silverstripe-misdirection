@@ -5,4 +5,4 @@ Injector:
   RequestProcessor:
     properties:
       filters:
-        - '%$LinkMappingRequestFilter'
+        - '%$MisdirectionRequestFilter'

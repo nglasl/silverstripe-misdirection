@@ -5,7 +5,7 @@
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
-class LinkMappingRequestFilter implements RequestFilter {
+class MisdirectionRequestFilter implements RequestFilter {
 
 	public $service;
 
@@ -78,8 +78,8 @@ class LinkMappingRequestFilter implements RequestFilter {
 
 		// Either hook into a page not found, or when enforced, replace the default automated URL handling.
 
-		$enforce = Config::inst()->get('LinkMappingRequestFilter', 'enforce_misdirection');
-		$replace = Config::inst()->get('LinkMappingRequestFilter', 'replace_default');
+		$enforce = Config::inst()->get('MisdirectionRequestFilter', 'enforce_misdirection');
+		$replace = Config::inst()->get('MisdirectionRequestFilter', 'replace_default');
 		if(($error || $enforce || $replace) && ($map = $this->service->getMappingByRequest($request))) {
 
 			// Update the response code where appropriate.

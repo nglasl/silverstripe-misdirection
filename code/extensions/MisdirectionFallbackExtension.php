@@ -7,7 +7,7 @@
  * @author <marcus@silverstripe.com.au>
  * @license BSD License http://www.silverstripe.org/bsd-license
  */
-class LinkMappingFallbackExtension extends DataExtension {
+class MisdirectionFallbackExtension extends DataExtension {
 
 	// Allow setting fallback rules on a per page basis.
 
@@ -19,7 +19,7 @@ class LinkMappingFallbackExtension extends DataExtension {
 	
 	protected function updateFields(FieldList $fields) {
 
-		Requirements::javascript(MISDIRECTION_PATH . '/javascript/link-mapping-fallback.js');
+		Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-fallback.js');
 		
 		// Allow customisation of fallback rules.
 		$fields->addFieldToTab('Root.Misdirection', HeaderField::create(

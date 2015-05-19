@@ -29,29 +29,29 @@ This module is designed to function with or without the CMS module present.
 To disable link mappings from taking precedence over the default automated URL handling..
 
 ```yaml
-LinkMappingRequestFilter:
+MisdirectionRequestFilter:
   enforce_misdirection: false
 ```
 
 To disable the automated URL handling completely..
 
 ```yaml
-LinkMappingRequestFilter:
+MisdirectionRequestFilter:
   replace_default: true
 ```
 
 When a certain depth of link mappings has been reached, the server will return with a 404 response to prevent inefficient mappings or infinite recursion. The following is the default configuration:
 
 ```yaml
-LinkMappingRequestFilter:
+MisdirectionRequestFilter:
   maximum_requests: 9
 ```
 
-#### Historical Link Mapping Task
+#### Misdirection Historical Link Mapping Task
 
 The following may be used to instantiate a link mapping for each site tree version URL, when replacing the default automated URL handling (currently only supported by MySQL).
 
-`/dev/tasks/HistoricalLinkMappingTask`
+`/dev/tasks/MisdirectionHistoricalLinkMappingTask`
 
 ### Link Mappings
 
@@ -70,7 +70,7 @@ You may bypass any link mappings or fallbacks by appending `?direct=1` to the UR
 
 #### Testing
 
-![test](images/link-mapping-test.png)
+![test](images/misdirection-testing.png)
 
 This will retrieve the link mapping call stack for a given URL, and whether that reached the maximum request limit.
 
