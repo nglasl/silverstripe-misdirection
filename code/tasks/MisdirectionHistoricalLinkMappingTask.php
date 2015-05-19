@@ -30,7 +30,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 	 *	The table created when disabling the temporary table usage.
 	 */
 
-	protected static $default_table = 'LinkMapping_Replay';
+	protected static $default_table = 'LinkMapping_replay';
 
 	protected static $use_temporary_table = true;
 
