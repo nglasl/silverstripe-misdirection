@@ -27,9 +27,9 @@ class MisdirectionFallbackExtension extends DataExtension {
 			_t('LinkMapping.FallbackHeader', 'Fallback')
 		));
 		$options = array(
-			'URL'		=> _t('LinkMapping.STRAIGHT_URL', 'Specific URL'),
+			'Nearest'	=> _t('LinkMapping.NEAREST', 'Nearest Parent'),
 			'ThisPage'	=> _t('LinkMapping.THIS_PAGE', 'This Page'),
-			'Nearest'	=> _t('LinkMapping.NEAREST', 'Nearest Parent')
+			'URL'		=> _t('LinkMapping.STRAIGHT_URL', 'Specific URL')
 		);
 		
 		// Retrieve the response code listing.

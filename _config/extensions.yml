@@ -6,7 +6,7 @@ MisdirectionAdmin:
     - 'MisdirectionAdminTestingExtension'
 SiteTree:
   extensions:
-    - 'MisdirectionSiteTreeExtension'
+    - 'SiteTreeMisdirectionExtension'
     - 'MisdirectionFallbackExtension'
 SiteConfig:
   extensions:

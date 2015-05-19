@@ -6,7 +6,7 @@
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
-class MisdirectionSiteTreeExtension extends DataExtension {
+class SiteTreeMisdirectionExtension extends DataExtension {
 
 	// Allow direct link mapping customisation from the pages themselves.
 

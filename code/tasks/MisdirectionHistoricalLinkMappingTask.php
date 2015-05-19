@@ -12,7 +12,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 
 	protected $title = 'Misdirection Historical Link Mapping';
 
-	protected $description = 'Instantiate a link mapping for each site tree version URL, recursively replaying the publish into a temporary table.';
+	protected $description = 'Instantiate a link mapping for each site tree version URL, recursively replaying the publish history into a temporary table.';
 
 	/**
 	 *	Don't create link mapping records until the user specifically requests a live run, using the GET parameter.
