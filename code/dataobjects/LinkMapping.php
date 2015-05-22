@@ -259,7 +259,7 @@ class LinkMapping extends DataObject {
 
 			// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
 
-			MisdirectionService::is_external_URL($this->RedirectLink) ? $result->valid() : $result->error('Validation Failed!');
+			MisdirectionService::is_external_URL($this->RedirectLink) ? $result->valid() : $result->error('External validation failed!');
 		}
 		return $result;
 	}
