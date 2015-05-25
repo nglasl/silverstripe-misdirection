@@ -96,7 +96,10 @@ class MisdirectionAdmin extends ModelAdmin {
 			$testing = true;
 			$mappings = singleton('MisdirectionService')->getMappingByRequest($request, $testing);
 			$this->getResponse()->addHeader('Content-Type', 'application/json');
-			return Convert::array2json($mappings);
+
+			// JSON_PRETTY_PRINT.
+
+			return json_encode($mappings, 128);
 		}
 		else {
 			return $this->httpError(404);
