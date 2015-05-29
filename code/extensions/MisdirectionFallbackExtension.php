@@ -13,7 +13,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 
 	private static $db = array(
 		'FallbackRule'		=> 'Varchar',
-		'FallbackUrl'		=> 'Varchar(255)',
+		'FallbackURL'		=> 'Varchar(255)',
 		'FallbackResponse'	=> 'Varchar',
 	);
 	
@@ -49,7 +49,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 			)->setRightTitle($info)->setHasEmptyDefault(true)->addExtraClass('fallback-rule');
 		
 		$fields->addFieldToTab('Root.Misdirection', $field);
-		$fields->addFieldToTab('Root.Misdirection', TextField::create('FallbackUrl', _t('LinkMapping.FALLBACK_URL', 'To URL'))->addExtraClass('fallback-to'));
+		$fields->addFieldToTab('Root.Misdirection', TextField::create('FallbackURL', _t('LinkMapping.FALLBACK_URL', 'To URL'))->addExtraClass('fallback-to'));
 		$fields->addFieldToTab('Root.Misdirection', DropdownField::create(
 				'FallbackResponse', 
 				_t('LinkMapping.FALLBACK_RESPONSE', 'Response Code'),

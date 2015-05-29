@@ -234,7 +234,7 @@ class MisdirectionService {
 			if($config && $config->FallbackRule) {
 				$thisPage = $nearestParent = Director::baseURL();
 				$applicableRule = $config->FallbackRule;
-				$specificURL = $config->FallbackUrl;
+				$specificURL = $config->FallbackURL;
 				$responseCode = $config->FallbackResponse;
 			}
 
@@ -259,7 +259,7 @@ class MisdirectionService {
 					if($page->FallbackRule) {
 						$parentID = $page->ID;
 						$applicableRule = $page->FallbackRule;
-						$specificURL = $page->FallbackUrl;
+						$specificURL = $page->FallbackURL;
 						$thisPage = $link;
 						$responseCode = $page->FallbackResponse;
 					}

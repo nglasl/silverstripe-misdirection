@@ -4,13 +4,11 @@
 	"type": "silverstripe-module",
 	"keywords": [
 		"silverstripe",
-		"redirect",
 		"link mapping",
-		"rewrite",
-		"regular expression",
-		"regex",
-		"request",
-		"response"
+		"URL",
+		"page not found",
+		"404",
+		"redirect"
 	],
 	"homepage": "https://github.com/nglasl/silverstripe-misdirection",
 	"license": "BSD-3-Clause",
