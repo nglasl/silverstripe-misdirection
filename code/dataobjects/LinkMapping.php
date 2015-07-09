@@ -81,9 +81,6 @@ class LinkMapping extends DataObject {
 
 	/**
 	 *	CMS users with appropriate access may view any mappings.
-	 *
-	 *	@parameter <{CURRENT_MEMBER}> member
-	 *	@return boolean
 	 */
 
 	public function canView($member = null) {
@@ -93,9 +90,6 @@ class LinkMapping extends DataObject {
 
 	/**
 	 *	CMS administrators may edit any mappings.
-	 *
-	 *	@parameter <{CURRENT_MEMBER}> member
-	 *	@return boolean
 	 */
 
 	public function canEdit($member = null) {
@@ -105,9 +99,6 @@ class LinkMapping extends DataObject {
 
 	/**
 	 *	CMS administrators may create any mappings.
-	 *
-	 *	@parameter <{CURRENT_MEMBER}> member
-	 *	@return boolean
 	 */
 
 	public function canCreate($member = null) {
@@ -117,9 +108,6 @@ class LinkMapping extends DataObject {
 
 	/**
 	 *	CMS administrators may delete any mappings.
-	 *
-	 *	@parameter <{CURRENT_MEMBER}> member
-	 *	@return boolean
 	 */
 
 	public function canDelete($member = null) {
@@ -255,11 +243,11 @@ class LinkMapping extends DataObject {
 	public function validate() {
 
 		$result = parent::validate();
-		if($this->ValidateExternal && $this->RedirectLink) {
+		if($this->ValidateExternal && $this->RedirectLink && $result->valid() && !MisdirectionService::is_external_URL($this->RedirectLink)) {
 
 			// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
 
-			MisdirectionService::is_external_URL($this->RedirectLink) ? $result->valid() : $result->error('External validation failed!');
+			$result->error('External validation failed!');
 		}
 		return $result;
 	}
