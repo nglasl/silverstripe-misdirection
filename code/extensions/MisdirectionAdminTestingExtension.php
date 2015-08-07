@@ -11,7 +11,7 @@ class MisdirectionAdminTestingExtension extends Extension {
 	 *	Update the edit form to include the URL input and test button.
 	 */
 
-	public function updateEditForm(&$form) {
+	public function updateEditForm($form) {
 
 		Requirements::css(MISDIRECTION_PATH . '/css/misdirection.css');
 
