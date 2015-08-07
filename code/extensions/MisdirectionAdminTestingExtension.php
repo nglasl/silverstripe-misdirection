@@ -1,26 +1,31 @@
 <?php
 
 /**
- *	Allow AJAX link mapping chain testing when viewing the MisdirectionAdmin.
+ *	This extension adds the testing interface used to view the link mapping recursion stack.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
 class MisdirectionAdminTestingExtension extends Extension {
 
+	/**
+	 *	Update the edit form to include the URL input and test button.
+	 */
+
 	public function updateEditForm(&$form) {
 
-		// Restrict the testing interface to administrators.
-
 		Requirements::css(MISDIRECTION_PATH . '/css/misdirection.css');
+
+		// Restrict this functionality to administrators.
+
 		$user = Member::currentUserID();
 		if(Permission::checkMember($user, 'ADMIN')) {
 			$gridfield = $form->fields->items[0];
 			if(isset($gridfield)) {
-				$configuration = $gridfield->config;
 
 				// Add the required HTML fragment.
 
 				Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-testing.js');
+				$configuration = $gridfield->config;
 				$configuration->addComponent(new MisdirectionTesting());
 			}
 		}

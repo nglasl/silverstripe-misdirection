@@ -1,7 +1,7 @@
 <?php
 
 /**
- *	Misdirection testing interface used to view the link mapping recursion stack.
+ *	The testing interface used to view the link mapping recursion stack.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
