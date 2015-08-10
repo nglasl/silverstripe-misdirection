@@ -112,7 +112,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 					singleton('MisdirectionService')->createPageMapping($URLsegment, $this->owner->ID);
 
-					// Purge any link mappings that point to the same page.
+					// Purge any link mappings that point back to the same page.
 
 					$this->purgeRecursiveLinkMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
 
@@ -154,15 +154,13 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	}
 
 	/**
-	 *	Purge any link mappings that point to the same page.
+	 *	Purge any link mappings that point back to the same page.
 	 *
 	 *	@parameter <{PAGE_URL}> string
 	 *	@parameter <{PAGE_ID}> integer
 	 */
 
 	public function purgeRecursiveLinkMappings($pageLink, $pageID) {
-
-		// Determine whether the redirect URL matches the mapped page.
 
 		LinkMapping::get()->filter(array(
 			'MappedLink' => MisdirectionService::unify(Director::makeRelative($pageLink)),
@@ -181,10 +179,13 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	public function recursiveLinkMapping($baseURL, $children) {
 
 		foreach($children as $child) {
+
+			// Instantiate a link mapping for this page.
+
 			$URLsegment = Controller::join_links($baseURL, $child->URLSegment);
 			singleton('MisdirectionService')->createPageMapping($URLsegment, $child->ID);
 
-			// Purge any link mappings that point to the same page.
+			// Purge any link mappings that point back to the same page.
 
 			$this->purgeRecursiveLinkMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
 
