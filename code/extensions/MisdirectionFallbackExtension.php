@@ -10,12 +10,12 @@ class MisdirectionFallbackExtension extends DataExtension {
 
 	private static $db = array(
 		'Fallback' => 'Varchar(255)',
-		'FallbackURL' => 'Varchar(255)',
-		'FallbackResponse' => 'Int'
+		'FallbackLink' => 'Varchar(255)',
+		'FallbackResponseCode' => 'Int'
 	);
 
 	private static $defaults = array(
-		'FallbackResponse' => 303
+		'FallbackResponseCode' => 303
 	);
 
 	/**
@@ -25,7 +25,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 	public function updateCMSFields(FieldList $fields) {
 
 		if($this->owner instanceof SiteConfig) {
-			return $this->updateFields($fields);
+			return $this->owner->updateFields($fields);
 		}
 	}
 
@@ -33,16 +33,28 @@ class MisdirectionFallbackExtension extends DataExtension {
 
 		// This extension only exists for site tree elements.
 
-		return $this->updateFields($fields);
+		return $this->owner->updateFields($fields);
 	}
 
-	private function updateFields($fields) {
+	public function updateFields($fields) {
 
 		Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-fallback.js');
 
+		// Update any fields that are displayed when not viewing a site tree element.
+
+		$tab = 'Root.Misdirection';
+		$options = array(
+			'Nearest' => 'Nearest Parent',
+			'This' => 'This Page',
+			'URL' => 'URL'
+		);
+		if($this->owner instanceof SiteConfig) {
+			$tab = 'Root.Pages';
+			unset($options['This']);
+		}
+
 		// Retrieve the fallback mapping selection.
 
-		$tab = ($this->owner instanceof SiteConfig) ? 'Root.Pages' : 'Root.Misdirection';
 		$fields->addFieldToTab($tab, HeaderField::create(
 			'FallbackHeader',
 			'Fallback'
@@ -50,16 +62,12 @@ class MisdirectionFallbackExtension extends DataExtension {
 		$fields->addFieldToTab($tab, DropdownField::create(
 			'Fallback',
 			'To',
-			array(
-				'Nearest' => 'Nearest Parent',
-				'This' => 'This Page',
-				'URL' => 'URL'
-			)
+			$options
 		)->addExtraClass('fallback')->setHasEmptyDefault(true)->setRightTitle('This will be used when children result in a <strong>page not found</strong>'));
 		$fields->addFieldToTab($tab, TextField::create(
-			'FallbackURL',
+			'FallbackLink',
 			'URL'
-		)->addExtraClass('fallback-url'));
+		)->addExtraClass('fallback-link'));
 
 		// Retrieve the response code selection.
 
@@ -71,10 +79,10 @@ class MisdirectionFallbackExtension extends DataExtension {
 			}
 		}
 		$fields->addFieldToTab($tab, DropdownField::create(
-			'FallbackResponse',
+			'FallbackResponseCode',
 			'Response Code',
 			$selection
-		)->addExtraClass('fallback-response'));
+		)->addExtraClass('fallback-response-code'));
 	}
 
 }

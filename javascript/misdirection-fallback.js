@@ -6,12 +6,12 @@
 
 		var rule = $('select.fallback').val();
 		if(rule) {
-			(rule === 'URL') ? $('div.fallback-url').show() : $('div.fallback-url').hide();
-			$('div.fallback-response').show();
+			(rule === 'URL') ? $('div.fallback-link').show() : $('div.fallback-link').hide();
+			$('div.fallback-response-code').show();
 		}
 		else {
-			$('div.fallback-url').hide();
-			$('div.fallback-response').hide();
+			$('div.fallback-link').hide();
+			$('div.fallback-response-code').hide();
 		}
 	};
 
