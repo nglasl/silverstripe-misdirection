@@ -1,7 +1,7 @@
 <?php
 
 /**
- *	This extension automatically creates appropriate link mappings when a site tree element has been updated, and provides vanity mapping.
+ *	This extension automatically creates appropriate link mappings when a site tree element is updated, and also provides vanity mapping.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
@@ -29,7 +29,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			'VanityURL',
 			'URL',
 			$this->owner->VanityMapping()->MappedLink
-		)->setRightTitle('Mappings with higher <strong>priority</strong> will take precedence over this'));
+		)->setRightTitle('Mappings with higher priority will take precedence over this'));
 	}
 
 	/**
@@ -78,7 +78,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	}
 
 	/**
-	 *	Determine whether link mappings need to be updated when replacing the default automated URL handling.
+	 *	Update link mappings when replacing the default automated URL handling.
 	 */
 
 	public function onAfterWrite() {
@@ -112,11 +112,11 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 					singleton('MisdirectionService')->createPageMapping($URLsegment, $this->owner->ID);
 
-					// Purge any link mappings where the redirect URL now points back to the mapped page.
+					// Purge any link mappings that point to the same page.
 
 					$this->purgeRecursiveLinkMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
 
-					// Recursively create link mappings for any children.
+					// Recursively create link mappings for any child pages.
 
 					$children = $this->owner->AllChildrenIncludingDeleted();
 					if($children->count()) {
@@ -154,25 +154,25 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	}
 
 	/**
-	 *	Purge any link mappings where the redirect URL now points back to the mapped page.
+	 *	Purge any link mappings that point to the same page.
 	 *
 	 *	@parameter <{PAGE_URL}> string
 	 *	@parameter <{PAGE_ID}> integer
 	 */
 
-	public function purgeRecursiveLinkMappings($pageLink, $redirectPageID) {
+	public function purgeRecursiveLinkMappings($pageLink, $pageID) {
 
 		// Determine whether the redirect URL matches the mapped page.
 
 		LinkMapping::get()->filter(array(
 			'MappedLink' => MisdirectionService::unify(Director::makeRelative($pageLink)),
 			'RedirectType' => 'Page',
-			'RedirectPageID' => $redirectPageID
+			'RedirectPageID' => $pageID
 		))->removeAll();
 	}
 
 	/**
-	 *	Recursively create link mappings for any children.
+	 *	Recursively create link mappings for any child pages.
 	 *
 	 *	@parameter <{BASE_URL}> string
 	 *	@parameter <{CHILDREN}> array
@@ -184,11 +184,11 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			$URLsegment = Controller::join_links($baseURL, $child->URLSegment);
 			singleton('MisdirectionService')->createPageMapping($URLsegment, $child->ID);
 
-			// Purge any link mappings where the redirect URL now points back to the mapped page.
+			// Purge any link mappings that point to the same page.
 
 			$this->purgeRecursiveLinkMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
 
-			// Recursively create link mappings for any children.
+			// Recursively create link mappings for any child pages.
 
 			$recursiveChildren = $child->AllChildrenIncludingDeleted();
 			if($recursiveChildren->count()) {
