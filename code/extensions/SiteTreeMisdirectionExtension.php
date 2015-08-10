@@ -114,13 +114,13 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 					// Purge any link mappings that point back to the same page.
 
-					$this->purgeRecursiveLinkMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
+					$this->owner->purgeRecursiveLinkMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
 
 					// Recursively create link mappings for any child pages.
 
 					$children = $this->owner->AllChildrenIncludingDeleted();
 					if($children->count()) {
-						$this->recursiveLinkMapping($URL, $children);
+						$this->owner->recursiveLinkMapping($URL, $children);
 					}
 				}
 			}
@@ -187,13 +187,13 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			// Purge any link mappings that point back to the same page.
 
-			$this->purgeRecursiveLinkMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
+			$this->owner->purgeRecursiveLinkMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
 
 			// Recursively create link mappings for any child pages.
 
 			$recursiveChildren = $child->AllChildrenIncludingDeleted();
 			if($recursiveChildren->count()) {
-				$this->recursiveLinkMapping($URL, $recursiveChildren);
+				$this->owner->recursiveLinkMapping($URL, $recursiveChildren);
 			}
 		}
 	}
