@@ -265,7 +265,7 @@ class LinkMapping extends DataObject {
 	}
 
 	/**
-	 *	Retrieve the site tree element associated with this link mapping redirection.
+	 *	Retrieve the page associated with this link mapping redirection.
 	 *
 	 *	@return site tree
 	 */
@@ -331,7 +331,7 @@ class LinkMapping extends DataObject {
 	}
 
 	/**
-	 *	Retrieve the site tree element title associated with this link mapping redirection.
+	 *	Retrieve the page title associated with this link mapping redirection.
 	 *
 	 *	@return string
 	 */

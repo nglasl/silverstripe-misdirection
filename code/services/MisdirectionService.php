@@ -305,7 +305,7 @@ class MisdirectionService {
 	}
 
 	/**
-	 *	Instantiate a new link mapping, redirecting a URL towards a site tree element.
+	 *	Instantiate a new link mapping, redirecting a URL towards a page.
 	 *
 	 *	@parameter <{MAPPING_URL}> string
 	 *	@parameter <{MAPPING_PAGE_ID}> integer

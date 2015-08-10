@@ -1,7 +1,7 @@
 <?php
 
 /**
- *	This extension automatically creates appropriate link mappings when a site tree element is updated, and also provides vanity mapping.
+ *	This extension automatically creates appropriate link mappings when a page is updated, and also provides vanity mapping.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 

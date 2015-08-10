@@ -40,7 +40,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 
 		Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-fallback.js');
 
-		// Update any fields that are displayed when not viewing a site tree element.
+		// Update any fields that are displayed when not viewing a page.
 
 		$tab = 'Root.Misdirection';
 		$options = array(
