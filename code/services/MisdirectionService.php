@@ -225,18 +225,18 @@ class MisdirectionService {
 
 			$segments = explode('/', self::unify($URL));
 			$applicableRule = null;
-			$specificURL = null;
-			$thisPage = null;
 			$nearestParent = null;
+			$thisPage = null;
+			$toURL = null;
 			$responseCode = 303;
 
 			// Retrieve the default site configuration fallback.
 
 			$config = SiteConfig::current_site_config();
-			if($config && $config->FallbackRule) {
-				$thisPage = $nearestParent = Director::baseURL();
-				$applicableRule = $config->FallbackRule;
-				$specificURL = $config->FallbackURL;
+			if($config && $config->Fallback) {
+				$applicableRule = $config->Fallback;
+				$nearestParent = $thisPage = Director::baseURL();
+				$toURL = $config->FallbackURL;
 				$responseCode = $config->FallbackResponse;
 			}
 
@@ -258,12 +258,12 @@ class MisdirectionService {
 
 					// Keep track of the current page fallback.
 
-					if($page->FallbackRule) {
-						$parentID = $page->ID;
-						$applicableRule = $page->FallbackRule;
-						$specificURL = $page->FallbackURL;
+					if($page->Fallback) {
+						$applicableRule = $page->Fallback;
 						$thisPage = $link;
+						$toURL = $page->FallbackURL;
 						$responseCode = $page->FallbackResponse;
+						$parentID = $page->ID;
 					}
 				}
 				else {
@@ -278,21 +278,21 @@ class MisdirectionService {
 			// Determine the applicable fallback.
 
 			if($apply && $applicableRule) {
-				$linkTo = null;
+				$link = null;
 				switch($applicableRule) {
-					case 'URL':
-						$linkTo = $specificURL;
-						break;
-					case 'ThisPage':
-						$linkTo = $thisPage;
-						break;
 					case 'Nearest':
-						$linkTo = $nearestParent;
+						$link = $nearestParent;
+						break;
+					case 'This':
+						$link = $thisPage;
+						break;
+					case 'URL':
+						$link = $toURL;
 						break;
 				}
-				if($linkTo) {
+				if($link) {
 					return array(
-						'link' => $linkTo,
+						'link' => $link,
 						'code' => (int)$responseCode
 					);
 				}

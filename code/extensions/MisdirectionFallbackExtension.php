@@ -1,70 +1,80 @@
 <?php
 
 /**
- * Extension that allows pages + site config to have "fallback" mapping rules
- * specified for them. 
- *
- * @author <marcus@silverstripe.com.au>
- * @license BSD License http://www.silverstripe.org/bsd-license
+ *	This extension allows pages to have a fallback mapping for children that result in a page not found.
+ *	@author Marcus Nyeholt <marcus@silverstripe.com.au>
+ *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
+
 class MisdirectionFallbackExtension extends DataExtension {
 
-	// Allow setting fallback rules on a per page basis.
-
 	private static $db = array(
-		'FallbackRule'		=> 'Varchar',
-		'FallbackURL'		=> 'Varchar(255)',
-		'FallbackResponse'	=> 'Varchar',
+		'Fallback' => 'Varchar(255)',
+		'FallbackURL' => 'Varchar(255)',
+		'FallbackResponse' => 'Int'
 	);
-	
-	protected function updateFields(FieldList $fields) {
 
-		Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-fallback.js');
-		
-		// Allow customisation of fallback rules.
-		$fields->addFieldToTab('Root.Misdirection', HeaderField::create(
-			'FallbackHeader',
-			_t('LinkMapping.FallbackHeader', 'Fallback')
-		));
-		$options = array(
-			'Nearest'	=> _t('LinkMapping.NEAREST', 'Nearest Parent'),
-			'ThisPage'	=> _t('LinkMapping.THIS_PAGE', 'This Page'),
-			'URL'		=> _t('LinkMapping.STRAIGHT_URL', 'Specific URL')
-		);
-		
-		// Retrieve the response code listing.
-		$responseCodes = Config::inst()->get('SS_HTTPResponse', 'status_codes');
-		$redirectCodes = array();
-		foreach($responseCodes as $code => $description) {
-			if ($code >= 300 && $code < 400) {
-				$redirectCodes[$code] = "{$code}: $description";
-			}
-		}
+	private static $defaults = array(
+		'FallbackResponse' => 303
+	);
 
-		$info = _t('LinkMapping.FALLBACK_DETAILS', 'Select a method to use for handling any missing child page');
-		$field = DropdownField::create(
-				'FallbackRule', 
-				_t('LinkMapping.FALLBACK_RULE', 'Rule'),
-				$options
-			)->setRightTitle($info)->setHasEmptyDefault(true)->addExtraClass('fallback-rule');
-		
-		$fields->addFieldToTab('Root.Misdirection', $field);
-		$fields->addFieldToTab('Root.Misdirection', TextField::create('FallbackURL', _t('LinkMapping.FALLBACK_URL', 'To URL'))->addExtraClass('fallback-to'));
-		$fields->addFieldToTab('Root.Misdirection', DropdownField::create(
-				'FallbackResponse', 
-				_t('LinkMapping.FALLBACK_RESPONSE', 'Response Code'),
-				$redirectCodes
-			)->setHasEmptyDefault(true)->addExtraClass('fallback-response')
-		);
-	}
+	/**
+	 *	Display the appropriate fallback fields.
+	 */
 
 	public function updateCMSFields(FieldList $fields) {
-		if ($this->owner instanceof SiteConfig) {
+
+		if($this->owner instanceof SiteConfig) {
 			return $this->updateFields($fields);
 		}
 	}
 
-	public function updateSettingsFields(FieldList $fields) {
+	public function updateSettingsFields($fields) {
+
+		// This extension only exists for site tree elements.
+
 		return $this->updateFields($fields);
 	}
+
+	private function updateFields($fields) {
+
+		Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-fallback.js');
+
+		// Retrieve the fallback mapping selection.
+
+		$tab = ($this->owner instanceof SiteConfig) ? 'Root.Pages' : 'Root.Misdirection';
+		$fields->addFieldToTab($tab, HeaderField::create(
+			'FallbackHeader',
+			'Fallback'
+		));
+		$fields->addFieldToTab($tab, DropdownField::create(
+			'Fallback',
+			'To',
+			array(
+				'Nearest' => 'Nearest Parent',
+				'This' => 'This Page',
+				'URL' => 'URL'
+			)
+		)->addExtraClass('fallback')->setHasEmptyDefault(true)->setRightTitle('This will be used when children result in a <strong>page not found</strong>'));
+		$fields->addFieldToTab($tab, TextField::create(
+			'FallbackURL',
+			'URL'
+		)->addExtraClass('fallback-url'));
+
+		// Retrieve the response code selection.
+
+		$responses = Config::inst()->get('SS_HTTPResponse', 'status_codes');
+		$selection = array();
+		foreach($responses as $code => $description) {
+			if(($code >= 300) && ($code < 400)) {
+				$selection[$code] = "{$code}: {$description}";
+			}
+		}
+		$fields->addFieldToTab($tab, DropdownField::create(
+			'FallbackResponse',
+			'Response Code',
+			$selection
+		)->addExtraClass('fallback-response'));
+	}
+
 }

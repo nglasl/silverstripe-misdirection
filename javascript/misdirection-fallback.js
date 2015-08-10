@@ -4,20 +4,20 @@
 
 	function toggle() {
 
-		var rule = $('select.fallback-rule').val();
+		var rule = $('select.fallback').val();
 		if(rule) {
+			(rule === 'URL') ? $('div.fallback-url').show() : $('div.fallback-url').hide();
 			$('div.fallback-response').show();
-			(rule === 'URL') ? $('div.fallback-to').show() : $('div.fallback-to').hide();
 		}
 		else {
+			$('div.fallback-url').hide();
 			$('div.fallback-response').hide();
-			$('div.fallback-to').hide();
 		}
 	};
 
 	// Bind the events dynamically.
 
-	$('select.fallback-rule').entwine({
+	$('select.fallback').entwine({
 		onmatch: function () {
 
 			toggle();
