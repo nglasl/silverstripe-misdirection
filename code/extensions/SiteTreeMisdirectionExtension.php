@@ -96,21 +96,21 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 				// The link mappings should only be created for existing pages.
 
-				$URLsegment = (isset($changed['URLSegment']['before']) ? $changed['URLSegment']['before'] : $this->owner->URLSegment);
-				if(strpos($URLsegment, 'new-') !== 0) {
+				$URL = (isset($changed['URLSegment']['before']) ? $changed['URLSegment']['before'] : $this->owner->URLSegment);
+				if(strpos($URL, 'new-') !== 0) {
 
 					// Determine the URL.
 
 					$parentID = (isset($changed['ParentID']['before']) ? $changed['ParentID']['before'] : $this->owner->ParentID);
 					$parent = SiteTree::get_one('SiteTree', "SiteTree.ID = {$parentID}");
 					while($parent) {
-						$URLsegment = Controller::join_links($parent->URLSegment, $URLsegment);
+						$URL = Controller::join_links($parent->URLSegment, $URL);
 						$parent = SiteTree::get_one('SiteTree', "SiteTree.ID = {$parent->ParentID}");
 					}
 
 					// Instantiate a link mapping for this page.
 
-					singleton('MisdirectionService')->createPageMapping($URLsegment, $this->owner->ID);
+					singleton('MisdirectionService')->createPageMapping($URL, $this->owner->ID);
 
 					// Purge any link mappings that point back to the same page.
 
@@ -120,7 +120,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 					$children = $this->owner->AllChildrenIncludingDeleted();
 					if($children->count()) {
-						$this->recursiveLinkMapping($URLsegment, $children);
+						$this->recursiveLinkMapping($URL, $children);
 					}
 				}
 			}
@@ -182,8 +182,8 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			// Instantiate a link mapping for this page.
 
-			$URLsegment = Controller::join_links($baseURL, $child->URLSegment);
-			singleton('MisdirectionService')->createPageMapping($URLsegment, $child->ID);
+			$URL = Controller::join_links($baseURL, $child->URLSegment);
+			singleton('MisdirectionService')->createPageMapping($URL, $child->ID);
 
 			// Purge any link mappings that point back to the same page.
 
@@ -193,7 +193,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			$recursiveChildren = $child->AllChildrenIncludingDeleted();
 			if($recursiveChildren->count()) {
-				$this->recursiveLinkMapping($URLsegment, $recursiveChildren);
+				$this->recursiveLinkMapping($URL, $recursiveChildren);
 			}
 		}
 	}
