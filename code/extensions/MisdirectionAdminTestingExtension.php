@@ -29,6 +29,10 @@ class MisdirectionAdminTestingExtension extends Extension {
 				$configuration->addComponent(new MisdirectionTesting());
 			}
 		}
+
+		// Allow extension customisation.
+
+		$this->owner->extend('updateMisdirectionAdminTestingExtensionEditForm', $form);
 	}
 
 }

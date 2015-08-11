@@ -83,6 +83,10 @@ class MisdirectionFallbackExtension extends DataExtension {
 			'Response Code',
 			$selection
 		)->addExtraClass('fallback-response-code'));
+
+		// Allow extension customisation.
+
+		$this->owner->extend('updateMisdirectionFallbackExtensionFields', $fields);
 	}
 
 }

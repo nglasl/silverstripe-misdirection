@@ -233,6 +233,10 @@ class LinkMapping extends DataObject {
 		$fields->addFieldToTab('Root.Optional', TextField::create(
 			'HostnameRestriction'
 		));
+
+		// Allow extension customisation.
+
+		$this->extend('updateLinkMappingCMSFields', $fields);
 		return $fields;
 	}
 
@@ -249,6 +253,10 @@ class LinkMapping extends DataObject {
 
 			$result->error('External validation failed!');
 		}
+
+		// Allow extension customisation.
+
+		$this->owner->extend('validateLinkMapping', $result);
 		return $result;
 	}
 

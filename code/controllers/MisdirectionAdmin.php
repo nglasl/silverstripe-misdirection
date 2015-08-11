@@ -31,6 +31,10 @@ class MisdirectionAdmin extends ModelAdmin {
 			'RedirectTypeSummary' => 'RedirectType',
 			'Host' => 'HostnameRestriction'
 		));
+
+		// Allow extension customisation.
+
+		$this->extend('updateMisdirectionAdminEditForm', $form);
 		return $form;
 	}
 

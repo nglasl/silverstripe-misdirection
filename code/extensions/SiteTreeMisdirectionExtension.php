@@ -30,6 +30,10 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			'URL',
 			$this->owner->VanityMapping()->MappedLink
 		)->setRightTitle('Mappings with higher priority will take precedence over this'));
+
+		// Allow extension customisation.
+
+		$this->owner->extend('updateSiteTreeMisdirectionExtensionSettingsFields', $fields);
 	}
 
 	/**
