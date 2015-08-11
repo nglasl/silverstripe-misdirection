@@ -42,7 +42,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 		// Retrieve the vanity mapping URL, where this is only possible using the POST variable.
 
-		$vanityURL = (($URL = Controller::curr()->getRequest()->postVar('VanityURL')) ? $URL : $this->owner->VanityMapping()->MappedLink);
+		$vanityURL = (is_null($URL = Controller::curr()->getRequest()->postVar('VanityURL')) ? $this->owner->VanityMapping()->MappedLink : $URL);
 		$mappingExists = $this->owner->VanityMapping()->exists();
 
 		// Determine whether the vanity mapping URL has been updated.
@@ -173,7 +173,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	 *	Recursively create link mappings for any children.
 	 *
 	 *	@parameter <{BASE_URL}> string
-	 *	@parameter <{CHILDREN}> array(site tree)
+	 *	@parameter <{PAGE_CHILDREN}> array(site tree)
 	 */
 
 	public function recursiveLinkMapping($baseURL, $children) {
