@@ -256,7 +256,7 @@ class LinkMapping extends DataObject {
 
 		// Allow extension customisation.
 
-		$this->owner->extend('validateLinkMapping', $result);
+		$this->extend('validateLinkMapping', $result);
 		return $result;
 	}
 
