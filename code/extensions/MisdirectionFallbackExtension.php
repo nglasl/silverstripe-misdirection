@@ -31,7 +31,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 
 	public function updateSettingsFields($fields) {
 
-		// This extension only exists for site tree elements.
+		// This extension only exists for pages.
 
 		return $this->owner->updateFields($fields);
 	}

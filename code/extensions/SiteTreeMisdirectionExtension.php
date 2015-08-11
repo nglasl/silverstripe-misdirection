@@ -1,7 +1,7 @@
 <?php
 
 /**
- *	This extension automatically creates appropriate link mappings when a page is updated, and also provides vanity mapping.
+ *	This extension automatically creates the appropriate link mappings when a page is updated, and also provides vanity mapping directly from a page.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
@@ -99,7 +99,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 				$URL = (isset($changed['URLSegment']['before']) ? $changed['URLSegment']['before'] : $this->owner->URLSegment);
 				if(strpos($URL, 'new-') !== 0) {
 
-					// Determine the URL.
+					// Determine the page URL.
 
 					$parentID = (isset($changed['ParentID']['before']) ? $changed['ParentID']['before'] : $this->owner->ParentID);
 					$parent = SiteTree::get_one('SiteTree', "SiteTree.ID = {$parentID}");
@@ -116,7 +116,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 					$this->owner->purgeRecursiveLinkMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
 
-					// Recursively create link mappings for any child pages.
+					// Recursively create link mappings for any children.
 
 					$children = $this->owner->AllChildrenIncludingDeleted();
 					if($children->count()) {
@@ -170,10 +170,10 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	}
 
 	/**
-	 *	Recursively create link mappings for any child pages.
+	 *	Recursively create link mappings for any children.
 	 *
 	 *	@parameter <{BASE_URL}> string
-	 *	@parameter <{CHILDREN}> array
+	 *	@parameter <{CHILDREN}> array(site tree)
 	 */
 
 	public function recursiveLinkMapping($baseURL, $children) {
@@ -189,7 +189,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			$this->owner->purgeRecursiveLinkMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
 
-			// Recursively create link mappings for any child pages.
+			// Recursively create link mappings for any children.
 
 			$recursiveChildren = $child->AllChildrenIncludingDeleted();
 			if($recursiveChildren->count()) {

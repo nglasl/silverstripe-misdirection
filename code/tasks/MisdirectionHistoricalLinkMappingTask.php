@@ -64,7 +64,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 	}
 
 	/**
-	 *	Retrieve the list of published pages from the version table, in order to recursively process and create URL path variations from the bottom up (ensuring all changes at that point in time are covered).
+	 *	Retrieve the list of published site tree elements from the version table, in order to recursively process and create URL path variations from the bottom up (ensuring all changes at that point in time are covered).
 	 *
 	 *	@return ss query
 	 */
@@ -223,7 +223,7 @@ class MisdirectionHistoricalLinkMappingTask extends BuildTask {
 		$livePages = SiteTree::get()->map()->toArray();
 		foreach($this->linkMappings as $URL => $siteTreeID) {
 
-			// Check that the destination page is live.
+			// Check that the destination site tree element is live.
 
 			if(isset($livePages[$siteTreeID])) {
 
