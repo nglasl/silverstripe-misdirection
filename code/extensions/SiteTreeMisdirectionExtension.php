@@ -1,7 +1,7 @@
 <?php
 
 /**
- *	This extension automatically creates the appropriate link mappings when a page is updated, and also provides vanity mapping directly from a page.
+ *	This extension provides vanity mapping directly from a page, and automatically creates the appropriate link mappings when replacing the default automated URL handling.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  */
 
