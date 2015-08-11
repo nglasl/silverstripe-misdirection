@@ -57,15 +57,6 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			}
 		}
 
-		// Determine whether the vanity mapping URL has been removed.
-
-		else if($mappingExists) {
-
-			// Remove the corresponding vanity mapping.
-
-			$this->owner->VanityMapping()->delete();
-		}
-
 		// Determine whether the vanity mapping URL has been defined.
 
 		else if($vanityURL) {
@@ -74,6 +65,15 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			$mapping = singleton('MisdirectionService')->createPageMapping($vanityURL, $this->owner->ID, 2);
 			$this->owner->VanityMappingID = $mapping->ID;
+		}
+
+		// Determine whether the vanity mapping URL has been removed.
+
+		else if($mappingExists) {
+
+			// Remove the corresponding vanity mapping.
+
+			$this->owner->VanityMapping()->delete();
 		}
 	}
 
