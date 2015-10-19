@@ -3,8 +3,10 @@
 _The current release is **2.0.1**_
 
 	A module for SilverStripe which will allow both simple and regular expression link
-	redirections based on customisable mappings, either hooking into a page not found
-	or replacing the default automated URL handling.
+	redirections based on customisable mappings, either hooking into a page not found or
+	replacing the default automated URL handling.
+
+This module improves [link mappings](https://github.com/silverstripe-australia/silverstripe-linkmapping).
 
 ## Requirement
 
@@ -15,14 +17,9 @@ _The current release is **2.0.1**_
 * Place the module under your root project directory.
 * `/dev/build`
 * Select `Misdirection` through the CMS.
-* Create a link mapping.
-* Enter this link mapping into the test interface.
+* Create link mappings.
 
 ## Overview
-
-_**NOTE:** This repository has been pulled together using re-factored code from an existing module._
-
-https://github.com/silverstripe-australia/silverstripe-linkmapping
 
 This module is designed to function with or without the CMS module present.
 
