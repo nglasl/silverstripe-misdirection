@@ -6,7 +6,7 @@ _The current release is **2.0.1**_
 	redirections based on customisable mappings, either hooking into a page not found or
 	replacing the default automated URL handling.
 
-This is based on the [link mapping](https://github.com/silverstripe-australia/silverstripe-linkmapping) module, and aims to provide a more robust and flexible solution for both users and developers alike!
+This development was based upon the existing [link mapping](https://github.com/silverstripe-australia/silverstripe-linkmapping) module, and aims to provide a more robust solution for both users and developers alike, with further customisation and support!
 
 ## Requirement
 
