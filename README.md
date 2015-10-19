@@ -58,8 +58,6 @@ You may either set a global fallback default under the site settings, or create 
 
 #### Testing
 
-![test](images/misdirection-testing.png)
-
 **replace with a screenshot when actually testing**
 
 This will retrieve the link mapping call stack for a given URL, and whether that reached the maximum request limit.
