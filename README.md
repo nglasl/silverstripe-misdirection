@@ -12,6 +12,8 @@ This is based upon the existing [link mapping](https://github.com/silverstripe-a
 
 * SilverStripe 3.1.X
 
+This module does **not** require the CMS.
+
 ## Getting Started
 
 * Place the module under your root project directory.
@@ -21,34 +23,22 @@ This is based upon the existing [link mapping](https://github.com/silverstripe-a
 
 ## Overview
 
-This module is designed to function with or without the CMS module present.
+### Link Mappings
 
-All URLs to redirect and that are redirected to end up being unified so there is consistency with varied user input.
+![management](images/misdirection-management.png)
 
-### Misdirection Admin
+The following customisation is available out of the box, allowing both simple and regular expression link redirections based on priority. This is very useful for legacy mapping or for having a page vanity URL.
 
-**screenshot of misdirection admin**
+**screenshot**
 
-#### Link Mapping
-
-**screenshots with the available field definitions**
-
-simple / regular expression types
-
-When multiple link mappings end up being matched, the one to be used is determined based on a priority field and how specific the definition is. Link mappings with identical priority will fall back to the oldest mapping by default.
-
-To URL or page if CMS is present. Can validate external URL if you so wish.
-
-Can customise response code.
-
-Can chain link mappings, hence why the testing interface is so useful.
-
-Hostname restriction under optional section.
+When two link mappings have the same priority, the first created will take precedence. This behaviour can be defined.
 
 ```yaml
 LinkMapping:
   priority: 'DESC'
 ```
+
+These may also be chained.
 
 #### Site Tree
 
