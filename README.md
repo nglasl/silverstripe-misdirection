@@ -28,11 +28,11 @@ All URLs to redirect and that are redirected to end up being unified so there is
 
 ### Misdirection Admin
 
-<screenshot of misdirection admin>
+**screenshot of misdirection admin**
 
 #### Link Mapping
 
-<screenshots with the available field definitions>
+**screenshots with the available field definitions**
 
 simple / regular expression types
 
@@ -51,17 +51,11 @@ LinkMapping:
   priority: 'DESC'
 ```
 
-#### Bypass
-
-You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL, which may prove useful when locked out by erroneous link mappings.
-
-<screenshot?>
-
 #### Testing
 
 ![test](images/misdirection-testing.png)
 
-<replace with screenshot when actually testing>
+**replace with a screenshot when actually testing**
 
 This will retrieve the link mapping call stack for a given URL, and whether that reached the maximum request limit.
 
@@ -72,13 +66,19 @@ MisdirectionRequestFilter:
   maximum_requests: 9
 ```
 
-<screenshot showing example of maximum number reached>
+**screenshot showing example of maximum number reached**
+
+#### Bypass
+
+You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL, which may prove useful when locked out by erroneous link mappings.
+
+**screenshot to demonstrate the bypass against the infinite loop above**
 
 #### Vanity URL
 
 You may create a vanity link mapping from your site tree element, however other matching link mappings with higher priority will take precedence.
 
-<screenshot of CMS, maybe combined into one with the fallback below>
+**screenshot of CMS, maybe combined into one with the fallback below**
 
 #### Fallbacks
 
@@ -86,8 +86,8 @@ These will be triggered when no link mappings are found, and the response will b
 
 You may either set a global fallback default under the site settings, or create a fallback from an individual site tree element.
 
-<screenshot of page config level>
-<screenshot of site config level>
+**screenshot of page config level**
+**screenshot of site config level**
 
 ### Automated URL Handling
 
@@ -113,7 +113,7 @@ The following may be used to instantiate a link mapping for each site tree versi
 
 `/dev/tasks/MisdirectionHistoricalLinkMappingTask`
 
-<images of using the task, and how things are populated>
+**images of using the task, and how things are populated**
 
 #### Site Tree Automatic Link Mapping
 
