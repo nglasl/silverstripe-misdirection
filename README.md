@@ -51,6 +51,22 @@ LinkMapping:
   priority: 'DESC'
 ```
 
+#### Site Tree
+
+**screenshot of page to show vanity URL and fallback config**
+
+##### Vanity URL
+
+You may create a vanity link mapping from your site tree element, however other matching link mappings with higher priority will take precedence.
+
+##### Fallbacks
+
+These will be triggered when no link mappings are found, and the response will be a 404, but only if the CMS module is present.
+
+You may either set a global fallback default under the site settings, or create a fallback from an individual site tree element.
+
+**screenshot of site config level**
+
 #### Testing
 
 ![test](images/misdirection-testing.png)
@@ -73,21 +89,6 @@ MisdirectionRequestFilter:
 You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL, which may prove useful when locked out by erroneous link mappings.
 
 **screenshot to demonstrate the bypass against the infinite loop above**
-
-#### Vanity URL
-
-You may create a vanity link mapping from your site tree element, however other matching link mappings with higher priority will take precedence.
-
-**screenshot of CMS, maybe combined into one with the fallback below**
-
-#### Fallbacks
-
-These will be triggered when no link mappings are found, and the response will be a 404, but only if the CMS module is present.
-
-You may either set a global fallback default under the site settings, or create a fallback from an individual site tree element.
-
-**screenshot of page config level**
-**screenshot of site config level**
 
 ### Automated URL Handling
 
