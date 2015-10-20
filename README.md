@@ -105,7 +105,7 @@ The following may be used to instantiate a link mapping for each site tree versi
 
 When the URL segment of a site tree element has been updated, a link mapping will automatically be created. This functionality will be removed as soon as you enable SilverStripe's default automated URL handling (as it will no longer be required).
 
-![default](images/misdirection-default.png)
+![default](images/misdirection-default.gif)
 
 ## Maintainer Contact
 
