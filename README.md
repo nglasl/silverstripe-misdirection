@@ -25,7 +25,7 @@ This module does **not** require the CMS.
 
 ### Link Mappings
 
-These allow both simple and regular expression link redirections, based on priority and specificity. They can be used for legacy page redirection, vanity URLs, or redirection based on specific URL patterns.
+These allow both simple and regular expression link redirections, based on priority and specificity. They can be used for legacy page redirection, vanity URLs (more below), or redirection based on specific URL patterns.
 
 ![link-mapping](images/misdirection-link-mapping.png)
 
@@ -49,7 +49,7 @@ LinkMapping:
 
 #### Vanity URLs
 
-A content author may directly create a link mapping from a page, however it should be noted that these are instantiated with a low priority of `2`, and therefore other link mappings with higher priority will take precedence.
+While it is possible to create these manually (as above), a content author may directly create a link mapping from a page. However, it should be noted that these are instantiated with a low priority of `2`, and therefore other link mappings with higher priority will take precedence.
 
 #### Fallbacks
 
