@@ -60,11 +60,11 @@ A fallback will be triggered when a user happens to encounter a page not found. 
 
 ### Testing
 
-The model admin will not only display a clean summary for each link mapping, it will also provide a powerful test interface for managing your redirection stack.
+The link mappings will be processed server side to prevent inefficient mappings or infinite recursion, though the model admin will provide a testing interface, so you may preview exactly what is happening behind the scenes!
 
 ![testing](images/misdirection-testing.png)
 
-The link mapping stack will be traversed server side to prevent inefficient link mappings or infinite recursion. When the maximum number of requests has been reached, the server will respond with a page not found.
+When the maximum number of requests has been reached, the server will respond with a page not found.
 
 ```yaml
 MisdirectionRequestFilter:
