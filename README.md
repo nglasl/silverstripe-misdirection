@@ -88,7 +88,7 @@ MisdirectionRequestFilter:
   replace_default: true
 ```
 
-When a page is moved, the appropriate link mappings are automatically created (while maintaining integrity). This allows customisation around which link mappings remain in the system.
+When a page is moved, the appropriate link mappings are automatically created (while maintaining integrity). This allows customisation around which legacy page URLs remain in the system.
 
 ![replace-default](images/misdirection-replace-default.gif)
 
