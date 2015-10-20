@@ -43,7 +43,7 @@ LinkMapping:
   priority: 'ASC'
 ```
 
-### Content Authors
+### Content Authors and Fallbacks
 
 ![vanity-URL-and-fallback](images/misdirection-vanity-URL-and-fallback.png)
 
@@ -53,7 +53,7 @@ A content author may directly create a link mapping from a page, however it shou
 
 #### Fallback
 
-This will be triggered when a page not found is encountered. It is possible to configure a global fallback through the site configuration by an administrator.
+This will be triggered when a page not found has been encountered. It is possible to configure a global fallback through the site configuration by an administrator.
 
 * Select `Settings`
 * Select `Pages`
