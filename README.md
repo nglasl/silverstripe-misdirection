@@ -61,7 +61,7 @@ A fallback will be triggered when a user happens to encounter a page not found. 
 
 ### What's Happening?
 
-The link mappings are processed server side to prevent inefficient mappings and infinite recursion, using a request filter.
+The link mappings are processed server side to prevent inefficient and problematic mappings, using a request filter.
 
 When you want to see exactly what is happening behind the scenes for a given URL, the model admin provides a powerful testing interface!
 
