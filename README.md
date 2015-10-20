@@ -58,20 +58,18 @@ A fallback will be triggered when a user happens to encounter a page not found. 
 * Select `Settings`
 * Select `Pages`
 
-#### Testing
+### Testing
+
+The model admin will not only display a clean summary for each link mapping, it will also provide a powerful test interface for managing your redirection stack.
 
 ![testing](images/misdirection-testing.png)
 
-This will retrieve the link mapping call stack for a given URL, and whether that reached the maximum request limit. The result is traversed on server side to detect any inefficient mappings or infinite loops.
-
-When a certain depth of link mappings has been reached, the server will return with a 404 response to prevent inefficient mappings or infinite recursion. The following is the default configuration:
+The link mapping stack will be traversed server side to prevent inefficient link mappings or infinite recursion. When the maximum number of requests has been reached, the server will respond with a page not found.
 
 ```yaml
 MisdirectionRequestFilter:
   maximum_requests: 9
 ```
-
-This stack will be traversed server side, rather than redirecting the user back and forth until the maximum.
 
 ![testing-maximum-requests](images/misdirection-testing-maximum-requests.png)
 
