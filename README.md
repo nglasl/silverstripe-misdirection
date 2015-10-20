@@ -49,11 +49,11 @@ LinkMapping:
 
 #### Vanity URL
 
-A content author may create a link mapping directly from a page, however it should be noted that these are instantiated with a low priority of `2`, and therefore other link mappings with higher priority will take precedence.
+A content author may directly create a link mapping from a page, however it should be noted that these are instantiated with a low priority of `2`, and therefore other link mappings with higher priority will take precedence.
 
 #### Fallback
 
-This will be triggered when a page not found is encountered. It is possible to configure a global fallback through the site configuration.
+This will be triggered when a page not found is encountered. It is possible to configure a global fallback through the site configuration by an administrator.
 
 * Select `Settings`
 * Select `Pages`
