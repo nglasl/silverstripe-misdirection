@@ -67,7 +67,7 @@ MisdirectionRequestFilter:
 
 This stack will be traversed server side, rather than redirecting the user back and forth until the maximum.
 
-![testing-maximum](images/misdirection-testing-maximum.png)
+![testing-maximum-requests](images/misdirection-testing-maximum-requests.png)
 
 #### Bypass
 
