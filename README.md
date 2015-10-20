@@ -43,19 +43,20 @@ LinkMapping:
   priority: 'ASC'
 ```
 
-#### Site Tree
+### Content Authors
 
 ![vanity-URL-and-fallback](images/misdirection-vanity-URL-and-fallback.png)
 
-##### Vanity URL
+#### Vanity URL
 
-You may create a vanity link mapping from your site tree element, however other matching link mappings with higher priority will take precedence.
+A content author may directly create a link mapping from a page, however it should be noted that these are created with a low priority of `2`, therefore other link mappings with higher priority will take precedence.
 
-##### Fallbacks
+#### Fallback
 
-These will be triggered when no link mappings are found, and the response will be a 404, but only if the CMS module is present.
+This will be triggered when children pages result in a page not found. It is also possible to configure a global fallback through the site configuration.
 
-You may either set a global fallback default under the site settings, or create a fallback from an individual site tree element.
+* Select `Settings`
+* Select `Pages`
 
 #### Testing
 
