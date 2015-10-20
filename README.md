@@ -88,15 +88,13 @@ MisdirectionRequestFilter:
   replace_default: true
 ```
 
-When a page is moved, the appropriate link mappings are automatically created (while maintaining integrity). This allows full control over which legacy URLs remain in the system.
+When a page is moved, the appropriate link mappings are automatically created and maintained. This allows full control over which legacy URLs remain in the system.
 
 ![replace-default](images/misdirection-replace-default.gif)
 
 #### Historical Link Mapping
 
-To ensure the current version history is carried across, the following task may be used to instantiate any appropriate link mappings (this is currently only supported by `MySQL`).
-
-`/dev/tasks/MisdirectionHistoricalLinkMappingTask`
+To ensure the current page version history is carried across, `/dev/tasks/MisdirectionHistoricalLinkMappingTask` may be used to instantiate any appropriate link mappings (however this is currently only supported by `MySQL`).
 
 ## Maintainer Contact
 
