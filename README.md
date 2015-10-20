@@ -75,7 +75,7 @@ MisdirectionRequestFilter:
 
 ![testing-maximum-requests](images/misdirection-testing-maximum-requests.png)
 
-### Bypassing Misdirection
+#### Bypassing Misdirection
 
 It is possible to bypass the request filter completely, by appending `?direct=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
 
@@ -92,9 +92,9 @@ When a page is moved, the appropriate link mappings are automatically created an
 
 ![replace-default](images/misdirection-replace-default.gif)
 
-#### Historical Link Mapping
+#### Historical Link Mappings
 
-To ensure the current page version history is carried across, `/dev/tasks/MisdirectionHistoricalLinkMappingTask` may be used to instantiate any appropriate link mappings (however this is currently only supported by `MySQL`).
+To ensure the current page version history is carried across, `/dev/tasks/MisdirectionHistoricalLinkMappingsTask` may be used to instantiate any appropriate link mappings (however this is currently only supported by `MySQL`).
 
 ## Maintainer Contact
 

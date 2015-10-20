@@ -8,7 +8,7 @@
  *	@URLparameter live <{CREATE_LINK_MAPPINGS}> boolean
  */
 
-class MisdirectionHistoricalLinkMappingTask extends BuildTask {
+class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 	protected $title = 'Misdirection Historical Link Mapping';
 
