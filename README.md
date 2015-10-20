@@ -75,9 +75,13 @@ MisdirectionRequestFilter:
 
 ![testing-maximum-requests](images/misdirection-testing-maximum-requests.png)
 
+### Bypassing Misdirection
+
+It is possible to bypass the request filter completely, by appending `?direct=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
+
 ### Default Automated URL Handling
 
-This may be completely replaced, in which case legacy page URLs will no longer resolve based on version history. When a page is moved, the appropriate link mappings are automatically created (while maintaining integrity). This also allows customisation around which link mappings to keep.
+This may be completely replaced, in which case legacy page URLs will no longer resolve based on version history. When a page is moved, the appropriate link mappings are automatically created (while maintaining integrity). This also allows customisation around which link mappings remain.
 
 ```yaml
 MisdirectionRequestFilter:
@@ -91,10 +95,6 @@ MisdirectionRequestFilter:
 The following may be used to instantiate a link mapping for each site tree version URL, when replacing the default automated URL handling (currently only supported by MySQL).
 
 `/dev/tasks/MisdirectionHistoricalLinkMappingTask`
-
-### Bypassing Misdirection
-
-It is possible to bypass the request filter completely, by appending `?direct=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
 
 ## Maintainer Contact
 
