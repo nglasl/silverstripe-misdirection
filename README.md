@@ -40,7 +40,7 @@ These may also be chained.
 
 #### Site Tree
 
-![site-tree](images/misdirection-site-tree.png)
+![vanity-URL-and-fallback](images/misdirection-vanity-URL-and-fallback.png)
 
 ##### Vanity URL
 
@@ -51,8 +51,6 @@ You may create a vanity link mapping from your site tree element, however other 
 These will be triggered when no link mappings are found, and the response will be a 404, but only if the CMS module is present.
 
 You may either set a global fallback default under the site settings, or create a fallback from an individual site tree element.
-
-![site-config](images/misdirection-site-config.png)
 
 #### Testing
 
@@ -105,7 +103,7 @@ The following may be used to instantiate a link mapping for each site tree versi
 
 When the URL segment of a site tree element has been updated, a link mapping will automatically be created. This functionality will be removed as soon as you enable SilverStripe's default automated URL handling (as it will no longer be required).
 
-![default](images/misdirection-default.gif)
+![replace-default](images/misdirection-replace-default.gif)
 
 ## Maintainer Contact
 
