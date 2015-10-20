@@ -25,8 +25,6 @@ This module does **not** require the CMS.
 
 ### Link Mappings
 
-![management](images/misdirection-management.png)
-
 The following customisation is available out of the box, allowing both simple and regular expression link redirections based on priority. This is very useful for legacy mapping or for having a page vanity URL.
 
 ![link-mapping](images/misdirection-link-mapping.png)
@@ -54,7 +52,7 @@ These will be triggered when no link mappings are found, and the response will b
 
 You may either set a global fallback default under the site settings, or create a fallback from an individual site tree element.
 
-**screenshot of site config level**
+![site-config](images/misdirection-site-config.png)
 
 #### Testing
 
