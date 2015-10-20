@@ -29,7 +29,12 @@ These allow both simple and regular expression link redirections, based on prior
 
 ![link-mapping](images/misdirection-link-mapping.png)
 
-The link mapping with the highest priority and greatest specificity will be used over any default automated URL handling out of the box, however it is possible to change this so it only hooks into a page not found.
+The link mapping with the highest priority and greatest specificity will be used, and replaces the default automated URL handling out of the box. This default behaviour may be configured to only hook into a page not found:
+
+```yaml
+MisdirectionRequestFilter:
+  enforce_misdirection: false
+```
 
 When there are multiple matches, the first link mapping created will be used. This default behaviour may be configured to prioritise the most recently created link mapping:
 
@@ -78,13 +83,6 @@ You may bypass any link mappings or fallbacks by appending `?direct=1` to the UR
 ### Automated URL Handling
 
 The custom request filter will prevent issues around existing director rules such as /admin or /dev.
-
-To disable link mappings from taking precedence over the default automated URL handling..
-
-```yaml
-MisdirectionRequestFilter:
-  enforce_misdirection: false
-```
 
 To disable the automated URL handling completely..
 
