@@ -116,6 +116,17 @@ class LinkMapping extends DataObject {
 	}
 
 	/**
+	 *	Print the mapped URL associated with this link mapping.
+	 *
+	 *	@return string
+	 */
+
+	public function getTitle() {
+
+		return $this->MappedLink;
+	}
+
+	/**
 	 *	Display CMS link mapping configuration.
 	 */
 

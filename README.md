@@ -29,7 +29,7 @@ This module does **not** require the CMS.
 
 The following customisation is available out of the box, allowing both simple and regular expression link redirections based on priority. This is very useful for legacy mapping or for having a page vanity URL.
 
-**screenshot**
+![link-mapping](images/misdirection-link-mapping.png)
 
 When two link mappings have the same priority, the first created will take precedence. This behaviour can be defined.
 
@@ -42,7 +42,7 @@ These may also be chained.
 
 #### Site Tree
 
-**screenshot of page to show vanity URL and fallback config**
+![site-tree](images/misdirection-site-tree.png)
 
 ##### Vanity URL
 
@@ -58,7 +58,7 @@ You may either set a global fallback default under the site settings, or create 
 
 #### Testing
 
-**replace with a screenshot when actually testing**
+![testing](images/misdirection-testing.png)
 
 This will retrieve the link mapping call stack for a given URL, and whether that reached the maximum request limit.
 
@@ -69,11 +69,11 @@ MisdirectionRequestFilter:
   maximum_requests: 9
 ```
 
-**screenshot showing example of maximum number reached**
+![testing-maximum](images/misdirection-testing-maximum.png)
 
 #### Bypass
 
-You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL, which may prove useful when locked out by erroneous link mappings.
+You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL, which may prove useful when locked out by erroneous link mappings. This does not work using the test interface.
 
 **screenshot to demonstrate the bypass against the infinite loop above**
 
