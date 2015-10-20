@@ -45,15 +45,15 @@ LinkMapping:
 
 ### Vanity URLs and Fallbacks
 
-![vanity-URL-and-fallback](images/misdirection-vanity-URL-and-fallback.png)
+![vanity-URLs-and-fallbacks](images/misdirection-vanity-URLs-and-fallbacks.png)
 
-#### Vanity URL
+#### Vanity URLs
 
 A content author may directly create a link mapping from a page, however it should be noted that these are instantiated with a low priority of `2`, and therefore other link mappings with higher priority will take precedence.
 
-#### Fallback
+#### Fallbacks
 
-This will be triggered when a page not found has been encountered. It is possible to configure a global fallback through the site configuration by an administrator.
+A fallback will be triggered when a user happens to encounter a page not found. It is possible for an administrator to configure a global fallback through the site configuration.
 
 * Select `Settings`
 * Select `Pages`
