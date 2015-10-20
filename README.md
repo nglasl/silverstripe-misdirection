@@ -20,6 +20,7 @@ This module does **not** require the CMS.
 * `/dev/build`
 * Select `Misdirection` through the CMS.
 * Create link mappings.
+* `/mapping`
 
 ## Overview
 
