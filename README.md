@@ -81,20 +81,20 @@ It is possible to bypass the request filter completely, by appending `?direct=1`
 
 ### Default Automated URL Handling
 
-This may be completely replaced, in which case legacy page URLs will no longer resolve based on version history.
+This may be completely replaced, in which case legacy URLs will no longer resolve based on version history.
 
 ```yaml
 MisdirectionRequestFilter:
   replace_default: true
 ```
 
-When a page is moved, the appropriate link mappings are automatically created (while maintaining integrity). This allows customisation around which legacy page URLs remain in the system.
+When a page is moved, the appropriate link mappings are automatically created (while maintaining integrity). This allows full control over which legacy URLs remain in the system.
 
 ![replace-default](images/misdirection-replace-default.gif)
 
 #### Historical Link Mapping
 
-To ensure the current version history is carried across, the following task may be used to instantiate the appropriate link mappings. This is currently only supported by MySQL.
+To ensure the current version history is carried across, the following task may be used to instantiate any appropriate link mappings (this is currently only supported by MySQL).
 
 `/dev/tasks/MisdirectionHistoricalLinkMappingTask`
 
