@@ -58,9 +58,11 @@ A fallback will be triggered when a user happens to encounter a page not found. 
 * Select `Settings`
 * Select `Pages`
 
-### Testing
+### What's Happening?
 
-The link mappings will be processed server side to prevent inefficient mappings and infinite recursion. The model admin provides a powerful testing interface, allowing you preview exactly what is happening behind the scenes for a request URL!
+The link mappings are processed server side, to prevent inefficient mappings and infinite recursion.
+
+When you want to see exactly what is happening behind the scenes for a request URL, the model admin provides a powerful testing interface!
 
 ![testing](images/misdirection-testing.png)
 
