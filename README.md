@@ -36,7 +36,7 @@ MisdirectionRequestFilter:
   enforce_misdirection: false
 ```
 
-When there are multiple matches, the first link mapping created will be used. This default behaviour may be configured to prioritise the most recently created link mapping:
+When there are multiple matches, the link mapping first created will be used. This default behaviour may be configured to prioritise the link mapping most recently created:
 
 ```yaml
 LinkMapping:
