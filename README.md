@@ -81,7 +81,7 @@ It is possible to bypass the request filter completely, by appending `?direct=1`
 
 ### Default Automated URL Handling
 
-This may be completely replaced, in which case legacy URLs will no longer resolve based on version history.
+This may be completely replaced, in which case legacy URLs will no longer resolve based on page version history.
 
 ```yaml
 MisdirectionRequestFilter:
@@ -94,7 +94,7 @@ When a page is moved, the appropriate link mappings are automatically created (w
 
 #### Historical Link Mapping
 
-To ensure the current version history is carried across, the following task may be used to instantiate any appropriate link mappings (this is currently only supported by MySQL).
+To ensure the current version history is carried across, the following task may be used to instantiate any appropriate link mappings (this is currently only supported by `MySQL`).
 
 `/dev/tasks/MisdirectionHistoricalLinkMappingTask`
 
