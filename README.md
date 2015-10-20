@@ -54,7 +54,7 @@ While it is possible to create these manually (as above), a content author may d
 
 #### Fallbacks
 
-A fallback will be triggered when a user happens to encounter a page not found. It is possible for an administrator to configure a global fallback through the site configuration, however a specific page setting will take precedence.
+When a user happens to encounter a page not found, a specified rule will be triggered to prevent displaying this. It is possible for an administrator to configure a global fallback through the site configuration, however a specific page setting will take precedence.
 
 * Select `Settings`
 * Select `Pages`
@@ -95,7 +95,7 @@ When a page is moved, the appropriate link mappings are automatically created an
 
 #### Historical Link Mappings
 
-To ensure the current page version history is carried across, `/dev/tasks/MisdirectionHistoricalLinkMappingsTask` may be used to instantiate any appropriate link mappings (however this is currently only supported by `MySQL`).
+To ensure the current page version history is carried across, `/dev/tasks/MisdirectionHistoricalLinkMappingsTask` may be used to instantiate the appropriate link mappings. However, this is currently only supported by `MySQL`.
 
 ## Maintainer Contact
 
