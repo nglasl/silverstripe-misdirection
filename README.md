@@ -67,6 +67,8 @@ MisdirectionRequestFilter:
   maximum_requests: 9
 ```
 
+This stack will be traversed server side, rather than redirecting the user back and forth until the maximum.
+
 ![testing-maximum](images/misdirection-testing-maximum.png)
 
 #### Bypass
