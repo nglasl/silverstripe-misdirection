@@ -29,14 +29,14 @@ These allow both simple and regular expression link redirections, based on prior
 
 ![link-mapping](images/misdirection-link-mapping.png)
 
-The link mapping with the highest priority and greatest specificity will be used, however should multiple match, the most recently created will be ignored. This behaviour may be configured:
+The link mapping with the highest priority and greatest specificity will either hook into a page not found or replace the default automated URL handling. However, should there be multiple matches, the most recently created link mapping will be ignored. This default behaviour may be configured to the opposite:
 
 ```yaml
 LinkMapping:
-  priority: 'DESC'
+  priority: 'ASC'
 ```
 
-This functionality can be used for legacy page redirection, or for vanity URLs.
+These can be used for applications such as applications such as legacy page redirection, vanity URLs, or redirection based on specific URL patterns.
 
 #### Site Tree
 
