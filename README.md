@@ -25,18 +25,18 @@ This module does **not** require the CMS.
 
 ### Link Mappings
 
-The following customisation is available out of the box, allowing both simple and regular expression link redirections based on priority. This is very useful for legacy mapping or for having a page vanity URL.
+These allow both simple and regular expression link redirections, based on priority.
 
 ![link-mapping](images/misdirection-link-mapping.png)
 
-When two link mappings have the same priority, the first created will take precedence. This behaviour can be defined.
+The link mapping with the highest priority will take precedence, however should these match, the first to be instantiated will be used. This behaviour may be configured:
 
 ```yaml
 LinkMapping:
   priority: 'DESC'
 ```
 
-These may also be chained.
+This functionality can be used for legacy page redirection, or for vanity URLs.
 
 #### Site Tree
 
@@ -56,7 +56,7 @@ You may either set a global fallback default under the site settings, or create 
 
 ![testing](images/misdirection-testing.png)
 
-This will retrieve the link mapping call stack for a given URL, and whether that reached the maximum request limit.
+This will retrieve the link mapping call stack for a given URL, and whether that reached the maximum request limit. The result is traversed on server side to detect any inefficient mappings or infinite loops.
 
 When a certain depth of link mappings has been reached, the server will return with a 404 response to prevent inefficient mappings or infinite recursion. The following is the default configuration:
 
