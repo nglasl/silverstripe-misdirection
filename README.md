@@ -25,13 +25,13 @@ This module does **not** require the CMS.
 
 ### Link Mappings
 
-These allow both simple and regular expression link redirections, based on priority and specificity, and can be used for legacy page redirection, vanity URLs, or redirection based on specific URL patterns.
+These allow both simple and regular expression link redirections, based on priority and specificity, which can be used for legacy page redirection, vanity URLs, or redirection based on specific URL patterns.
 
 ![link-mapping](images/misdirection-link-mapping.png)
 
-The link mapping with the highest priority and greatest specificity will replace any default automated URL handling out of the box, however it is possible to change this so it only hooks into a page not found.
+The link mapping with the highest priority and greatest specificity will be used over any default automated URL handling out of the box, however it is possible to change this so it only hooks into a page not found.
 
-When there are multiple matches, the first link mapping will be used. This default behaviour may be configured to prioritise the most recently created:
+When there are multiple matches, the first link mapping created will be used. This default behaviour may be configured to prioritise the most recently created link mapping:
 
 ```yaml
 LinkMapping:
