@@ -54,7 +54,7 @@ While it is possible to create these manually (as above), a content author may d
 
 #### Fallbacks
 
-When a user happens to encounter a page not found, a specified rule will be triggered to prevent displaying this. It is possible for an administrator to configure a global fallback through the site configuration, however a specific page setting will take precedence.
+When a user happens to encounter a page not found, a specified rule may be triggered to prevent displaying this. It is possible for an administrator to configure a global fallback through the site configuration, however a specific page setting will take precedence.
 
 * Select `Settings`
 * Select `Pages`
@@ -67,7 +67,7 @@ When you want to see exactly what is happening behind the scenes for a given URL
 
 ![testing](images/misdirection-testing.png)
 
-Once the maximum number of requests has been reached, the server will respond with a page not found. The following is the default configuration:
+Once a maximum number of requests has been reached, the server will respond with a page not found. The following is the default configuration:
 
 ```yaml
 MisdirectionRequestFilter:
@@ -78,7 +78,7 @@ MisdirectionRequestFilter:
 
 #### Bypassing Misdirection
 
-It is possible to bypass the request filter completely, by appending `?direct=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
+It is possible to bypass the request filter completely, and is done so by appending `?direct=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
 
 ### Default Automated URL Handling
 
@@ -95,7 +95,7 @@ When a page is moved, the appropriate link mappings are automatically created an
 
 #### Historical Link Mappings
 
-To ensure the current page version history is carried across, `/dev/tasks/MisdirectionHistoricalLinkMappingsTask` may be used to instantiate the appropriate link mappings. However, this is currently only supported by `MySQL`.
+To ensure the current page version history remains, `/dev/tasks/MisdirectionHistoricalLinkMappingsTask` may be used to instantiate the appropriate link mappings. However, this task is currently only supported by `MySQL`.
 
 ## Maintainer Contact
 
