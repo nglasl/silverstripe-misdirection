@@ -60,13 +60,13 @@ A fallback will be triggered when a user happens to encounter a page not found. 
 
 ### What's Happening?
 
-The link mappings are processed server side, to prevent inefficient mappings and infinite recursion.
+The link mappings are processed server side to prevent inefficient mappings and infinite recursion.
 
-When you want to see exactly what is happening behind the scenes for a request URL, the model admin provides a powerful testing interface!
+When you want to see exactly what is happening behind the scenes for a given URL, the model admin provides a powerful testing interface!
 
 ![testing](images/misdirection-testing.png)
 
-When the maximum number of requests has been reached, the server will respond with a page not found. The following is the default configuration:
+Once the maximum number of requests has been reached, the server will respond with a page not found. The following is the default configuration:
 
 ```yaml
 MisdirectionRequestFilter:
