@@ -30,7 +30,7 @@ These allow both simple and regular expression link redirections, and can be use
 
 ![link-mapping](images/misdirection-link-mapping.png)
 
-The link mapping with the highest priority and greatest specificity will be used, and replaces the default automated URL handling out of the box. This default behaviour may be configured to only hook into a page not found:
+The link mapping with the highest priority (followed by greatest specificity) will be used, and replaces the default automated URL handling out of the box. This default behaviour may be configured to only hook into a page not found:
 
 ```yaml
 MisdirectionRequestFilter:
