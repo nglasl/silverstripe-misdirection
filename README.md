@@ -53,7 +53,7 @@ A content author may directly create a link mapping from a page, however it shou
 
 #### Fallbacks
 
-A fallback will be triggered when a user happens to encounter a page not found. It is possible for an administrator to configure a global fallback through the site configuration.
+A fallback will be triggered when a user happens to encounter a page not found. It is possible for an administrator to configure a global fallback through the site configuration, however a specific page setting will take precedence.
 
 * Select `Settings`
 * Select `Pages`
