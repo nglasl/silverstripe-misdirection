@@ -81,7 +81,7 @@ It's possible to bypass the request filter completely, by appending `?direct=1` 
 
 ### Default Automated URL Handling
 
-This may be completely replaced by using the following, in which case legacy page URLs are no longer automatically resolved without link mappings being in place.
+This may be completely replaced, in which case legacy URLs are no longer automatically resolved.
 
 ```yaml
 MisdirectionRequestFilter:
