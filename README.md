@@ -43,7 +43,7 @@ LinkMapping:
   priority: 'ASC'
 ```
 
-### Content Authors and Fallbacks
+### Vanity URLs and Fallbacks
 
 ![vanity-URL-and-fallback](images/misdirection-vanity-URL-and-fallback.png)
 
