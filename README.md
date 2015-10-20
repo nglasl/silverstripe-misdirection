@@ -81,24 +81,20 @@ It's possible to bypass the request filter completely, by appending `?direct=1` 
 
 ### Default Automated URL Handling
 
-This may be completely replaced, in which case legacy URLs are no longer automatically resolved.
+This may be completely replaced with automatic link mapping, in which case legacy URLs no longer depend on version history and become customisable.
 
 ```yaml
 MisdirectionRequestFilter:
   replace_default: true
 ```
 
+![replace-default](images/misdirection-replace-default.gif)
+
 #### Misdirection Historical Link Mapping Task
 
 The following may be used to instantiate a link mapping for each site tree version URL, when replacing the default automated URL handling (currently only supported by MySQL).
 
 `/dev/tasks/MisdirectionHistoricalLinkMappingTask`
-
-#### Site Tree Automatic Link Mapping
-
-When the URL segment of a site tree element has been updated, a link mapping will automatically be created. This functionality will be removed as soon as you enable SilverStripe's default automated URL handling (as it will no longer be required).
-
-![replace-default](images/misdirection-replace-default.gif)
 
 ## Maintainer Contact
 
