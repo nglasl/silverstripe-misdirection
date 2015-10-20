@@ -75,17 +75,13 @@ MisdirectionRequestFilter:
 
 ![testing-maximum-requests](images/misdirection-testing-maximum-requests.png)
 
-#### Bypass
+### Bypassing Misdirection
 
-You may bypass any link mappings or fallbacks by appending `?direct=1` to the URL, which may prove useful when locked out by erroneous link mappings. This does not work using the test interface.
+It's possible to bypass the request filter completely, by appending `?direct=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
 
-**screenshot to demonstrate the bypass against the infinite loop above**
+### Default Automated URL Handling
 
-### Automated URL Handling
-
-The custom request filter will prevent issues around existing director rules such as /admin or /dev.
-
-To disable the automated URL handling completely..
+This may be completely replaced by using the following, in which case legacy page URLs are no longer automatically resolved without link mappings being in place.
 
 ```yaml
 MisdirectionRequestFilter:
