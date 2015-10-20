@@ -25,11 +25,11 @@ This module does **not** require the CMS.
 
 ### Link Mappings
 
-These allow both simple and regular expression link redirections, based on priority.
+These allow both simple and regular expression link redirections, based on priority and specificity.
 
 ![link-mapping](images/misdirection-link-mapping.png)
 
-The link mapping with the highest priority will take precedence, however should these match, the first to be instantiated will be used. This behaviour may be configured:
+The link mapping with the highest priority and greatest specificity will be used, however should multiple match, the most recently created will be ignored. This behaviour may be configured:
 
 ```yaml
 LinkMapping:
