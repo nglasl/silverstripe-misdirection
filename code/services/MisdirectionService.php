@@ -113,6 +113,7 @@ class MisdirectionService {
 
 		$matches = $matches->sort(array(
 			'Priority' => 'DESC',
+			'LinkType' => 'DESC',
 			'MappedLink' => 'DESC',
 			'ID' => Config::inst()->get('LinkMapping', 'priority')
 		));
