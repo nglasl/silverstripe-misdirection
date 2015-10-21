@@ -91,8 +91,6 @@ MisdirectionRequestFilter:
 
 When a page is moved, the appropriate link mappings are automatically created and maintained. This allows full control over which legacy URLs remain in the system.
 
-![replace-default](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/images/misdirection-replace-default.gif)
-
 #### Historical Link Mappings
 
 To ensure the current page version history remains, `/dev/tasks/MisdirectionHistoricalLinkMappingsTask` may be used to instantiate the appropriate link mappings. However, this task is currently only supported by `MySQL`.
