@@ -16,11 +16,13 @@ class MisdirectionTests extends SapphireTest {
 
 		// Instantiate a link mapping to use.
 
-		$mapping = LinkMapping::create(array(
-			'LinkType' => 'Regular Expression',
-			'MappedLink' => '^wrong(.*)',
-			'RedirectLink' => 'correct\\1'
-		));
+		$mapping = LinkMapping::create(
+			array(
+				'LinkType' => 'Regular Expression',
+				'MappedLink' => '^wrong(.*)',
+				'RedirectLink' => 'correct\\1'
+			)
+		);
 		$mapping->setMatchedURL('wrong/page');
 
 		// Determine whether the regular expression replacement is correct.
