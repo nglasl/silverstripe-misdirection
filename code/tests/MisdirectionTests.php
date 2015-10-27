@@ -26,10 +26,6 @@ class MisdirectionTests extends SapphireTest {
 		// Determine whether the regular expression replacement is correct.
 
 		$this->assertEquals('/correct/page', $mapping->getLink());
-		$testing = true;
-		$mappings = singleton('MisdirectionService')->getRecursiveMapping($mapping, null, $testing);
-		$this->assertEquals(1, count($mappings));
-		$this->assertEquals('correct/page', $mappings[0]['RedirectLink']);
 	}
 
 }
