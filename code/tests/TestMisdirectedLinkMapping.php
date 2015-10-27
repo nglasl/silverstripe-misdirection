@@ -1,38 +1,35 @@
 <?php
 
 /**
- * @author marcus
+ *	The misdirection specific unit tests, and functional tests.
+ *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ *	@author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
-class TestMisdirectedLinkMapping extends SapphireTest {
-	
-	public function testRegexUrlReplacement() {
-		$mapping = new LinkMapping(array(
-			'LinkType'		=> 'Regular Expression',
-			'MappedLink'	=> '^case-study(.*)',
-			'RedirectLink'	=> 'our-stories/case-studies?source=\\1',
+
+class MisdirectionTests extends SapphireTest {
+
+	/**
+	 *	The test to ensure regular expression replacement is correct.
+	 */
+
+	public function testRegularExpressionReplacement() {
+
+		// Instantiate a link mapping to use.
+
+		$mapping = LinkMapping::create(array(
+			'LinkType' => 'Regular Expression',
+			'MappedLink' => '^wrong(.*)',
+			'RedirectLink' => 'correct\\1'
 		));
-		
-		$mapping->setMatchedURL('case-study-blood-stage-malaria-vaccine');
-		
-		$link = $mapping->getLink();
-		
-		$this->assertEquals('/our-stories/case-studies?source=-blood-stage-malaria-vaccine', $link);
-		
+		$mapping->setMatchedURL('wrong/page');
+
+		// Determine whether the regular expression replacement is correct.
+
+		$this->assertEquals('/correct/page', $mapping->getLink());
+		$testing = true;
+		$mappings = singleton('MisdirectionService')->getRecursiveMapping($mapping, null, $testing);
+		$this->assertEquals(1, count($mappings));
+		$this->assertEquals('correct/page', $mappings[0]['RedirectLink']);
 	}
-	
-	public function testMappingToResult() {
-		$mapping = new LinkMapping(array(
-			'LinkType'		=> 'Regular Expression',
-			'MappedLink'	=> '^case-study(.*)',
-			'RedirectLink'	=> 'our-stories/case-studies?source=\\1',
-		));
-		$mapping->setMatchedURL('case-study-blood-stage-malaria-vaccine');
-		
-		$service = singleton('MisdirectionService');
-		
-		$out = $service->getRecursiveMapping($mapping, null, true);
-		
-		$this->assertEquals(1, count($out));
-		$this->assertEquals('our-stories/case-studies?source=-blood-stage-malaria-vaccine', $out[0]['RedirectLink']);
-	}
+
 }

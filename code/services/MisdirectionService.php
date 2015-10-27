@@ -175,13 +175,10 @@ class MisdirectionService {
 		$counter = 1;
 		$redirect = $map->getLink();
 		$chain = array(
-			array_merge(
-				$map->toMap(),
-				array(
-					'Counter' => $counter,
-					'RedirectLink' => $map->getLinkSummary()
-				)
-			)
+			array_merge($map->toMap(), array(
+				'Counter' => $counter,
+				'RedirectLink' => $map->getLinkSummary()
+			))
 		);
 
 		// Determine the next link mapping.
@@ -200,10 +197,10 @@ class MisdirectionService {
 				return $testing ? $chain : null;
 			}
 			$redirect = $next->getLink();
-			$chain[] = array_merge(array(
+			$chain[] = array_merge($next->toMap(), array(
 				'Counter' => ++$counter,
 				'RedirectLink' => $next->getLinkSummary()
-			), $next->toMap());
+			));
 			$map = $next;
 		}
 
