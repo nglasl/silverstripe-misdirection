@@ -1,7 +1,7 @@
 <?php
 
 /**
- *	The misdirection specific unit tests.
+ *	The misdirection specific unit testing.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  *	@author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
