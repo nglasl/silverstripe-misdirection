@@ -1,12 +1,12 @@
 <?php
 
 /**
- *	The misdirection specific unit tests, and functional tests.
+ *	The misdirection specific unit tests.
  *	@author Nathan Glasl <nathan@silverstripe.com.au>
  *	@author Marcus Nyeholt <marcus@silverstripe.com.au>
  */
 
-class MisdirectionTests extends SapphireTest {
+class MisdirectionUnitTests extends SapphireTest {
 
 	/**
 	 *	The test to ensure regular expression replacement is correct.
