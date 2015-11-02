@@ -104,7 +104,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 				// Generate new URLs for each child element.
 
-				$children = $this->getChildPages($replayRecord['ID']);
+				$children = $this->getChildren($replayRecord['ID']);
 				$this->updateURLs($children);
 			}
 		}
@@ -118,7 +118,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 			$URL = $this->getURLForRecord($record);
 			$this->addMappingToList($URL, $record['ID']);
-			$children = $this->getChildPages($record['ID']);
+			$children = $this->getChildren($record['ID']);
 			$this->updateURLs($children);
 		}
 	}
@@ -176,7 +176,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 	 *	@return ss query
 	 */
 
-	protected function getChildPages($ID) {
+	protected function getChildren($ID) {
 
 		$query = new SQLQuery('*', $this->replayTable, 'ParentID = ' . (int)$ID);
 		return $query->execute();
