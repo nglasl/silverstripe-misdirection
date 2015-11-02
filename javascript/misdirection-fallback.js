@@ -2,7 +2,7 @@
 
 	// Determine which fallback option display and functionality should be enabled.
 
-	function toggle() {
+	function toggleResponseCode() {
 
 		var rule = $('select.fallback').val();
 		if(rule) {
@@ -20,11 +20,11 @@
 	$('select.fallback').entwine({
 		onmatch: function () {
 
-			toggle();
+			toggleResponseCode();
 		},
 		onchange: function () {
 
-			toggle();
+			toggleResponseCode();
 		}
 	});
 

@@ -118,13 +118,13 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 					// Purge any link mappings that point back to the same page.
 
-					$this->owner->purgeRecursiveLinkMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
+					$this->owner->regulateMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
 
 					// Recursively create link mappings for any children.
 
 					$children = $this->owner->AllChildrenIncludingDeleted();
 					if($children->count()) {
-						$this->owner->recursiveLinkMapping($URL, $children);
+						$this->owner->recursiveMapping($URL, $children);
 					}
 				}
 			}
@@ -164,7 +164,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	 *	@parameter <{PAGE_ID}> integer
 	 */
 
-	public function purgeRecursiveLinkMappings($pageLink, $pageID) {
+	public function regulateMappings($pageLink, $pageID) {
 
 		LinkMapping::get()->filter(array(
 			'MappedLink' => MisdirectionService::unify(Director::makeRelative($pageLink)),
@@ -180,7 +180,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	 *	@parameter <{PAGE_CHILDREN}> array(site tree)
 	 */
 
-	public function recursiveLinkMapping($baseURL, $children) {
+	public function recursiveMapping($baseURL, $children) {
 
 		foreach($children as $child) {
 
@@ -191,13 +191,13 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			// Purge any link mappings that point back to the same page.
 
-			$this->owner->purgeRecursiveLinkMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
+			$this->owner->regulateMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
 
 			// Recursively create link mappings for any children.
 
 			$recursiveChildren = $child->AllChildrenIncludingDeleted();
 			if($recursiveChildren->count()) {
-				$this->owner->recursiveLinkMapping($URL, $recursiveChildren);
+				$this->owner->recursiveMapping($URL, $recursiveChildren);
 			}
 		}
 	}
