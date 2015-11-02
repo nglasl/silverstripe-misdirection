@@ -167,7 +167,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	public function regulateMappings($pageLink, $pageID) {
 
 		LinkMapping::get()->filter(array(
-			'MappedLink' => MisdirectionService::unify(Director::makeRelative($pageLink)),
+			'MappedLink' => MisdirectionService::unify_URL(Director::makeRelative($pageLink)),
 			'RedirectType' => 'Page',
 			'RedirectPageID' => $pageID
 		))->removeAll();

@@ -278,9 +278,9 @@ class LinkMapping extends DataObject {
 	public function onBeforeWrite() {
 
 		parent::onBeforeWrite();
-		$this->MappedLink = MisdirectionService::unify($this->MappedLink);
-		$this->RedirectLink = MisdirectionService::unify($this->RedirectLink);
-		$this->HostnameRestriction = MisdirectionService::unify($this->HostnameRestriction);
+		$this->MappedLink = MisdirectionService::unify_URL($this->MappedLink);
+		$this->RedirectLink = MisdirectionService::unify_URL($this->RedirectLink);
+		$this->HostnameRestriction = MisdirectionService::unify_URL($this->HostnameRestriction);
 	}
 
 	/**
@@ -335,7 +335,7 @@ class LinkMapping extends DataObject {
 
 	public function getLinkSummary() {
 
-		return ($link = $this->getLink()) ? MisdirectionService::unify($link) : '-';
+		return ($link = $this->getLink()) ? MisdirectionService::unify_URL($link) : '-';
 	}
 
 	/**

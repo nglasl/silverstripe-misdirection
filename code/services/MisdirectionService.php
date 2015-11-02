@@ -14,7 +14,7 @@ class MisdirectionService {
 	 *	@return string
 	 */
 
-	public static function unify($URL) {
+	public static function unify_URL($URL) {
 
 		return strtolower(trim($URL, '/?'));
 	}
@@ -66,7 +66,7 @@ class MisdirectionService {
 
 	public function getMapping($URL, $host = null) {
 
-		$URL = self::unify(Director::makeRelative($URL));
+		$URL = self::unify_URL(Director::makeRelative($URL));
 		$parts = explode('?', $URL);
 		$base = Convert::raw2sql($parts[0]);
 
@@ -224,7 +224,7 @@ class MisdirectionService {
 
 			// Instantiate the required variables.
 
-			$segments = explode('/', self::unify($URL));
+			$segments = explode('/', self::unify_URL($URL));
 			$applicableRule = null;
 			$nearestParent = null;
 			$thisPage = null;
