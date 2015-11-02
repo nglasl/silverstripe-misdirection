@@ -57,7 +57,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 			echo '<div>Running in <strong>test</strong> mode... to actually create link mappings, append <strong>?live=1</strong> to the URL...</div><br>';
 		}
 		$this->setupStructure();
-		$records = $this->publishedVersionRecords();
+		$records = $this->getPublishedVersionRecords();
 		$this->processRecords($records);
 		$this->checkAndCreateMappings();
 		echo '<strong>Complete!</strong>';
@@ -69,7 +69,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 	 *	@return ss query
 	 */
 
-	protected function publishedVersionRecords() {
+	protected function getPublishedVersionRecords() {
 
 		$query = new SQLQuery('ID, RecordID, ParentID, URLSegment, Version', 'SiteTree_versions', 'WasPublished = 1', 'ID ASC');
 		return $query->execute();
@@ -87,7 +87,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 			// Determine if this record has an updated URL.
 
-			$update = $this->urlUpdateRequired($record['RecordID'], $record['URLSegment'], $record['ParentID']);
+			$update = $this->isUpdated($record['RecordID'], $record['URLSegment'], $record['ParentID']);
 
 			// Add this record to the replay table.
 
@@ -104,7 +104,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 				// Generate new URLs for each child element.
 
-				$children = $this->childPages($replayRecord['ID']);
+				$children = $this->getChildPages($replayRecord['ID']);
 				$this->updateURLs($children);
 			}
 		}
@@ -118,7 +118,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 			$URL = $this->getURLForRecord($record);
 			$this->addMappingToList($URL, $record['ID']);
-			$children = $this->childPages($record['ID']);
+			$children = $this->getChildPages($record['ID']);
 			$this->updateURLs($children);
 		}
 	}
@@ -149,7 +149,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 	 *	@return boolean
 	 */
 
-	protected function urlUpdateRequired($ID, $oldURLSegment, $oldParentID) {
+	protected function isUpdated($ID, $oldURLSegment, $oldParentID) {
 
 		$record = $this->getReplayRecordByID($ID);
 		return (!$record || ($record && (($record['URLSegment'] != $oldURLSegment) || ($record['ParentID'] != $oldParentID))));
@@ -176,7 +176,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 	 *	@return ss query
 	 */
 
-	protected function childPages($ID) {
+	protected function getChildPages($ID) {
 
 		$query = new SQLQuery('*', $this->replayTable, 'ParentID = ' . (int)$ID);
 		return $query->execute();
