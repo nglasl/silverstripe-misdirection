@@ -80,19 +80,19 @@ class MisdirectionService {
 			$host = Controller::curr()->getRequest()->getHeader('Host');
 		}
 		$matches = $matches->where("(HostnameRestriction IS NULL) OR (HostnameRestriction = '" . Convert::raw2sql($host) . "')");
+		$regex = clone $matches;
 
 		// Determine the simple matching from the database.
 
-		$filtered = ArrayList::create();
-		$regexMatches = clone $matches;
 		$matches = $matches->where("(LinkType = 'Simple') AND (((IncludesHostname = 0) AND ((MappedLink = '{$base}') OR (MappedLink LIKE '{$base}?%'))) OR ((IncludesHostname = 1) AND ((MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$host}/{$base}?%'))))");
 
-		// Determine the remaining regular expression matching, as this is inconsistent when using the database.
+		// Determine the remaining regular expression matching, as this is inconsistent from the database.
 
-		$regexMatches = $regexMatches->filter('LinkType', 'Regular Expression');
-		foreach($regexMatches as $regexMatch) {
-			if((!$regexMatch->IncludesHostname && preg_match("%{$regexMatch->MappedLink}%", $base)) || ($regexMatch->IncludesHostname && preg_match("%{$regexMatch->MappedLink}%", "{$host}/{$base}"))) {
-				$filtered->push($regexMatch);
+		$regex = $regex->filter('LinkType', 'Regular Expression');
+		$filtered = ArrayList::create();
+		foreach($regex as $match) {
+			if((!$match->IncludesHostname && preg_match("%{$match->MappedLink}%", $base)) || ($match->IncludesHostname && preg_match("%{$match->MappedLink}%", "{$host}/{$base}"))) {
+				$filtered->push($match);
 			}
 		}
 		$filtered->merge($matches);
