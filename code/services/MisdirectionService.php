@@ -87,7 +87,7 @@ class MisdirectionService {
 
 			// Determine the simple and regular expression matching from the database for MySQL (http://dev.mysql.com/doc/refman/5.1/en/regexp.html#operator_regexp).
 
-			$matches = $matches->where("((LinkType = 'Simple') AND ((MappedLink = '{$base}') OR (MappedLink LIKE '{$base}?%'))) OR ((LinkType = 'Regular Expression') AND ('{$base}' REGEXP REPLACE(MappedLink, '\\\\', '\\\\\\\\')))");
+			$matches = $matches->where("((LinkType = 'Simple') AND ((MappedLink = '{$base}') OR (MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$base}?%') OR (MappedLink LIKE '{$host}/{$base}?%'))) OR ((LinkType = 'Regular Expression') AND (('{$base}' REGEXP REPLACE(MappedLink, '\\\\', '\\\\\\\\')) OR ('{$host}/{$base}' REGEXP REPLACE(MappedLink, '\\\\', '\\\\\\\\'))))");
 		}
 		else {
 			$filtered = ArrayList::create();
@@ -95,13 +95,13 @@ class MisdirectionService {
 			// Determine the simple matching from the database.
 
 			$regexMatches = clone $matches;
-			$matches = $matches->where("(LinkType = 'Simple') AND ((MappedLink = '{$base}') OR (MappedLink LIKE '{$base}?%'))");
+			$matches = $matches->where("(LinkType = 'Simple') AND ((MappedLink = '{$base}') OR (MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$base}?%') OR (MappedLink LIKE '{$host}/{$base}?%'))");
 
 			// Determine the remaining regular expression matching.
 
 			$regexMatches = $regexMatches->filter('LinkType', 'Regular Expression');
 			foreach($regexMatches as $regexMatch) {
-				if(preg_match("|{$regexMatch->MappedLink}|", $base)) {
+				if(preg_match("%{$regexMatch->MappedLink}%", $base) || preg_match("%{$regexMatch->MappedLink}%", "{$host}/{$base}")) {
 					$filtered->push($regexMatch);
 				}
 			}
@@ -140,7 +140,6 @@ class MisdirectionService {
 					$matchParameters = array();
 					parse_str($matchParts[1], $matchParameters);
 					if($matchParameters == $queryParameters) {
-						$match->setMatchedURL($parts[0]);
 						return $match;
 					}
 				}
@@ -148,7 +147,7 @@ class MisdirectionService {
 
 					// Return the first link mapping when GET parameters aren't present.
 
-					$match->setMatchedURL($parts[0]);
+					$match->setMatchedURL($match->IncludesHostname ? "{$host}/{$parts[0]}" : $parts[0]);
 					return $match;
 				}
 			}

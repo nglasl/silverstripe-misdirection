@@ -14,6 +14,7 @@ class LinkMapping extends DataObject {
 	private static $db = array(
 		'LinkType' => "Enum('Simple, Regular Expression', 'Simple')",
 		'MappedLink' => 'Varchar(255)',
+		'IncludesHostname' => 'Boolean',
 		'Priority' => 'Int',
 		'RedirectType' => "Enum('Page, Link', 'Link')",
 		'RedirectLink' => 'Varchar(255)',
@@ -137,6 +138,8 @@ class LinkMapping extends DataObject {
 
 		// Remove any fields that are not required in their default state.
 
+		$fields->removeByName('MappedLink');
+		$fields->removeByName('IncludesHostname');
 		$fields->removeByName('Priority');
 		$fields->removeByName('RedirectType');
 		$fields->removeByName('RedirectLink');
@@ -148,7 +151,6 @@ class LinkMapping extends DataObject {
 		// Update any fields that are displayed.
 
 		$fields->dataFieldByName('LinkType')->setTitle('Type');
-		$fields->dataFieldByName('MappedLink')->setTitle('URL');
 
 		// Instantiate the required fields.
 
@@ -157,6 +159,20 @@ class LinkMapping extends DataObject {
 			'Mapping',
 			3
 		), 'LinkType');
+
+		// Retrieve the mapped link configuration as a single grouping.
+
+		$URL = FieldGroup::create(
+			TextField::create(
+				'MappedLink',
+				''
+			),
+			CheckboxField::create(
+				'IncludesHostname',
+				'Includes Hostname?'
+			)
+		)->addExtraClass('mapped-link')->setTitle('URL');
+		$fields->addFieldToTab('Root.Main', $URL);
 
 		// Generate the 1 - 10 priority selection.
 
@@ -210,7 +226,8 @@ class LinkMapping extends DataObject {
 
 		if($this->canEdit()) {
 			$redirect->push(CheckboxField::create(
-				'ValidateExternal'
+				'ValidateExternal',
+				'Validate External?'
 			));
 		}
 
@@ -234,7 +251,7 @@ class LinkMapping extends DataObject {
 			),
 			CheckboxField::create(
 				'ForwardPOSTRequest',
-				'Forward POST Request'
+				'Forward POST Request?'
 			)
 		)->addExtraClass('response')->setTitle('Response Code');
 		$fields->addFieldToTab('Root.Main', $response);
@@ -314,7 +331,7 @@ class LinkMapping extends DataObject {
 
 			// Apply the regular expression pattern replacement.
 
-			if($link = (($this->LinkType === 'Regular Expression') && $this->matchedURL) ? preg_replace("|{$this->MappedLink}|i", $this->RedirectLink, $this->matchedURL) : $this->RedirectLink) {
+			if($link = (($this->LinkType === 'Regular Expression') && $this->matchedURL) ? preg_replace("%{$this->MappedLink}%i", $this->RedirectLink, $this->matchedURL) : $this->RedirectLink) {
 
 				// When appropriate, prepend the base URL to match a page redirection.
 

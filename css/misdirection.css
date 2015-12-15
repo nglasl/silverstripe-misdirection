@@ -99,7 +99,7 @@ ul.redirect {
 	padding-bottom: 8px;
 }
 
-ul.redirect > li input {
+ul.redirect > li input[type=radio] {
 	margin-top: 2px;
 }
 
@@ -111,6 +111,7 @@ div.redirect-link {
 	margin-bottom: 0;
 }
 
+div.mapped-link div.fieldgroup-field,
 div.redirect-link div.fieldgroup-field,
 div.response div.fieldgroup-field {
 	float: none;
@@ -121,12 +122,14 @@ div.redirect-link div.fieldgroup-field.last {
 	padding-bottom: 8px !important;
 }
 
+div.mapped-link div.fieldgroup-field input,
 div.redirect-link div.fieldgroup-field input,
 div.response div.fieldgroup-field input {
 	display: inline;
 }
 
-ul.redirect > li label,
+div.mapped-link div.fieldgroup-field input,
+div.mapped-link div.fieldgroup-field label,
 div.redirect-link div.fieldgroup-field input,
 div.redirect-link div.fieldgroup-field label,
 div.response div.fieldgroup-field input,
