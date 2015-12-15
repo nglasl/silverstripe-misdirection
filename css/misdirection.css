@@ -99,7 +99,7 @@ ul.redirect {
 	padding-bottom: 8px;
 }
 
-ul.redirect > li input[type=radio] {
+ul.redirect > li input {
 	margin-top: 2px;
 }
 
@@ -135,4 +135,9 @@ div.redirect-link div.fieldgroup-field label,
 div.response div.fieldgroup-field input,
 div.response div.fieldgroup-field label {
 	vertical-align: middle;
+}
+
+div.redirect-link div.fieldgroup-field input.checkbox,
+div.response div.fieldgroup-field input.checkbox {
+	margin: 2px 2px 2px 0;
 }
