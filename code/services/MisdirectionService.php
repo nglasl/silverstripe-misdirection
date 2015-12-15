@@ -81,33 +81,22 @@ class MisdirectionService {
 		}
 		$matches = $matches->where("(HostnameRestriction IS NULL) OR (HostnameRestriction = '" . Convert::raw2sql($host) . "')");
 
-		// Retrieve the link mappings based on the database connection type.
+		// Determine the simple matching from the database.
 
-		if(DB::getConn() instanceof MySQLDatabase) {
+		$filtered = ArrayList::create();
+		$regexMatches = clone $matches;
+		$matches = $matches->where("(LinkType = 'Simple') AND (((IncludesHostname = 0) AND ((MappedLink = '{$base}') OR (MappedLink LIKE '{$base}?%'))) OR ((IncludesHostname = 1) AND ((MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$host}/{$base}?%'))))");
 
-			// Determine the simple and regular expression matching from the database for MySQL (http://dev.mysql.com/doc/refman/5.1/en/regexp.html#operator_regexp).
+		// Determine the remaining regular expression matching, as this is inconsistent when using the database.
 
-			$matches = $matches->where("((LinkType = 'Simple') AND ((MappedLink = '{$base}') OR (MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$base}?%') OR (MappedLink LIKE '{$host}/{$base}?%'))) OR ((LinkType = 'Regular Expression') AND (('{$base}' REGEXP REPLACE(MappedLink, '\\\\', '\\\\\\\\')) OR ('{$host}/{$base}' REGEXP REPLACE(MappedLink, '\\\\', '\\\\\\\\'))))");
-		}
-		else {
-			$filtered = ArrayList::create();
-
-			// Determine the simple matching from the database.
-
-			$regexMatches = clone $matches;
-			$matches = $matches->where("(LinkType = 'Simple') AND ((MappedLink = '{$base}') OR (MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$base}?%') OR (MappedLink LIKE '{$host}/{$base}?%'))");
-
-			// Determine the remaining regular expression matching.
-
-			$regexMatches = $regexMatches->filter('LinkType', 'Regular Expression');
-			foreach($regexMatches as $regexMatch) {
-				if(preg_match("%{$regexMatch->MappedLink}%", $base) || preg_match("%{$regexMatch->MappedLink}%", "{$host}/{$base}")) {
-					$filtered->push($regexMatch);
-				}
+		$regexMatches = $regexMatches->filter('LinkType', 'Regular Expression');
+		foreach($regexMatches as $regexMatch) {
+			if((!$regexMatch->IncludesHostname && preg_match("%{$regexMatch->MappedLink}%", $base)) || ($regexMatch->IncludesHostname && preg_match("%{$regexMatch->MappedLink}%", "{$host}/{$base}"))) {
+				$filtered->push($regexMatch);
 			}
-			$filtered->merge($matches);
-			$matches = $filtered;
 		}
+		$filtered->merge($matches);
+		$matches = $filtered;
 
 		// Make sure the link mappings are ordered by priority and specificity.
 
