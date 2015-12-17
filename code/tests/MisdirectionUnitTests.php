@@ -31,13 +31,13 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Update the link mapping (to the equivalent of includes hostname).
 
-		$mapping->MappedLink = '^www\.wrong\.com/(page/)?(index){1}\.php$';
-		$mapping->RedirectLink = 'https://www.correct.com/page/$2';
-		$mapping->setMatchedURL('www.wrong.com/page/index.php');
+		$mapping->MappedLink = '^www\.wrong\.com/(wrong/)?(index){1}\.php$';
+		$mapping->RedirectLink = 'https://www.correct.com/correct/$2';
+		$mapping->setMatchedURL('www.wrong.com/wrong/index.php');
 
 		// Determine whether the regular expression replacement is correct.
 
-		$this->assertEquals('https://www.correct.com/page/index', $mapping->getLink());
+		$this->assertEquals('https://www.correct.com/correct/index', $mapping->getLink());
 	}
 
 }
