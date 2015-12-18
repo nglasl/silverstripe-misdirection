@@ -19,7 +19,7 @@ class MisdirectionUnitTests extends SapphireTest {
 		$mapping = LinkMapping::create(
 			array(
 				'LinkType' => 'Simple',
-				'MappedLink' => 'wrong',
+				'MappedLink' => 'wrong/page',
 				'RedirectLink' => 'pending'
 			)
 		);
@@ -28,13 +28,13 @@ class MisdirectionUnitTests extends SapphireTest {
 			array(
 				'LinkType' => 'Simple',
 				'MappedLink' => 'pending',
-				'RedirectLink' => 'correct'
+				'RedirectLink' => 'correct/page'
 			)
 		)->write();
 
 		// Instantiate a request to use.
 
-		$request = new SS_HTTPRequest('GET', 'wrong');
+		$request = new SS_HTTPRequest('GET', 'wrong/page');
 
 		// Determine whether the simple link mappings are functioning correctly.
 
@@ -43,22 +43,22 @@ class MisdirectionUnitTests extends SapphireTest {
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
-		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct');
+		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct/page');
 
 		// Update the link mappings and request (to the equivalent of includes hostname).
 
-		$mapping->MappedLink = 'www.wrong.com/wrong';
+		$mapping->MappedLink = 'www.site.com/wrong/page';
 		$mapping->IncludesHostname = 1;
 		$mapping->write();
-		$request->setUrl('wrong');
-		$request->addHeader('Host', 'www.wrong.com');
+		$request->setUrl('wrong/page');
+		$request->addHeader('Host', 'www.site.com');
 
 		// Determine whether the simple link mappings are functioning correctly.
 
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
-		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct');
+		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct/page');
 	}
 
 	/**
@@ -84,13 +84,13 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Update the link mapping (to the equivalent of includes hostname).
 
-		$mapping->MappedLink = '^www\.wrong\.com/(wrong/)?(index){1}\.php$';
-		$mapping->RedirectLink = 'https://www.correct.com/correct/$2';
-		$mapping->setMatchedURL('www.wrong.com/wrong/index.php');
+		$mapping->MappedLink = '^www\.wrong\.com(/page)?/(index){1}\.php$';
+		$mapping->RedirectLink = 'https://www.correct.com$1';
+		$mapping->setMatchedURL('www.wrong.com/page/index.php');
 
 		// Determine whether the regular expression replacement is correct.
 
-		$this->assertEquals($mapping->getLink(), 'https://www.correct.com/correct/index');
+		$this->assertEquals($mapping->getLink(), 'https://www.correct.com/page');
 	}
 
 	/**
@@ -103,16 +103,16 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		$mapping = LinkMapping::create(
 			array(
-				'LinkType' => 'Simple',
-				'MappedLink' => 'wrong',
+				'LinkType' => 'Regular Expression',
+				'MappedLink' => '^wrong(.*)$',
 				'RedirectLink' => 'pending'
 			)
 		);
 		$mapping->write();
 		LinkMapping::create(
 			array(
-				'LinkType' => 'Simple',
-				'MappedLink' => 'pending',
+				'LinkType' => 'Regular Expression',
+				'MappedLink' => '^pending(.*)$',
 				'RedirectLink' => 'correct'
 			)
 		)->write();
