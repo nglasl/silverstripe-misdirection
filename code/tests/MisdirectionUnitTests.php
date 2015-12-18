@@ -50,7 +50,6 @@ class MisdirectionUnitTests extends SapphireTest {
 		$mapping->MappedLink = 'www.site.com/wrong/page';
 		$mapping->IncludesHostname = 1;
 		$mapping->write();
-		$request->setUrl('wrong/page');
 		$request->addHeader('Host', 'www.site.com');
 
 		// Determine whether the simple link mappings are functioning correctly.
@@ -139,7 +138,6 @@ class MisdirectionUnitTests extends SapphireTest {
 		$mapping->MappedLink = '^www\.site\.com/wrong(.*)$';
 		$mapping->IncludesHostname = 1;
 		$mapping->write();
-		$request->setUrl('wrong/page');
 		$request->addHeader('Host', 'www.site.com');
 
 		// Determine whether the regular expression link mappings are functioning correctly.
