@@ -59,6 +59,10 @@ class MisdirectionUnitTests extends SapphireTest {
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
 		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct/page');
+
+		// The database needs to be emptied to prevent further testing conflict.
+
+		self::empty_temp_db();
 	}
 
 	/**
@@ -144,6 +148,10 @@ class MisdirectionUnitTests extends SapphireTest {
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
 		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct');
+
+		// The database needs to be emptied to prevent further testing conflict.
+
+		self::empty_temp_db();
 	}
 
 }
