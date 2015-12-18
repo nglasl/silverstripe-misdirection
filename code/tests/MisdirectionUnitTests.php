@@ -43,7 +43,7 @@ class MisdirectionUnitTests extends SapphireTest {
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
-		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct/page');
+		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
 		// Update the link mappings and request (to the equivalent of includes hostname).
 
@@ -58,7 +58,7 @@ class MisdirectionUnitTests extends SapphireTest {
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
-		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct/page');
+		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
 		// The database needs to be emptied to prevent further testing conflict.
 
@@ -125,29 +125,29 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		$request = new SS_HTTPRequest('GET', 'wrong/page');
 
-		// Determine whether the simple link mappings are functioning correctly.
+		// Determine whether the regular expression link mappings are functioning correctly.
 
 		$testing = true;
 		$service = singleton('MisdirectionService');
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
-		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct/page');
+		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
 		// Update the link mappings and request (to the equivalent of includes hostname).
 
-		$mapping->MappedLink = 'www.site.com/wrong/page';
+		$mapping->MappedLink = '^www\.site\.com/wrong(.*)$';
 		$mapping->IncludesHostname = 1;
 		$mapping->write();
 		$request->setUrl('wrong/page');
 		$request->addHeader('Host', 'www.site.com');
 
-		// Determine whether the simple link mappings are functioning correctly.
+		// Determine whether the regular expression link mappings are functioning correctly.
 
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
-		$this->assertEquals(LinkMapping::get()->byID($match['ID'])->getLink(), '/correct/page');
+		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
 		// The database needs to be emptied to prevent further testing conflict.
 
