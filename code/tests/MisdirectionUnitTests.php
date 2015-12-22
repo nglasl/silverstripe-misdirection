@@ -16,14 +16,14 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Instantiate link mappings to use (the equivalent of does NOT include hostname).
 
-		$mapping = LinkMapping::create(
+		$first = LinkMapping::create(
 			array(
 				'LinkType' => 'Simple',
 				'MappedLink' => 'wrong/page',
 				'RedirectLink' => 'pending'
 			)
 		);
-		$mapping->write();
+		$first->write();
 		LinkMapping::create(
 			array(
 				'LinkType' => 'Simple',
@@ -45,11 +45,11 @@ class MisdirectionUnitTests extends SapphireTest {
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
-		// Update the link mappings and request (to the equivalent of includes hostname).
+		// Update the first link mapping and request (to the equivalent of includes hostname).
 
-		$mapping->MappedLink = 'www.site.com/wrong/page';
-		$mapping->IncludesHostname = 1;
-		$mapping->write();
+		$first->MappedLink = 'www.site.com/wrong/page';
+		$first->IncludesHostname = 1;
+		$first->write();
 		$request->addHeader('Host', 'www.site.com');
 
 		// Determine whether the simple link mappings are functioning correctly.
@@ -104,14 +104,14 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Instantiate link mappings to use (the equivalent of does NOT include hostname).
 
-		$mapping = LinkMapping::create(
+		$first = LinkMapping::create(
 			array(
 				'LinkType' => 'Regular Expression',
 				'MappedLink' => '^wrong(.*)$',
 				'RedirectLink' => 'pending\\1'
 			)
 		);
-		$mapping->write();
+		$first->write();
 		LinkMapping::create(
 			array(
 				'LinkType' => 'Regular Expression',
@@ -133,11 +133,11 @@ class MisdirectionUnitTests extends SapphireTest {
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
-		// Update the link mappings and request (to the equivalent of includes hostname).
+		// Update the first link mapping and request (to the equivalent of includes hostname).
 
-		$mapping->MappedLink = '^www\.site\.com/wrong(.*)$';
-		$mapping->IncludesHostname = 1;
-		$mapping->write();
+		$first->MappedLink = '^www\.site\.com/wrong(.*)$';
+		$first->IncludesHostname = 1;
+		$first->write();
 		$request->addHeader('Host', 'www.site.com');
 
 		// Determine whether the regular expression link mappings are functioning correctly.

@@ -16,7 +16,7 @@ class LinkMapping extends DataObject {
 		'MappedLink' => 'Varchar(255)',
 		'IncludesHostname' => 'Boolean',
 		'Priority' => 'Int',
-		'RedirectType' => "Enum('Page, Link', 'Link')",
+		'RedirectType' => "Enum('Link, Page', 'Link')",
 		'RedirectLink' => 'Varchar(255)',
 		'RedirectPageID' => 'Int',
 		'ResponseCode' => 'Int',
@@ -205,6 +205,7 @@ class LinkMapping extends DataObject {
 
 			// Allow redirect type configuration.
 
+			$this->RedirectType = 'Link';
 			$fields->addFieldToTab('Root.Main', SelectionGroup::create(
 				'RedirectType',
 				array(
