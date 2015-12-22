@@ -330,7 +330,7 @@ class LinkMapping extends DataObject {
 
 			if(($page = $this->getRedirectPage()) && ($link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) {
 
-				// This is to support multiple sites, and the absolute page URLs.
+				// This is to support multiple sites, where the absolute page URLs are treated as relative.
 
 				return MisdirectionService::is_external_URL($link) ? ltrim($link, '/') : $link;
 			}
