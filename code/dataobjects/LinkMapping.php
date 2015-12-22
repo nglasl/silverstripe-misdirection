@@ -38,8 +38,7 @@ class LinkMapping extends DataObject {
 		'LinkType',
 		'MappedLink',
 		'Priority',
-		'RedirectType',
-		'HostnameRestriction'
+		'RedirectType'
 	);
 
 	private static $summary_fields = array(
@@ -48,8 +47,7 @@ class LinkMapping extends DataObject {
 		'Priority',
 		'RedirectTypeSummary',
 		'RedirectPageTitle',
-		'isLive',
-		'Host'
+		'isLive'
 	);
 
 	private static $field_labels = array(
@@ -57,8 +55,7 @@ class LinkMapping extends DataObject {
 		'LinkSummary' => 'Redirection',
 		'RedirectTypeSummary' => 'Redirect Type',
 		'RedirectPageTitle' => 'Redirect Page Title',
-		'isLive' => 'Is Live?',
-		'Host' => 'Hostname Restriction'
+		'isLive' => 'Is Live?'
 	);
 
 	/**
@@ -257,11 +254,13 @@ class LinkMapping extends DataObject {
 		)->addExtraClass('response')->setTitle('Response Code');
 		$fields->addFieldToTab('Root.Main', $response);
 
-		// Allow an optional hostname restriction.
+		// The optional hostname restriction is now deprecated.
 
-		$fields->addFieldToTab('Root.Optional', TextField::create(
-			'HostnameRestriction'
-		));
+		if($this->HostnameRestriction) {
+			$fields->addFieldToTab('Root.Optional', TextField::create(
+				'HostnameRestriction'
+			));
+		}
 
 		// Allow extension customisation.
 
@@ -280,7 +279,7 @@ class LinkMapping extends DataObject {
 
 			// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
 
-			$result->error('The external URL validation failed!');
+			$result->error('External URL validation failed!');
 		}
 
 		// Allow extension customisation.
@@ -387,17 +386,6 @@ class LinkMapping extends DataObject {
 	public function isLive() {
 
 		return ($this->RedirectType === 'Page') ? ($this->getRedirectPage() ? 'true' : 'false') : '-';
-	}
-
-	/**
-	 *	Retrieve the hostname restriction for display purposes.
-	 *
-	 *	@return string
-	 */
-
-	public function getHost() {
-
-		return $this->HostnameRestriction ? $this->HostnameRestriction : '-';
 	}
 
 }

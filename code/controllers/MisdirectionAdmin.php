@@ -28,8 +28,7 @@ class MisdirectionAdmin extends ModelAdmin {
 		$form = parent::getEditForm($ID, $fields);
 		$gridfield = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
 		$gridfield->getConfig()->getComponentByType('GridFieldSortableHeader')->setFieldSorting(array(
-			'RedirectTypeSummary' => 'RedirectType',
-			'Host' => 'HostnameRestriction'
+			'RedirectTypeSummary' => 'RedirectType'
 		));
 
 		// Allow extension customisation.
