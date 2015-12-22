@@ -70,25 +70,15 @@ class MisdirectionUnitTests extends SapphireTest {
 
 	public function testRegularExpressionReplacement() {
 
-		// Instantiate a link mapping to use (the equivalent of does NOT include hostname).
+		// Instantiate a link mapping to use.
 
 		$mapping = LinkMapping::create(
 			array(
 				'LinkType' => 'Regular Expression',
-				'MappedLink' => '^wrong(.*)$',
-				'RedirectLink' => 'correct\\1'
+				'MappedLink' => '^www\.wrong\.com(/page)?/(index){1}\.php$',
+				'RedirectLink' => 'https://www.correct.com$1'
 			)
 		);
-		$mapping->setMatchedURL('wrong/page');
-
-		// Determine whether the regular expression replacement is correct.
-
-		$this->assertEquals($mapping->getLink(), '/correct/page');
-
-		// Update the link mapping (to the equivalent of includes hostname).
-
-		$mapping->MappedLink = '^www\.wrong\.com(/page)?/(index){1}\.php$';
-		$mapping->RedirectLink = 'https://www.correct.com$1';
 		$mapping->setMatchedURL('www.wrong.com/page/index.php');
 
 		// Determine whether the regular expression replacement is correct.

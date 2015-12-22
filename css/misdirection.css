@@ -62,6 +62,7 @@ div.misdirection-testing.admin div.result {
 	float: left;
 	width: 18%;
 	margin: 10px 1%;
+	word-wrap: break-word;
 }
 
 /* This is used to correct the float height issue, however will not be supported by IE8. */
