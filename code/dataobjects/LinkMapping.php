@@ -202,7 +202,12 @@ class LinkMapping extends DataObject {
 
 			// Allow redirect type configuration.
 
-			$this->RedirectType = 'Link';
+			if(!$this->RedirectType) {
+
+				// Initialise the default redirect type.
+
+				$this->RedirectType = 'Link';
+			}
 			$fields->addFieldToTab('Root.Main', SelectionGroup::create(
 				'RedirectType',
 				array(
@@ -324,7 +329,10 @@ class LinkMapping extends DataObject {
 			// Determine the home page URL when appropriate.
 
 			if(($page = $this->getRedirectPage()) && ($link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) {
-				return $link;
+
+				// This is to support multiple sites, and the absolute page URLs.
+
+				return MisdirectionService::is_external_URL($link) ? ltrim($link, '/') : $link;
 			}
 		}
 		else {
