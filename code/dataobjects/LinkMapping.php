@@ -166,7 +166,7 @@ class LinkMapping extends DataObject {
 			TextField::create(
 				'MappedLink',
 				''
-			),
+			)->setRightTitle('This should <strong>not</strong> include the <strong>HTTP/S</strong> scheme'),
 			CheckboxField::create(
 				'IncludesHostname',
 				'Includes Hostname?'
@@ -197,7 +197,7 @@ class LinkMapping extends DataObject {
 		$redirect->push(TextField::create(
 			'RedirectLink',
 			''
-		));
+		)->setRightTitle('This requires the <strong>HTTP/S</strong> scheme for an external URL'));
 
 		// Allow redirect page configuration when the CMS module is present.
 
@@ -228,7 +228,7 @@ class LinkMapping extends DataObject {
 		if($this->canEdit()) {
 			$redirect->push(CheckboxField::create(
 				'ValidateExternal',
-				'Validate External?'
+				'Validate External URL?'
 			));
 		}
 
@@ -280,7 +280,7 @@ class LinkMapping extends DataObject {
 
 			// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
 
-			$result->error('External validation failed!');
+			$result->error('The external URL validation failed!');
 		}
 
 		// Allow extension customisation.

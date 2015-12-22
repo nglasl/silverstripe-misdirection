@@ -45,7 +45,7 @@ class MisdirectionUnitTests extends SapphireTest {
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
-		// Update the first link mapping and request (to the equivalent of includes hostname).
+		// Update the link mapping and request (to the equivalent of includes hostname).
 
 		$first->MappedLink = 'www.site.com/wrong/page';
 		$first->IncludesHostname = 1;
@@ -133,7 +133,7 @@ class MisdirectionUnitTests extends SapphireTest {
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
 
-		// Update the first link mapping and request (to the equivalent of includes hostname).
+		// Update the link mapping and request (to the equivalent of includes hostname).
 
 		$first->MappedLink = '^www\.site\.com/wrong(.*)$';
 		$first->IncludesHostname = 1;
