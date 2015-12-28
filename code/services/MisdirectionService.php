@@ -169,6 +169,8 @@ class MisdirectionService {
 				'LinkMapping' => $map
 			))
 		);
+		
+		$host = $map->getLinkHost() ? $map->getLinkHost() : $host;
 
 		// Determine the next link mapping.
 

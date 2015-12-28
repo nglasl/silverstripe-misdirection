@@ -316,6 +316,17 @@ class LinkMapping extends DataObject {
 
 		return (ClassInfo::exists('SiteTree') && $this->RedirectPageID) ? SiteTree::get_by_id('SiteTree', $this->RedirectPageID) : null;
 	}
+	
+	/**
+	 * Retrieve the hostname of a fully qualified redirect link
+	 */
+	public function getLinkHost() {
+		if (strpos($this->RedirectLink, '//')) {
+			// get the host
+			$host = parse_url($this->RedirectLink, PHP_URL_HOST);
+			return $host;
+		}
+	}
 
 	/**
 	 *	Retrieve the redirection URL.
