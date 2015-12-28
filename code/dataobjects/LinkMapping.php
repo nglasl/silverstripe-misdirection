@@ -147,7 +147,7 @@ class LinkMapping extends DataObject {
 
 		// Update any fields that are displayed.
 
-		$fields->dataFieldByName('LinkType')->setTitle('Type');
+		$fields->dataFieldByName('LinkType')->addExtraClass('link-type')->setTitle('Type');
 
 		// Instantiate the required fields.
 
@@ -228,10 +228,11 @@ class LinkMapping extends DataObject {
 		// Use third party validation against an external URL.
 
 		if($this->canEdit()) {
+			Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-link-mapping.js');
 			$redirect->push(CheckboxField::create(
 				'ValidateExternal',
 				'Validate External URL?'
-			));
+			)->addExtraClass('validate-external'));
 		}
 
 		// Retrieve the response code selection.
