@@ -1,6 +1,6 @@
 ;(function($) {
 
-	// Determine whether the validate external URL functionality should be enabled, as this will not work correctly for a regular expression.
+	// Determine whether the validate external URL functionality should be enabled, as this does not expect a regular expression.
 
 	function toggleValidateExternal() {
 
