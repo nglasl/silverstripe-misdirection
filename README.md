@@ -41,7 +41,7 @@ When there are multiple matches, the link mapping first created will be used. Th
 
 ```yaml
 LinkMapping:
-  priority: 'ASC'
+  priority: 'DESC'
 ```
 
 ### Vanity URLs and Fallbacks

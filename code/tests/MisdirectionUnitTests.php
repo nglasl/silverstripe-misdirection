@@ -142,4 +142,70 @@ class MisdirectionUnitTests extends SapphireTest {
 		self::empty_temp_db();
 	}
 
+	/**
+	 *	The test to ensure link mapping priority is correct.
+	 */
+
+	public function testMappingPriority() {
+
+		// Instantiate link mappings to use.
+
+		$first = LinkMapping::create(
+			array(
+				'LinkType' => 'Simple',
+				'MappedLink' => 'wrong/page',
+				'Priority' => 1
+			)
+		);
+		$first->write();
+		$second = LinkMapping::create(
+			array(
+				'LinkType' => 'Simple',
+				'MappedLink' => 'wrong/page',
+				'Priority' => 1
+			)
+		);
+		$second->write();
+
+		// Instantiate a request to use.
+
+		$request = new SS_HTTPRequest('GET', 'wrong/page');
+
+		// Determine whether the link mapping first created is matched.
+
+		$testing = true;
+		$service = singleton('MisdirectionService');
+		$chain = $service->getMappingByRequest($request, $testing);
+		$this->assertEquals(count($chain), 1);
+		$match = end($chain);
+		$this->assertEquals($match['LinkMapping']->ID, $first->ID);
+
+		// Update the link mapping default priority.
+
+		Config::inst()->update('LinkMapping', 'priority', 'DESC');
+
+		// Determine whether the link mapping most recently created is matched.
+
+		$chain = $service->getMappingByRequest($request, $testing);
+		$this->assertEquals(count($chain), 1);
+		$match = end($chain);
+		$this->assertEquals($match['LinkMapping']->ID, $second->ID);
+
+		// Update the link mapping priority.
+
+		$first->Priority = 2;
+		$first->write();
+
+		// Determine whether the link mapping first created is matched.
+
+		$chain = $service->getMappingByRequest($request, $testing);
+		$this->assertEquals(count($chain), 1);
+		$match = end($chain);
+		$this->assertEquals($match['LinkMapping']->ID, $first->ID);
+
+		// The database needs to be emptied to prevent further testing conflict.
+
+		self::empty_temp_db();
+	}
+
 }

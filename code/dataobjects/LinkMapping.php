@@ -62,7 +62,7 @@ class LinkMapping extends DataObject {
 	 *	Make sure previous link mappings take precedence.
 	 */
 
-	private static $priority = 'DESC';
+	private static $priority = 'ASC';
 
 	/**
 	 *	Keep track of the initial URL for regular expression pattern replacement.
