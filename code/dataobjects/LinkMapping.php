@@ -316,17 +316,6 @@ class LinkMapping extends DataObject {
 
 		return (ClassInfo::exists('SiteTree') && $this->RedirectPageID) ? SiteTree::get_by_id('SiteTree', $this->RedirectPageID) : null;
 	}
-	
-	/**
-	 * Retrieve the hostname of a fully qualified redirect link
-	 */
-	public function getLinkHost() {
-		if (strpos($this->RedirectLink, '//')) {
-			// get the host
-			$host = parse_url($this->RedirectLink, PHP_URL_HOST);
-			return $host;
-		}
-	}
 
 	/**
 	 *	Retrieve the redirection URL.
@@ -360,6 +349,42 @@ class LinkMapping extends DataObject {
 		}
 
 		// No redirection URL has been found.
+
+		return null;
+	}
+
+	/**
+	 *	Retrieve the redirection hostname.
+	 *
+	 *	@return string
+	 */
+
+	public function getLinkHost() {
+
+		if($this->RedirectType === 'Page') {
+
+			// Determine the home page URL when appropriate.
+
+			if(($page = $this->getRedirectPage()) && ($link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) {
+
+				// Determine the subsequent host.
+
+				return MisdirectionService::is_external_URL($link) ? parse_url($link, PHP_URL_HOST) : null;
+			}
+		}
+		else {
+
+			// Apply the regular expression pattern replacement.
+
+			if($link = (($this->LinkType === 'Regular Expression') && $this->matchedURL) ? preg_replace("%{$this->MappedLink}%i", $this->RedirectLink, $this->matchedURL) : $this->RedirectLink) {
+
+				// Determine the subsequent host.
+
+				return MisdirectionService::is_external_URL($link) ? parse_url($link, PHP_URL_HOST) : null;
+			}
+		}
+
+		// No redirection hostname has been found.
 
 		return null;
 	}

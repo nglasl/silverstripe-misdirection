@@ -169,8 +169,12 @@ class MisdirectionService {
 				'LinkMapping' => $map
 			))
 		);
-		
-		$host = $map->getLinkHost() ? $map->getLinkHost() : $host;
+
+		// Determine the subsequent host.
+
+		if($map->getLinkHost()) {
+			$host = $map->getLinkHost();
+		}
 
 		// Determine the next link mapping.
 
@@ -193,6 +197,12 @@ class MisdirectionService {
 				'RedirectLink' => $next->getLinkSummary(),
 				'LinkMapping' => $next
 			));
+
+			// Determine the subsequent host.
+
+			if($next->getLinkHost()) {
+				$host = $next->getLinkHost();
+			}
 			$map = $next;
 		}
 
