@@ -191,7 +191,7 @@ class MisdirectionUnitTests extends SapphireTest {
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->ID, $second->ID);
 
-		// Update the first created link mapping priority.
+		// Update the link mapping priority.
 
 		$first->Priority = 2;
 		$first->write();
