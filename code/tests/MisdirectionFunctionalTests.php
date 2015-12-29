@@ -8,7 +8,7 @@
 class MisdirectionFunctionalTests extends FunctionalTest {
 
 	/**
-	 *	This is to prevent following a redirect.
+	 *	This is to prevent following the request filter's redirect.
 	 */
 
 	protected $autoFollowRedirection = false;

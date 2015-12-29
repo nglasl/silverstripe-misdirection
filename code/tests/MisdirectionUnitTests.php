@@ -9,7 +9,7 @@
 class MisdirectionUnitTests extends SapphireTest {
 
 	/**
-	 *	The test to ensure simple link mappings are functioning correctly.
+	 *	The test to ensure the simple link mappings are functioning correctly.
 	 */
 
 	public function testSimpleLinkMappings() {
@@ -65,7 +65,7 @@ class MisdirectionUnitTests extends SapphireTest {
 	}
 
 	/**
-	 *	The test to ensure regular expression replacement is correct.
+	 *	The test to ensure the regular expression replacement is correct.
 	 */
 
 	public function testRegularExpressionReplacement() {
@@ -87,7 +87,7 @@ class MisdirectionUnitTests extends SapphireTest {
 	}
 
 	/**
-	 *	The test to ensure regular expression link mappings are functioning correctly.
+	 *	The test to ensure the regular expression link mappings are functioning correctly.
 	 */
 
 	public function testRegularExpressionLinkMappings() {
@@ -143,7 +143,7 @@ class MisdirectionUnitTests extends SapphireTest {
 	}
 
 	/**
-	 *	The test to ensure link mapping priority is correct.
+	 *	The test to ensure the link mapping priority is correct.
 	 */
 
 	public function testMappingPriority() {
