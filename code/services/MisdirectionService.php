@@ -66,7 +66,8 @@ class MisdirectionService {
 
 	public function getMapping($URL, $host = null) {
 
-		$URL = self::unify_URL(Director::makeRelative($URL));
+		$URL = self::is_external_URL($URL) ? parse_url($URL, PHP_URL_PATH) : Director::makeRelative($URL);
+		$URL = self::unify_URL($URL);
 		$parts = explode('?', $URL);
 		$base = Convert::raw2sql($parts[0]);
 
