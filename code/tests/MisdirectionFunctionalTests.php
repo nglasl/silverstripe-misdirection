@@ -80,7 +80,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 			$this->assertEquals($response->getStatusCode(), 200);
 			$this->assertEquals($response->getHeader('Location'), null);
 
-			// Instantiate a fallback.
+			// Instantiate a fallback to use.
 
 			$second->deleteFromStage('Live');
 			$second->deleteFromStage('Stage');
@@ -96,7 +96,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 			$this->assertEquals($response->getHeader('Location'), '/wrong/?direct=1');
 		}
 
-		// Instantiate a director rule.
+		// Instantiate a director rule to use.
 
 		Config::inst()->update('Director', 'rules', array(
 			'wrong/page' => 'Controller'
@@ -106,6 +106,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 
 		$response = $this->get('wrong/page');
 		$this->assertEquals($response->getStatusCode(), 200);
+		$this->assertEquals($response->getHeader('Location'), null);
 
 		// The database needs to be emptied to prevent further testing conflict.
 
