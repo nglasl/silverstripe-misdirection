@@ -41,11 +41,17 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 
 		if(ClassInfo::exists('SiteTree')) {
 
+			// This is required to support multiple sites.
+
+			$parentID = ClassInfo::exists('Multisites') ? Multisites::inst()->getCurrentSiteId() : 0;
+			$this->logInAs(Member::default_admin());
+
 			// Instantiate pages to use.
 
 			$first = SiteTree::create(
 				array(
-					'URLSegment' => 'wrong'
+					'URLSegment' => 'wrong',
+					'ParentID' => $parentID
 				)
 			);
 			$first->writeToStage('Stage');

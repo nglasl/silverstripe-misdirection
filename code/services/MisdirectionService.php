@@ -243,9 +243,12 @@ class MisdirectionService {
 				$responseCode = $config->FallbackResponseCode;
 			}
 
+			// This is required to support multiple sites.
+
+			$parentID = ClassInfo::exists('Multisites') ? Multisites::inst()->getCurrentSiteId() : 0;
+
 			// Determine the page specific fallback.
 
-			$parentID = 0;
 			$apply = false;
 			for($iteration = 0; $iteration < count($segments); $iteration++) {
 				$page = SiteTree::get()->filter(array(
