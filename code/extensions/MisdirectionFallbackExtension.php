@@ -67,7 +67,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 		$fields->addFieldToTab($tab, TextField::create(
 			'FallbackLink',
 			'URL'
-		)->addExtraClass('fallback-link'));
+		)->addExtraClass('fallback-link')->setRightTitle('This requires the <strong>HTTP/S</strong> scheme for an external URL'));
 
 		// Retrieve the response code selection.
 
