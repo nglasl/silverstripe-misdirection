@@ -266,8 +266,8 @@ class MisdirectionService {
 						$thisPage = $link;
 						$toURL = $page->FallbackLink;
 						$responseCode = $page->FallbackResponseCode;
-						$parentID = $page->ID;
 					}
+					$parentID = $page->ID;
 				}
 				else {
 
