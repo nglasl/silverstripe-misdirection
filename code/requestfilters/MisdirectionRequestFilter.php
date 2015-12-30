@@ -114,7 +114,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 			// Update the response using the fallback, enforcing no further redirection.
 
-			$response->redirect(HTTP::setGetVar('direct', true, Controller::join_links(Director::absoluteBaseURL(), $fallback['link'])), $responseCode);
+			$response->redirect($fallback['link'], $responseCode);
 		}
 
 		// When enabled, replace the default automated URL handling with a page not found.

@@ -295,7 +295,7 @@ class MisdirectionService {
 				}
 				if($link) {
 					return array(
-						'link' => $link,
+						'link' => self::is_external_URL($link) ? $link : Controller::join_links(Director::baseURL(), HTTP::setGetVar('direct', true, $link)),
 						'code' => (int)$responseCode
 					);
 				}
