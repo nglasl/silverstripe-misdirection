@@ -43,8 +43,8 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 
 			// This is required to support multiple sites.
 
-			$parentID = ClassInfo::exists('Multisites') ? Multisites::inst()->getCurrentSiteId() : 0;
 			$this->logInAs(Member::default_admin());
+			$parentID = ClassInfo::exists('Multisites') ? Multisites::inst()->getCurrentSiteId() : 0;
 
 			// Instantiate pages to use.
 
