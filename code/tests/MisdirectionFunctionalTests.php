@@ -87,10 +87,10 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 			$first->Fallback = 'Nearest';
 			$first->writeToStage('Stage');
 			$first->writeToStage('Live');
-			$mapping->delete();
 
 			// Determine whether the fallback is matched.
 
+			$mapping->delete();
 			$response = $this->get('wrong/page');
 			$this->assertEquals($response->getStatusCode(), 303);
 			$this->assertEquals($response->getHeader('Location'), '/wrong/?direct=1');
