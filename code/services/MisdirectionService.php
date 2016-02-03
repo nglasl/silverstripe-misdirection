@@ -66,8 +66,8 @@ class MisdirectionService {
 
 	public function getMapping($URL, $host = null) {
 
-		$URL = self::unify_URL(Director::makeRelative($URL));
-		$parts = explode('?', $URL);
+		$URL = self::is_external_URL($URL) ? parse_url($URL, PHP_URL_PATH) : Director::makeRelative($URL);
+		$parts = explode('?', self::unify_URL($URL));
 		$base = Convert::raw2sql($parts[0]);
 
 		// Instantiate the link mapping query.
@@ -158,6 +158,13 @@ class MisdirectionService {
 
 	public function getRecursiveMapping($map, $host = null, $testing = false) {
 
+		// if this is an external link, and the type is 'Link', we ignore recursing against
+		// additional rules. 
+		$summary = $map->getLinkSummary();
+		if (self::is_external_URL($summary) && $map->RedirectType === 'Link') {
+			return $map;
+		}
+		
 		// Keep track of the link mapping recursion.
 
 		$counter = 1;
@@ -165,12 +172,16 @@ class MisdirectionService {
 		$chain = array(
 			array_merge($map->toMap(), array(
 				'Counter' => $counter,
-				'RedirectLink' => $map->getLinkSummary(),
+				'RedirectLink' => $summary,
 				'LinkMapping' => $map
 			))
 		);
-		
-		$host = $map->getLinkHost() ? $map->getLinkHost() : $host;
+
+		// Determine the subsequent host.
+
+		if($map->getLinkHost()) {
+			$host = $map->getLinkHost();
+		}
 
 		// Determine the next link mapping.
 
@@ -193,6 +204,12 @@ class MisdirectionService {
 				'RedirectLink' => $next->getLinkSummary(),
 				'LinkMapping' => $next
 			));
+
+			// Determine the subsequent host.
+
+			if($next->getLinkHost()) {
+				$host = $next->getLinkHost();
+			}
 			$map = $next;
 		}
 
@@ -233,9 +250,12 @@ class MisdirectionService {
 				$responseCode = $config->FallbackResponseCode;
 			}
 
+			// This is required to support multiple sites.
+
+			$parentID = ClassInfo::exists('Multisites') ? Multisites::inst()->getCurrentSiteId() : 0;
+
 			// Determine the page specific fallback.
 
-			$parentID = 0;
 			$apply = false;
 			for($iteration = 0; $iteration < count($segments); $iteration++) {
 				$page = SiteTree::get()->filter(array(
@@ -256,8 +276,8 @@ class MisdirectionService {
 						$thisPage = $link;
 						$toURL = $page->FallbackLink;
 						$responseCode = $page->FallbackResponseCode;
-						$parentID = $page->ID;
 					}
+					$parentID = $page->ID;
 				}
 				else {
 
@@ -285,7 +305,7 @@ class MisdirectionService {
 				}
 				if($link) {
 					return array(
-						'link' => $link,
+						'link' => self::is_external_URL($link) ? $link : Controller::join_links(Director::baseURL(), HTTP::setGetVar('direct', true, $link)),
 						'code' => (int)$responseCode
 					);
 				}
