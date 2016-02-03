@@ -158,6 +158,13 @@ class MisdirectionService {
 
 	public function getRecursiveMapping($map, $host = null, $testing = false) {
 
+		// if this is an external link, we ignore recursing against
+		// additional rules. 
+		$summary = $map->getLinkSummary();
+		if (self::is_external_URL($summary)) {
+			return $map;
+		}
+		
 		// Keep track of the link mapping recursion.
 
 		$counter = 1;
@@ -165,7 +172,7 @@ class MisdirectionService {
 		$chain = array(
 			array_merge($map->toMap(), array(
 				'Counter' => $counter,
-				'RedirectLink' => $map->getLinkSummary(),
+				'RedirectLink' => $summary,
 				'LinkMapping' => $map
 			))
 		);
