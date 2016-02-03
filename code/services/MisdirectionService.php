@@ -170,6 +170,8 @@ class MisdirectionService {
 			))
 		);
 
+		// Determine whether to bypass the request filter.
+
 		if(self::is_external_URL($redirect)) {
 			return $testing ? $chain : $map;
 		}
