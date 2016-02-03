@@ -78,7 +78,7 @@ MisdirectionRequestFilter:
 
 #### Bypassing Misdirection
 
-It is possible to bypass the request filter completely by appending `?direct=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
+It is possible to bypass the request filter completely by appending `?misdirected=1` to the URL. This is fantastic for debugging, however does not apply to the testing interface for obvious reasons.
 
 ### Default Automated URL Handling
 

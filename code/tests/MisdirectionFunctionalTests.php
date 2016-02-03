@@ -102,7 +102,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 
 			$response = $this->get('wrong/page');
 			$this->assertEquals($response->getStatusCode(), 303);
-			$this->assertEquals($response->getHeader('Location'), '/wrong/?direct=1');
+			$this->assertEquals($response->getHeader('Location'), '/wrong/?misdirected=1');
 		}
 
 		// Instantiate a director rule to use.

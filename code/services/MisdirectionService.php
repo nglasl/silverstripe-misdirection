@@ -170,6 +170,10 @@ class MisdirectionService {
 			))
 		);
 
+		if(self::is_external_URL($redirect)) {
+			return $testing ? $chain : $map;
+		}
+
 		// Determine the subsequent host.
 
 		if($map->getLinkHost()) {
@@ -298,7 +302,7 @@ class MisdirectionService {
 				}
 				if($link) {
 					return array(
-						'link' => self::is_external_URL($link) ? $link : Controller::join_links(Director::baseURL(), HTTP::setGetVar('direct', true, $link)),
+						'link' => self::is_external_URL($link) ? $link : Controller::join_links(Director::baseURL(), HTTP::setGetVar('misdirected', true, $link)),
 						'code' => (int)$responseCode
 					);
 				}

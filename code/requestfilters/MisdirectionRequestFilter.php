@@ -35,7 +35,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 	/**
 	 *	Attempt to redirect towards the highest priority link mapping that may have been defined.
 	 *
-	 *	@URLparameter direct <{BYPASS_LINK_MAPPINGS}> boolean
+	 *	@URLparameter misdirected <{BYPASS_LINK_MAPPINGS}> boolean
 	 */
 
 	public function postRequest(SS_HTTPRequest $request, SS_HTTPResponse $response, DataModel $model) {
@@ -62,9 +62,9 @@ class MisdirectionRequestFilter implements RequestFilter {
 			}
 		}
 
-		// Bypass the request filter when using the direct GET parameter.
+		// Bypass the request filter when using the misdirected GET parameter.
 
-		if($request->getVar('direct')) {
+		if($request->getVar('misdirected')) {
 
 			// Continue processing the response.
 
