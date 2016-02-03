@@ -170,21 +170,15 @@ class MisdirectionService {
 			))
 		);
 
-		// Determine whether to bypass the request filter.
-
-		if(self::is_external_URL($redirect)) {
-			return $testing ? $chain : $map;
-		}
-
 		// Determine the subsequent host.
 
 		if($map->getLinkHost()) {
 			$host = $map->getLinkHost();
 		}
 
-		// Determine the next link mapping.
+		// Determine the next link mapping, and whether to bypass the request filter for an external URL.
 
-		while($next = $this->getMapping($redirect, $host)) {
+		while(!self::is_external_URL($redirect) && ($next = $this->getMapping($redirect, $host))) {
 
 			// Enforce a maximum number of redirects, preventing infinite recursion and inefficient link mappings.
 
