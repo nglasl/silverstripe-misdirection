@@ -176,7 +176,7 @@ class MisdirectionService {
 			$host = $map->getLinkHost();
 		}
 
-		// Determine the next link mapping, and whether to bypass the request filter for an external URL.
+		// Determine the next link mapping.
 
 		while(!self::is_external_URL($redirect) && ($next = $this->getMapping($redirect, $host))) {
 
