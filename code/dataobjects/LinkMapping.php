@@ -333,7 +333,7 @@ class LinkMapping extends DataObject {
 
 				// This is to support multiple sites, where the absolute page URLs are treated as relative.
 
-				return MisdirectionService::is_external_URL($link) ? HTTP::setGetVar('misdirected', true, ltrim($link, '/')) : $link;
+				return MisdirectionService::is_external_URL($link) ? ltrim($link, '/') : $link;
 			}
 		}
 		else {

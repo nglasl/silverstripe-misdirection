@@ -176,9 +176,9 @@ class MisdirectionService {
 			$host = $map->getLinkHost();
 		}
 
-		// Determine the next link mapping.
+		// Determine the next link mapping, immediately redirecting towards an external URL.
 
-		while(!self::is_external_URL($redirect) && ($next = $this->getMapping($redirect, $host))) {
+		while((($map->RedirectType === 'Page') || !self::is_external_URL($redirect)) && ($next = $this->getMapping($redirect, $host))) {
 
 			// Enforce a maximum number of redirects, preventing infinite recursion and inefficient link mappings.
 
