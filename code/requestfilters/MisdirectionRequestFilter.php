@@ -64,7 +64,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 		// Bypass the request filter when using the misdirected GET parameter.
 
-		if($request->getVar('misdirected')) {
+		if($request->getVar('misdirected') || $request->getVar('direct')) {
 
 			// Continue processing the response.
 
