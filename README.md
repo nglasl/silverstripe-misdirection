@@ -1,6 +1,6 @@
 # [misdirection](https://packagist.org/packages/nglasl/silverstripe-misdirection)
 
-_The current release is **2.1.5**_
+_The current release is **2.1.6**_
 
 	A module for SilverStripe which will allow both simple and regular expression link
 	redirections based on customisable mappings, either hooking into a page not found or
