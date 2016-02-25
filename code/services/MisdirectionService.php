@@ -76,8 +76,8 @@ class MisdirectionService {
 
 		// Enforce any hostname restriction that may have been defined.
 
-		if(is_null($host) && Controller::curr()) {
-			$host = Controller::curr()->getRequest()->getHeader('Host');
+		if(is_null($host) && ($controller = Controller::curr())) {
+			$host = $controller->getRequest()->getHeader('Host');
 		}
 		$matches = $matches->where("(HostnameRestriction IS NULL) OR (HostnameRestriction = '" . Convert::raw2sql($host) . "')");
 		$regex = clone $matches;
