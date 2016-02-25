@@ -281,10 +281,16 @@ class LinkMapping extends DataObject {
 	public function validate() {
 
 		$result = parent::validate();
+
+		// Determine whether a regular expression mapping is possible to match against.
+
+		if(($this->LinkType === 'Regular Expression') && $result->valid() && (!$this->MappedLink || !is_numeric(@preg_match("%{$this->MappedLink}%", null)))) {
+			$result->error('Invalid regular expression!');
+		}
+
+		// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
+
 		if($this->ValidateExternal && $this->RedirectLink && $result->valid() && !MisdirectionService::is_external_URL($this->RedirectLink)) {
-
-			// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
-
 			$result->error('External URL validation failed!');
 		}
 
