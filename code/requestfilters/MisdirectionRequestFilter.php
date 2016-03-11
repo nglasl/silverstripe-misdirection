@@ -97,7 +97,8 @@ class MisdirectionRequestFilter implements RequestFilter {
 			}
 
 			// Update the response using the link mapping redirection.
-            $response->setBody('');
+
+			$response->setBody('');
 			$response->redirect($map->getLink(), $responseCode);
 		}
 
@@ -113,7 +114,8 @@ class MisdirectionRequestFilter implements RequestFilter {
 			}
 
 			// Update the response using the fallback, enforcing no further redirection.
-            $response->setBody('');
+
+			$response->setBody('');
 			$response->redirect($fallback['link'], $responseCode);
 		}
 
