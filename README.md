@@ -10,7 +10,7 @@ This is based upon the existing [link mapping](https://github.com/silverstripe-a
 
 ## Requirement
 
-* SilverStripe 3.1.X
+* SilverStripe 3.2.X
 
 This module does **not** require the CMS.
 
