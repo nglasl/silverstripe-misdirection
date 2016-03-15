@@ -17,7 +17,7 @@
 		"email": "nathan@silverstripe.com.au"
 	}],
 	"require": {
-		"silverstripe/framework": "3.2.*"
+		"silverstripe/framework": "~3.2"
 	},
 	"extra": {
 		"installer-name": "misdirection",

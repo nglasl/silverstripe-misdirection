@@ -1,6 +1,6 @@
 # [misdirection](https://packagist.org/packages/nglasl/silverstripe-misdirection)
 
-_The current release is **2.2.0**_
+_The current release is **2.2.1**_
 
 	A module for SilverStripe which will allow both simple and regular expression link
 	redirections based on customisable mappings, either hooking into a page not found or
@@ -10,7 +10,7 @@ This is based upon the existing [link mapping](https://github.com/silverstripe-a
 
 ## Requirement
 
-* SilverStripe 3.2.X
+* SilverStripe 3.1.X or **3.2.X**
 
 This module does **not** require the CMS.
 
