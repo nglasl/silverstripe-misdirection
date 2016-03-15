@@ -135,9 +135,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 			// This is only used retain the latest version of the record.
 
-			DB::prepared_query('REPLACE INTO ?(?) VALUES(?, ?, ?, ?, ?);', array(
-				$this->replayTable,
-				$this->replaceColumnString,
+			DB::prepared_query("REPLACE INTO {$this->replayTable}({$this->replaceColumnString}) VALUES(?, ?, ?, ?, ?);", array(
 				$record['RecordID'],
 				$record['ID'],
 				$record['ParentID'],
