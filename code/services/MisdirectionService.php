@@ -68,7 +68,6 @@ class MisdirectionService {
 
 		$URL = self::is_external_URL($URL) ? parse_url($URL, PHP_URL_PATH) : Director::makeRelative($URL);
 		$parts = explode('?', self::unify_URL($URL));
-		$base = Convert::raw2sql($parts[0]);
 
 		// Instantiate the link mapping query.
 
@@ -84,7 +83,9 @@ class MisdirectionService {
 
 		// Determine the simple matching from the database.
 
+		$base = Convert::raw2sql($parts[0]);
 		$matches = $matches->where("(LinkType = 'Simple') AND (((IncludesHostname = 0) AND ((MappedLink = '{$base}') OR (MappedLink LIKE '{$base}?%'))) OR ((IncludesHostname = 1) AND ((MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$host}/{$base}?%'))))");
+		$base = $parts[0];
 
 		// Determine the remaining regular expression matching, as this is inconsistent from the database.
 
@@ -136,7 +137,7 @@ class MisdirectionService {
 
 					// Return the first link mapping when GET parameters aren't present.
 
-					$match->setMatchedURL($match->IncludesHostname ? "{$host}/{$parts[0]}" : $parts[0]);
+					$match->setMatchedURL($match->IncludesHostname ? "{$host}/{$base}" : $base);
 					return $match;
 				}
 			}
