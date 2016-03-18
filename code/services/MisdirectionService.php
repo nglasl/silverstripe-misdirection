@@ -78,13 +78,16 @@ class MisdirectionService {
 		if(is_null($host) && ($controller = Controller::curr())) {
 			$host = $controller->getRequest()->getHeader('Host');
 		}
-		$matches = $matches->where("(HostnameRestriction IS NULL) OR (HostnameRestriction = '" . Convert::raw2sql($host) . "')");
+		$temporary = $host;
+		$host = Convert::raw2sql($host);
+		$matches = $matches->where("(HostnameRestriction IS NULL) OR (HostnameRestriction = '{$host}')");
 		$regex = clone $matches;
 
 		// Determine the simple matching from the database.
 
 		$base = Convert::raw2sql($parts[0]);
 		$matches = $matches->where("(LinkType = 'Simple') AND (((IncludesHostname = 0) AND ((MappedLink = '{$base}') OR (MappedLink LIKE '{$base}?%'))) OR ((IncludesHostname = 1) AND ((MappedLink = '{$host}/{$base}') OR (MappedLink LIKE '{$host}/{$base}?%'))))");
+		$host = $temporary;
 		$base = $parts[0];
 
 		// Determine the remaining regular expression matching, as this is inconsistent from the database.
