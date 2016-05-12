@@ -16,7 +16,7 @@ class MisdirectionService {
 
 	public static function unify_URL($URL) {
 
-		return strtolower(trim($URL, '/?'));
+		return strtolower(trim($URL, ' ?/'));
 	}
 
 	/**
