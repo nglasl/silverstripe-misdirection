@@ -11,3 +11,6 @@ SiteTree:
 SiteConfig:
   extensions:
     - 'MisdirectionFallbackExtension'
+Controller:
+  extensions:
+    - 'MisdirectionControllerExtension'
