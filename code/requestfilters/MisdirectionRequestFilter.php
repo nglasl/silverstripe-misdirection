@@ -77,7 +77,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 		$success = (($status >= 200) && ($status < 300));
 		$error = ($status === 404);
 
-		// Either hook into a page not found, or when enforced, replace the default automated URL handling.
+		// Determine whether we're either hooking into a page not found or replacing the default automated URL handling.
 
 		$enforce = $configuration->get('MisdirectionRequestFilter', 'enforce_misdirection');
 		$replace = $configuration->get('MisdirectionRequestFilter', 'replace_default');
@@ -96,10 +96,17 @@ class MisdirectionRequestFilter implements RequestFilter {
 				$responseCode = 307;
 			}
 
+			// Determine the home page URL when replacing the default automated URL handling.
+
+			$link = $map->getLink();
+			if($replace && (strpos(strrev(trim($link, '/')), strrev('home')) === 0)) {
+				$link = Director::baseURL();
+			}
+
 			// Update the response using the link mapping redirection.
 
 			$response->setBody('');
-			$response->redirect($map->getLink(), $responseCode);
+			$response->redirect($link, $responseCode);
 		}
 
 		// Determine a page not found fallback, when the CMS module is present.
