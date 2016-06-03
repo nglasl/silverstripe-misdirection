@@ -253,7 +253,6 @@ class MisdirectionService {
 
 			// Determine the page specific fallback.
 
-			$apply = false;
 			for($iteration = 0; $iteration < count($segments); $iteration++) {
 				$page = SiteTree::get()->filter(array(
 					'URLSegment' => $segments[$iteration],
@@ -280,14 +279,13 @@ class MisdirectionService {
 
 					// The bottom of the chain has been reached.
 
-					$apply = true;
 					break;
 				}
 			}
 
 			// Determine the applicable fallback.
 
-			if($apply && $applicableRule) {
+			if($applicableRule) {
 				$link = null;
 				switch($applicableRule) {
 					case 'Nearest':
