@@ -237,6 +237,10 @@ class MisdirectionService {
 			$toURL = null;
 			$responseCode = 303;
 
+			// This prevents a page not found from redirecting back to the same page.
+
+			array_pop($segments);
+
 			// Retrieve the default site configuration fallback.
 
 			$config = SiteConfig::current_site_config();
