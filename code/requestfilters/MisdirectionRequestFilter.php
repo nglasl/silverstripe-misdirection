@@ -99,8 +99,9 @@ class MisdirectionRequestFilter implements RequestFilter {
 			// Determine the home page URL when replacing the default automated URL handling.
 
 			$link = $map->getLink();
-			if($replace && (strpos(strrev(trim($link, '/')), strrev('home')) === 0)) {
-				$link = Director::baseURL();
+			$base = Director::baseURL();
+			if($replace && (substr($link, 0, strlen($base)) === $base) && (substr($link, strlen($base)) === 'home/')) {
+				$link = $base;
 			}
 
 			// Update the response using the link mapping redirection.
