@@ -299,12 +299,12 @@ class MisdirectionService {
 						$link = $thisPage;
 						break;
 					case 'URL':
-						$link = $toURL;
+						$link = self::is_external_URL($toURL) ? (ClassInfo::exists('Multisites') ? HTTP::setGetVar('misdirected', true, $toURL) : $toURL) : Controller::join_links(Director::baseURL(), $toURL);
 						break;
 				}
 				if($link) {
 					return array(
-						'link' => self::is_external_URL($link) ? $link : Controller::join_links(Director::baseURL(), HTTP::setGetVar('misdirected', true, $link)),
+						'link' => self::is_external_URL($link) ? $link : ('/' . HTTP::setGetVar('misdirected', true, $link)),
 						'code' => (int)$responseCode
 					);
 				}
