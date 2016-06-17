@@ -42,8 +42,14 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 		// Bypass the request filter when requesting specific director rules such as "/admin" or "/dev".
 
-		$requestURL = $request->getURL();
 		$configuration = Config::inst();
+		$bypass = array(
+			'admin',
+			'Security',
+			'CMSSecurity',
+			'dev'
+		);
+		$requestURL = $request->getURL();
 		foreach($configuration->get('Director', 'rules') as $segment => $controller) {
 
 			// Retrieve the specific director rules.
@@ -54,7 +60,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 			// Determine if the current request matches a specific director rule.
 
-			if($segment && (strpos($requestURL, $segment) === 0)) {
+			if($segment && in_array($segment, $bypass) && (($requestURL === $segment) || (strpos($requestURL, "{$segment}/") === 0))) {
 
 				// Continue processing the response.
 
