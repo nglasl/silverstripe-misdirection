@@ -40,16 +40,16 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 	public function postRequest(SS_HTTPRequest $request, SS_HTTPResponse $response, DataModel $model) {
 
-		// Bypass the request filter when requesting specific director rules such as "/admin" or "/dev".
+		// Bypass the request filter when requesting specific director rules such as "/admin".
 
 		$configuration = Config::inst();
+		$requestURL = $request->getURL();
 		$bypass = array(
 			'admin',
 			'Security',
 			'CMSSecurity',
 			'dev'
 		);
-		$requestURL = $request->getURL();
 		foreach($configuration->get('Director', 'rules') as $segment => $controller) {
 
 			// Retrieve the specific director rules.
