@@ -1,10 +1,8 @@
 # [misdirection](https://packagist.org/packages/nglasl/silverstripe-misdirection)
 
-_The current release is **2.2.8**_
+_The current release is **2.2.9**_
 
 > A module for SilverStripe which will allow both simple and regular expression link redirections based on customisable mappings, either hooking into a page not found or replacing the default automated URL handling.
-
-This is based upon the existing [link mapping](https://github.com/silverstripe-australia/link-mapping) module, aiming to provide a more robust solution for both users and developers alike, with further support and customisation!
 
 ## Requirement
 
