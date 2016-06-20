@@ -126,7 +126,12 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 	protected function addMappingToList($URL, $ID) {
 
 		$this->linkMappings[$URL] = $ID;
-		DB::query("UPDATE {$this->replayTable} SET FullURL = '{$URL}' WHERE ID = {$ID};");
+		$query = new SQLUpdate($this->replayTable, array(
+			'FullURL' => $URL
+		), array(
+			'ID' => $ID
+		));
+		$query->execute();
 	}
 
 	protected function addRecord($record) {
