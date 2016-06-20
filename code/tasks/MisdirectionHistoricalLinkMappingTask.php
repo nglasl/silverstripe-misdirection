@@ -71,7 +71,12 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 	protected function getPublishedVersionRecords() {
 
-		$query = new SQLSelect('ID, RecordID, ParentID, URLSegment, Version', 'SiteTree_versions', 'WasPublished = 1', 'ID ASC');
+		$query = new SQLSelect(
+			'ID, RecordID, ParentID, URLSegment, Version',
+			'SiteTree_versions',
+			'WasPublished = 1',
+			'ID ASC'
+		);
 		return $query->execute();
 	}
 
@@ -126,11 +131,13 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 	protected function addMappingToList($URL, $ID) {
 
 		$this->linkMappings[$URL] = $ID;
-		$query = new SQLUpdate($this->replayTable, array(
-			'FullURL' => $URL
-		), array(
-			'ID' => $ID
-		));
+		$query = new SQLUpdate(
+			$this->replayTable,
+			array(
+				'FullURL' => $URL
+			),
+			"ID = {$ID}"
+		);
 		$query->execute();
 	}
 
@@ -174,7 +181,11 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 	protected function getReplayRecordByID($ID) {
 
-		$query = new SQLSelect('*', $this->replayTable, "ID = {$ID}");
+		$query = new SQLSelect(
+			'*',
+			$this->replayTable,
+			"ID = {$ID}"
+		);
 		$records = $query->execute();
 		return $records->first();
 	}
@@ -188,7 +199,11 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 	protected function getChildren($ID) {
 
-		$query = new SQLSelect('*', $this->replayTable, 'ParentID = ' . (int)$ID);
+		$query = new SQLSelect(
+			'*',
+			$this->replayTable,
+			'ParentID = ' . (int)$ID
+		);
 		return $query->execute();
 	}
 
@@ -218,7 +233,15 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 			// Retrieve the parent element which was most recently published.
 
-			$parentQuery = new SQLSelect('ID, ParentID, URLSegment, Version', $this->replayTable, "ID = {$parentID}", null, null, null, 1);
+			$parentQuery = new SQLSelect(
+				'ID, ParentID, URLSegment, Version',
+				$this->replayTable,
+				"ID = {$parentID}",
+				null,
+				null,
+				null,
+				1
+			);
 			$parent = $parentQuery->execute()->first();
 			return $this->getURLForRecord($parent, $URL);
 		}
@@ -239,7 +262,11 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 				// Check that the URL is not the current live URL.
 
-				$query = new SQLSelect('ID', $this->replayTable, "FullURL = '{$URL}'");
+				$query = new SQLSelect(
+					'ID',
+					$this->replayTable,
+					"FullURL = '{$URL}'"
+				);
 				if($query->count('ID') == 0) {
 					echo "<div>{$siteTreeID} - {$URL}</div><br>";
 					if($this->live) {
@@ -273,7 +300,9 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 
 			// Delete all records from the table.
 
-			$query = new SQLDelete(self::$default_table);
+			$query = new SQLDelete(
+				self::$default_table
+			);
 			$query->execute();
 		}
 	}
