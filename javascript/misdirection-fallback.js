@@ -18,11 +18,11 @@
 	// Bind the events dynamically.
 
 	$('select.fallback').entwine({
-		onmatch: function () {
+		onmatch: function() {
 
 			toggleResponseCode();
 		},
-		onchange: function () {
+		onchange: function() {
 
 			toggleResponseCode();
 		}

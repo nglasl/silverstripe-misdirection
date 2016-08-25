@@ -10,11 +10,11 @@
 	// Bind the events dynamically.
 
 	$('select.link-type').entwine({
-		onmatch: function () {
+		onmatch: function() {
 
 			toggleValidateExternal();
 		},
-		onchange: function () {
+		onchange: function() {
 
 			toggleValidateExternal();
 		}
