@@ -5,9 +5,12 @@
 	"keywords": [
 		"silverstripe",
 		"link mapping",
-		"URL",
+		"mapping",
+		"url",
 		"page not found",
 		"404",
+		"http 404",
+		"redirection",
 		"redirect"
 	],
 	"homepage": "https://github.com/nglasl/silverstripe-misdirection",
