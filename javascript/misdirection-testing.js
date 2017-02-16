@@ -91,6 +91,9 @@
 		if(event.keyCode === 13) {
 			var input = $(this);
 			if(input.val().length > 0) {
+
+				// Test the link mapping chain for the given URL, and render this to the user.
+
 				test();
 			}
 			return false;
