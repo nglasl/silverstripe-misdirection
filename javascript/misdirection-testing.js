@@ -75,52 +75,36 @@
 		});
 	};
 
-	// Bind the events dynamically.
+	// Trigger an interface update on input.
 
-	$.entwine('ss', function($) {
+	$(document).on('input', 'div.misdirection-testing.admin input.url', function() {
 
-		// Trigger an interface update on key press.
+		enable($(this));
+	});
 
-		$('div.misdirection-testing.admin input.url').entwine({
-			onchange: function() {
+	// The testing.
 
-				enable($(this));
-			},
-			onkeydown: function(event) {
+	$(document).on('keydown', 'div.misdirection-testing.admin input.url', function(event) {
 
-				// Trigger a test request on pressing enter.
+		// Trigger a test request on pressing enter.
 
-				if(event.keyCode === 13) {
-					var input = $(this);
-					if(input.val().length > 0) {
-						test();
-					}
-
-					// Trigger an interface update.
-
-					input.change();
-					return false;
-				}
+		if(event.keyCode === 13) {
+			var input = $(this);
+			if(input.val().length > 0) {
+				test();
 			}
-		});
+			return false;
+		}
+	});
 
-		// Trigger an interface update and handle any test request.
+	$(document).on('click', 'div.misdirection-testing.admin span.test', function() {
 
-		$('div.misdirection-testing.admin span.test').entwine({
-			onmouseenter: function() {
+		if(!$(this).hasClass('disabled')) {
 
-				enable();
-			},
-			onclick: function() {
+			// Test the link mapping chain for the given URL, and render this to the user.
 
-				if(!$(this).hasClass('disabled')) {
-
-					// Test the link mapping chain for the given URL, and render this to the user.
-
-					test();
-				}
-			}
-		});
+			test();
+		}
 	});
 
 })(jQuery);
