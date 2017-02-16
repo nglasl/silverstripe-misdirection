@@ -18,7 +18,6 @@
 				button.addClass('disabled');
 			});
 		}
-		$('#Form_EditForm').removeClass('changed');
 	};
 
 	// Test the link mapping chain for a given URL.
@@ -80,6 +79,13 @@
 	$(document).on('input', 'div.misdirection-testing.admin input.url', function() {
 
 		enable($(this));
+	});
+
+	$(document).on('change', 'div.misdirection-testing.admin input.url', function() {
+
+		// Make sure the edit form doesn't detect changes.
+
+		$('#Form_EditForm').removeClass('changed');
 	});
 
 	// The testing.
