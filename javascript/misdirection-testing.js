@@ -1,5 +1,7 @@
 ;(function($) {
 
+	var page = $(document);
+
 	// Determine whether the test button display and functionality should be enabled.
 
 	function enable(input) {
@@ -76,12 +78,12 @@
 
 	// Trigger an interface update on input.
 
-	$(document).on('input', 'div.misdirection-testing.admin input.url', function() {
+	page.on('input', 'div.misdirection-testing.admin input.url', function() {
 
 		enable($(this));
 	});
 
-	$(document).on('change', 'div.misdirection-testing.admin input.url', function() {
+	page.on('change', 'div.misdirection-testing.admin input.url', function() {
 
 		// Make sure the edit form doesn't detect changes.
 
@@ -90,7 +92,7 @@
 
 	// The testing.
 
-	$(document).on('keydown', 'div.misdirection-testing.admin input.url', function(event) {
+	page.on('keydown', 'div.misdirection-testing.admin input.url', function(event) {
 
 		// Trigger a test request on pressing enter.
 
@@ -106,7 +108,7 @@
 		}
 	});
 
-	$(document).on('click', 'div.misdirection-testing.admin span.test', function() {
+	page.on('click', 'div.misdirection-testing.admin span.test', function() {
 
 		if(!$(this).hasClass('disabled')) {
 
