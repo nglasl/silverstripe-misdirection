@@ -42,9 +42,15 @@ class MisdirectionService {
 
 	public function getMappingByRequest($request, $testing = false) {
 
-		// Make sure an external URL comes through correctly.
+		// Make sure a URL comes through correctly.
 
-		$link = str_replace(':/', '://', $request->getURL(true));
+		$link = str_replace(array(
+			':/',
+			' '
+		), array(
+			'://',
+			'%20'
+		), $request->getURL(true));
 		$host = $request->getHeader('Host');
 
 		// Retrieve the appropriate link mapping.
