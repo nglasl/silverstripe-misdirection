@@ -54,13 +54,13 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 			$this->live = true;
 		}
 		else {
-			echo '<div>Running in <strong>test</strong> mode... to actually create link mappings, append <strong>?live=1</strong> to the URL...</div><br>';
+			DB::alteration_message('<div>Running in <strong>test</strong> mode... to actually create link mappings, append <strong>?live=1</strong> to the URL...</div><br>');
 		}
 		$this->setupStructure();
 		$records = $this->getPublishedVersionRecords();
 		$this->processRecords($records);
 		$this->checkAndCreateMappings();
-		echo '<strong>Complete!</strong>';
+		DB::alteration_message('<strong>Complete!</strong>');
 	}
 
 	/**
@@ -268,7 +268,7 @@ class MisdirectionHistoricalLinkMappingsTask extends BuildTask {
 					"FullURL = '{$URL}'"
 				);
 				if($query->count('ID') == 0) {
-					echo "<div>{$siteTreeID} - {$URL}</div><br>";
+					DB::alteration_message("<div>{$siteTreeID} - {$URL}</div><br>");
 					if($this->live) {
 						singleton('MisdirectionService')->createPageMapping($URL, $siteTreeID);
 					}
