@@ -262,9 +262,12 @@ class MisdirectionService {
 			if(ClassInfo::exists('Multisites')) {
 				$parent = Multisites::inst()->getCurrentSite();
 				$parentID = $parent->ID;
-				$applicableRule = $parent->Fallback;
-				$toURL = $parent->FallbackLink;
-				$responseCode = $parent->FallbackResponseCode;
+				if($parent->Fallback) {
+					$applicableRule = $parent->Fallback;
+					$nearestParent = $thisPage = Director::baseURL();
+					$toURL = $parent->FallbackLink;
+					$responseCode = $parent->FallbackResponseCode;
+				}
 			}
 			else {
 				$parentID = 0;
