@@ -259,7 +259,16 @@ class MisdirectionService {
 
 			// This is required to support multiple sites.
 
-			$parentID = ClassInfo::exists('Multisites') ? Multisites::inst()->getCurrentSiteId() : 0;
+			if(ClassInfo::exists('Multisites')) {
+				$parent = Multisites::inst()->getCurrentSite();
+				$parentID = $parent->ID;
+				$applicableRule = $parent->Fallback;
+				$toURL = $parent->FallbackLink;
+				$responseCode = $parent->FallbackResponseCode;
+			}
+			else {
+				$parentID = 0;
+			}
 
 			// Determine the page specific fallback.
 
