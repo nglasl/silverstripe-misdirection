@@ -25,6 +25,12 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			'VanityHeader',
 			'Vanity'
 		));
+		if($this->owner->VanityMapping()->RedirectPageID !== $this->owner->ID) {
+
+			// The mapping may have been pointed to another page.
+
+			$this->owner->VanityMappingID = 0;
+		}
 		$fields->addFieldToTab('Root.Misdirection', TextField::create(
 			'VanityURL',
 			'URL',
