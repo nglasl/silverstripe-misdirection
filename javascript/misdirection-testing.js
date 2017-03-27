@@ -51,8 +51,8 @@
 					if(object['ResponseCode'] !== 404) {
 						output += '<h3><strong>' + object['Counter'] + '</strong></h3>';
 						output += '<div><strong>Link Type</strong> ' + object['LinkType'] + '</div>';
-						output += '<div><strong>Mapped Link</strong> ' + object['MappedLink'] + '</div>';
-						output += '<div><strong>Redirect Link</strong> ' + object['RedirectLink'] + '</div>';
+						output += '<div><strong>Mapped Link</strong> ' + object['MappedLink'].replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
+						output += '<div><strong>Redirect Link</strong> ' + object['RedirectLink'].replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
 						output += '<div><strong>Response Code</strong> ' + object['ResponseCode'] + '</div>';
 						output += '<div><strong>Priority</strong> ' + object['Priority'] + '</div>';
 					}
