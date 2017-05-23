@@ -10,6 +10,16 @@ _The current release is **2.2.22**_
 
 This module does **not** require the CMS.
 
+## Installation
+
+It is recommended that you install this module via composer
+
+```sh
+$ composer require nglasl/silverstripe-misdirection
+```
+
+Alternatively you may download this module directly and place it under your root project directory
+
 ## Getting Started
 
 * [Place the module under your root project directory.](https://packagist.org/packages/nglasl/silverstripe-misdirection)
