@@ -1,6 +1,6 @@
 # [misdirection](https://packagist.org/packages/nglasl/silverstripe-misdirection)
 
-_The current release is **2.2.21**_
+_The current release is **2.2.22**_
 
 > A module for SilverStripe which will allow both simple and regular expression link redirections based on customisable mappings, either hooking into a page not found or replacing the default automated URL handling.
 
@@ -12,7 +12,7 @@ This module does **not** require the CMS.
 
 ## Getting Started
 
-* Place the module under your root project directory.
+* [Place the module under your root project directory.](https://packagist.org/packages/nglasl/silverstripe-misdirection)
 * `/dev/build`
 * Select `Misdirection` through the CMS.
 * Create a link mapping.
