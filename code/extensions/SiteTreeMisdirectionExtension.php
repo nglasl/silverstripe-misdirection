@@ -49,10 +49,17 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	public function onBeforeWrite() {
 
 		parent::onBeforeWrite();
-
-		// Retrieve the vanity mapping URL, where this is only possible using the POST variable.
-
-		$vanityURL = (is_null($controller = Controller::curr()) || is_null($URL = $controller->getRequest()->postVar('VanityURL'))) ? $this->owner->VanityMapping()->MappedLink : $URL;
+		// Add exception handling (helps when running Behat tests that create Page as fixtures)
+		try {
+			// Retrieve the vanity mapping URL, where this is only possible using the POST variable.
+			if(is_null($controller = Controller::curr()) || is_null($URL = $controller->getRequest()->postVar('VanityURL'))) {
+				$vanityURL = $this->owner->VanityMapping()->MappedLink;
+			} else {
+				$vanityURL = $URL;
+			}
+		} catch (Exception $e){
+			$vanityURL = false;
+		}
 		$mappingExists = $this->owner->VanityMapping()->exists();
 
 		// Determine whether the vanity mapping URL has been updated.
