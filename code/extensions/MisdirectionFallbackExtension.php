@@ -2,8 +2,8 @@
 
 /**
  *	This extension allows pages to have a fallback mapping for children that result in a page not found.
- *	@author Marcus Nyeholt <marcus@silverstripe.com.au>
- *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ *	@author Marcus Nyeholt <marcus@symbiote.com.au>
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
 class MisdirectionFallbackExtension extends DataExtension {

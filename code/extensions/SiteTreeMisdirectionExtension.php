@@ -2,7 +2,7 @@
 
 /**
  *	This extension provides vanity mapping directly from a page, and automatically creates the appropriate link mappings when replacing the default automated URL handling.
- *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
 class SiteTreeMisdirectionExtension extends DataExtension {

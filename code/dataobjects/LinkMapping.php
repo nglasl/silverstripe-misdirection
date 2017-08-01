@@ -2,7 +2,7 @@
 
 /**
  *	Simple and regular expression link redirection definitions.
- *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
 class LinkMapping extends DataObject {

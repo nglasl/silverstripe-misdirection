@@ -2,7 +2,7 @@
 
 /**
  *	Hooks into the current director response and appropriately redirects towards the highest priority link mapping that may have been defined.
- *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
 class MisdirectionRequestFilter implements RequestFilter {

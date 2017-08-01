@@ -3,7 +3,7 @@
 /**
  *	Instantiate a link mapping for each site tree version URL, recursively replaying the publish into a temporary table.
  *	NOTE: If disabling the temporary table usage, ensure the default table doesn't already exist.
- *	@author Rodney Way <rodney@silverstripe.com.au>
+ *	@author Rodney Way <rodney@symbiote.com.au>
  *
  *	@URLparameter live <{CREATE_LINK_MAPPINGS}> boolean
  */

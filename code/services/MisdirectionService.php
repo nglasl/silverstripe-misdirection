@@ -2,7 +2,7 @@
 
 /**
  *	Handles the link mapping recursion to return the eventual result, while providing any additional functionality required by the module.
- *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
 class MisdirectionService {

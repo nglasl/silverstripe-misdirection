@@ -2,8 +2,8 @@
 
 /**
  *	The misdirection specific unit testing.
- *	@author Nathan Glasl <nathan@silverstripe.com.au>
- *	@author Marcus Nyeholt <marcus@silverstripe.com.au>
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
+ *	@author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 
 class MisdirectionUnitTests extends SapphireTest {

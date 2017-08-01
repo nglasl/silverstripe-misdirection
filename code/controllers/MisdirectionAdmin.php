@@ -2,7 +2,7 @@
 
 /**
  *	Misdirection CMS interface for creating, managing and testing customisable link redirection mappings.
- *	@author Nathan Glasl <nathan@silverstripe.com.au>
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
 class MisdirectionAdmin extends ModelAdmin {
