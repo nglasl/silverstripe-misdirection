@@ -93,7 +93,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 			$responseCode = $map->ResponseCode;
 			if($responseCode == 0) {
-				$responseCode = 303;
+				$responseCode = 301;
 			}
 			else if(($responseCode == 301) && $map->ForwardPOSTRequest) {
 				$responseCode = 308;

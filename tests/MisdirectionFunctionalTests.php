@@ -69,7 +69,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 		// Determine whether the enforce misdirection is functioning correctly.
 
 		$response = $this->get('wrong/page');
-		$this->assertEquals($response->getStatusCode(), 303);
+		$this->assertEquals($response->getStatusCode(), 301);
 		$this->assertEquals($response->getHeader('Location'), '/correct/page');
 
 		// The CMS module needs to be present to test page behaviour.

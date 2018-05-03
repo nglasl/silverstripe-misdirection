@@ -78,6 +78,9 @@ class MisdirectionFallbackExtension extends DataExtension {
 				$selection[$code] = "{$code}: {$description}";
 			}
 		}
+		if(!$this->owner->FallbackResponseCode) {
+			$this->owner->FallbackResponseCode = 303;
+		}
 		$fields->addFieldToTab($tab, DropdownField::create(
 			'FallbackResponseCode',
 			'Response Code',

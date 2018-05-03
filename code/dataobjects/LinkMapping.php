@@ -25,7 +25,7 @@ class LinkMapping extends DataObject {
 	);
 
 	private static $defaults = array(
-		'ResponseCode' => 303
+		'ResponseCode' => 301
 	);
 
 	/**
@@ -46,16 +46,14 @@ class LinkMapping extends DataObject {
 		'LinkSummary',
 		'Priority',
 		'RedirectTypeSummary',
-		'RedirectPageTitle',
-		'isLive'
+		'RedirectPageTitle'
 	);
 
 	private static $field_labels = array(
 		'MappedLink' => 'Mapping',
 		'LinkSummary' => 'Redirection',
 		'RedirectTypeSummary' => 'Redirect Type',
-		'RedirectPageTitle' => 'Redirect Page Title',
-		'isLive' => 'Is Live?'
+		'RedirectPageTitle' => 'Redirect Page Title'
 	);
 
 	/**
