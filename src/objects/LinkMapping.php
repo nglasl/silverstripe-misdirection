@@ -1,11 +1,33 @@
 <?php
 
+namespace nglasl\misdirection;
+
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\HTTP;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\SelectionGroup;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\TreeDropdownField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Permission;
+use SilverStripe\View\Requirements;
+use Symbiote\Multisites\Multisites;
+
 /**
  *	Simple and regular expression link redirection definitions.
  *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
 class LinkMapping extends DataObject {
+
+	private static $table_name = 'LinkMapping';
 
 	/**
 	 *	Manually define the redirect page relationship when the CMS module is not present.
@@ -20,7 +42,6 @@ class LinkMapping extends DataObject {
 		'RedirectLink' => 'Varchar(255)',
 		'RedirectPageID' => 'Int',
 		'ResponseCode' => 'Int',
-		'ForwardPOSTRequest' => 'Boolean',
 		'HostnameRestriction' => 'Varchar(255)'
 	);
 
@@ -75,36 +96,20 @@ class LinkMapping extends DataObject {
 		$this->matchedURL = $matchedURL;
 	}
 
-	/**
-	 *	CMS users with appropriate access may view any mappings.
-	 */
-
 	public function canView($member = null) {
 
 		return true;
 	}
-
-	/**
-	 *	CMS administrators may edit any mappings.
-	 */
 
 	public function canEdit($member = null) {
 
 		return Permission::checkMember($member, 'ADMIN');
 	}
 
-	/**
-	 *	CMS administrators may create any mappings.
-	 */
-
-	public function canCreate($member = null) {
+	public function canCreate($member = null, $context = array()) {
 
 		return Permission::checkMember($member, 'ADMIN');
 	}
-
-	/**
-	 *	CMS administrators may delete any mappings.
-	 */
 
 	public function canDelete($member = null) {
 
@@ -122,14 +127,10 @@ class LinkMapping extends DataObject {
 		return $this->MappedLink;
 	}
 
-	/**
-	 *	Display CMS link mapping configuration.
-	 */
-
 	public function getCMSFields() {
 
 		$fields = parent::getCMSFields();
-		Requirements::css(MISDIRECTION_PATH . '/css/misdirection.css');
+		Requirements::css('nglasl/silverstripe-misdirection: client/css/misdirection.css');
 
 		// Remove any fields that are not required in their default state.
 
@@ -140,7 +141,6 @@ class LinkMapping extends DataObject {
 		$fields->removeByName('RedirectLink');
 		$fields->removeByName('RedirectPageID');
 		$fields->removeByName('ResponseCode');
-		$fields->removeByName('ForwardPOSTRequest');
 		$fields->removeByName('HostnameRestriction');
 
 		// Update any fields that are displayed.
@@ -161,12 +161,12 @@ class LinkMapping extends DataObject {
 			TextField::create(
 				'MappedLink',
 				''
-			)->setRightTitle('This should <strong>not</strong> include the <strong>HTTP/S</strong> scheme'),
+			)->addExtraClass('mapped-link')->setDescription('This should <strong>not</strong> include the <strong>HTTP/S</strong> scheme'),
 			CheckboxField::create(
 				'IncludesHostname',
 				'Includes Hostname?'
 			)
-		)->addExtraClass('mapped-link')->setTitle('URL');
+		)->setTitle('URL');
 		$fields->addFieldToTab('Root.Main', $URL);
 
 		// Generate the 1 - 10 priority selection.
@@ -188,15 +188,15 @@ class LinkMapping extends DataObject {
 			'Redirection',
 			3
 		));
-		$redirect = FieldGroup::create()->addExtraClass('redirect-link');
+		$redirect = FieldGroup::create();
 		$redirect->push(TextField::create(
 			'RedirectLink',
 			''
-		)->setRightTitle('This requires the <strong>HTTP/S</strong> scheme for an external URL'));
+		)->addExtraClass('redirect-link')->setDescription('This requires the <strong>HTTP/S</strong> scheme for an external URL'));
 
 		// Allow redirect page configuration when the CMS module is present.
 
-		if(ClassInfo::exists('SiteTree')) {
+		if(ClassInfo::exists(SiteTree::class)) {
 
 			// Allow redirect type configuration.
 
@@ -213,10 +213,10 @@ class LinkMapping extends DataObject {
 					'Page//To Page' => TreeDropdownField::create(
 						'RedirectPageID',
 						'',
-						'SiteTree'
+						SiteTree::class
 					)
 				)
-			)->addExtraClass('field redirect'));
+			));
 		}
 		else {
 			$redirect->setTitle('To URL');
@@ -226,7 +226,7 @@ class LinkMapping extends DataObject {
 		// Use third party validation against an external URL.
 
 		if($this->canEdit()) {
-			Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-link-mapping.js');
+			Requirements::javascript('nglasl/silverstripe-misdirection: client/javascript/misdirection-link-mapping.js');
 			$redirect->push(CheckboxField::create(
 				'ValidateExternal',
 				'Validate External URL?'
@@ -235,28 +235,18 @@ class LinkMapping extends DataObject {
 
 		// Retrieve the response code selection.
 
-		$responses = Config::inst()->get('SS_HTTPResponse', 'status_codes');
+		$responses = Config::inst()->get(MisdirectionRequestFilter::class, 'status_codes');
 		$selection = array();
 		foreach($responses as $code => $description) {
 			if(($code >= 300) && ($code < 400)) {
 				$selection[$code] = "{$code}: {$description}";
 			}
 		}
-
-		// Retrieve the response code configuration as a single grouping.
-
-		$response = FieldGroup::create(
-			DropdownField::create(
-				'ResponseCode',
-				'',
-				$selection
-			),
-			CheckboxField::create(
-				'ForwardPOSTRequest',
-				'Forward POST Request?'
-			)
-		)->addExtraClass('response')->setTitle('Response Code');
-		$fields->addFieldToTab('Root.Main', $response);
+		$fields->addFieldToTab('Root.Main', DropdownField::create(
+			'ResponseCode',
+			'Response Code',
+			$selection
+		));
 
 		// The optional hostname restriction is now deprecated.
 
@@ -282,14 +272,14 @@ class LinkMapping extends DataObject {
 
 		// Determine whether a regular expression mapping is possible to match against.
 
-		if($result->valid() && ($this->LinkType === 'Regular Expression') && (!$this->MappedLink || !is_numeric(@preg_match("%{$this->MappedLink}%", null)))) {
-			$result->error('Invalid regular expression!');
+		if($result->isValid() && ($this->LinkType === 'Regular Expression') && (!$this->MappedLink || !is_numeric(@preg_match("%{$this->MappedLink}%", null)))) {
+			$result->addError('Invalid regular expression!');
 		}
 
 		// Use third party validation to determine an external URL (https://gist.github.com/dperini/729294 and http://mathiasbynens.be/demo/url-regex).
 
-		else if($result->valid() && $this->ValidateExternal && $this->RedirectLink && !MisdirectionService::is_external_URL($this->RedirectLink)) {
-			$result->error('External URL validation failed!');
+		else if($result->isValid() && $this->ValidateExternal && $this->RedirectLink && !MisdirectionService::is_external_URL($this->RedirectLink)) {
+			$result->addError('External URL validation failed!');
 		}
 
 		// Allow extension customisation.
@@ -318,7 +308,7 @@ class LinkMapping extends DataObject {
 
 	public function getRedirectPage() {
 
-		return (ClassInfo::exists('SiteTree') && $this->RedirectPageID) ? SiteTree::get_by_id('SiteTree', $this->RedirectPageID) : null;
+		return (ClassInfo::exists(SiteTree::class) && $this->RedirectPageID) ? SiteTree::get()->byID($this->RedirectPageID) : null;
 	}
 
 	/**
@@ -350,7 +340,7 @@ class LinkMapping extends DataObject {
 
 				$prepended = Controller::join_links(Director::baseURL(), $link);
 				if(MisdirectionService::is_external_URL($link)) {
-					return ClassInfo::exists('Multisites') ? HTTP::setGetVar('misdirected', true, $link) : $link;
+					return ClassInfo::exists(Multisites::class) ? HTTP::setGetVar('misdirected', true, $link) : $link;
 				}
 
 				// This is needed, otherwise infinitely recursive mappings won't be detected in advance.

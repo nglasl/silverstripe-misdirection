@@ -1,8 +1,8 @@
 ---
 name: misdirection-request-filters
 ---
-Injector:
-  RequestProcessor:
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\RequestProcessor:
     properties:
       filters:
-        - '%$MisdirectionRequestFilter'
+        - '%$nglasl\misdirection\MisdirectionRequestFilter'

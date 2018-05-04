@@ -1,0 +1,11 @@
+mappings:
+  MisdirectionAdmin: 'nglasl\misdirection\MisdirectionAdmin'
+  MisdirectionAdminTestingExtension: 'nglasl\misdirection\MisdirectionAdminTestingExtension'
+  MisdirectionFallbackExtension: 'nglasl\misdirection\MisdirectionFallbackExtension'
+  SiteTreeMisdirectionExtension: 'nglasl\misdirection\SiteTreeMisdirectionExtension'
+  MisdirectionTesting: 'nglasl\misdirection\MisdirectionTesting'
+  LinkMapping: 'nglasl\misdirection\LinkMapping'
+  MisdirectionRequestFilter: 'nglasl\misdirection\MisdirectionRequestFilter'
+  MisdirectionService: 'nglasl\misdirection\MisdirectionService'
+  MisdirectionFunctionalTests: 'nglasl\misdirection\tests\MisdirectionFunctionalTests'
+  MisdirectionUnitTests: 'nglasl\misdirection\tests\MisdirectionUnitTests'

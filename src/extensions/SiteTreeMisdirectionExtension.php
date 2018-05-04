@@ -1,5 +1,15 @@
 <?php
 
+namespace nglasl\misdirection;
+
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+
 /**
  *	This extension provides vanity mapping directly from a page, and automatically creates the appropriate link mappings when replacing the default automated URL handling.
  *	@author Nathan Glasl <nathan@symbiote.com.au>
@@ -12,7 +22,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	 */
 
 	private static $has_one = array(
-		'VanityMapping' => 'LinkMapping'
+		'VanityMapping' => LinkMapping::class
 	);
 
 	/**
@@ -25,7 +35,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			'VanityHeader',
 			'Vanity'
 		));
-		if($this->owner->VanityMapping()->RedirectPageID !== $this->owner->ID) {
+		if($this->owner->VanityMapping()->RedirectPageID != $this->owner->ID) {
 
 			// The mapping may have been pointed to another page.
 
@@ -35,7 +45,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			'VanityURL',
 			'URL',
 			$this->owner->VanityMapping()->MappedLink
-		)->setRightTitle('Mappings with higher priority will take precedence over this'));
+		)->setDescription('Mappings with higher priority will take precedence over this'));
 
 		// Allow extension customisation.
 
@@ -73,7 +83,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			// Instantiate the vanity mapping.
 
-			$mapping = singleton('MisdirectionService')->createPageMapping($vanityURL, $this->owner->ID, 2);
+			$mapping = singleton(MisdirectionService::class)->createPageMapping($vanityURL, $this->owner->ID, 2);
 			$this->owner->VanityMappingID = $mapping->ID;
 		}
 
@@ -97,7 +107,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 		// Determine whether the default automated URL handling has been replaced.
 
-		if(Config::inst()->get('MisdirectionRequestFilter', 'replace_default')) {
+		if(Config::inst()->get(MisdirectionRequestFilter::class, 'replace_default')) {
 
 			// Determine whether the URL segment or parent ID has been updated.
 
@@ -112,15 +122,15 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 					// Determine the page URL.
 
 					$parentID = (isset($changed['ParentID']['before']) ? $changed['ParentID']['before'] : $this->owner->ParentID);
-					$parent = SiteTree::get_one('SiteTree', "SiteTree.ID = {$parentID}");
+					$parent = SiteTree::get_one(SiteTree::class, "SiteTree.ID = {$parentID}");
 					while($parent) {
 						$URL = Controller::join_links($parent->URLSegment, $URL);
-						$parent = SiteTree::get_one('SiteTree', "SiteTree.ID = {$parent->ParentID}");
+						$parent = SiteTree::get_one(SiteTree::class, "SiteTree.ID = {$parent->ParentID}");
 					}
 
 					// Instantiate a link mapping for this page.
 
-					singleton('MisdirectionService')->createPageMapping($URL, $this->owner->ID);
+					singleton(MisdirectionService::class)->createPageMapping($URL, $this->owner->ID);
 
 					// Purge any link mappings that point back to the same page.
 
@@ -147,7 +157,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 		// Determine whether this page has been completely removed.
 
-		if(Config::inst()->get('MisdirectionRequestFilter', 'replace_default') && !$this->owner->isPublished() && $this->owner->getIsDeletedFromStage()) {
+		if(Config::inst()->get(MisdirectionRequestFilter::class, 'replace_default') && !$this->owner->isPublished() && !$this->owner->isOnDraft()) {
 
 			// Convert any link mappings that are directly associated with this page.
 
@@ -193,7 +203,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			// Instantiate a link mapping for this page.
 
 			$URL = Controller::join_links($baseURL, $child->URLSegment);
-			singleton('MisdirectionService')->createPageMapping($URL, $child->ID);
+			singleton(MisdirectionService::class)->createPageMapping($URL, $child->ID);
 
 			// Purge any link mappings that point back to the same page.
 

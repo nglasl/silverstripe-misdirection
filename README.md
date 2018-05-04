@@ -1,12 +1,12 @@
 # [misdirection](https://packagist.org/packages/nglasl/silverstripe-misdirection)
 
-_The current release is **2.2.26**_
+_The current release is **3.0.0**_
 
-> A module for SilverStripe which will allow both simple and regular expression link redirections based on customisable mappings, either hooking into a page not found or replacing the default automated URL handling.
+> This module allows both simple and regular expression link redirections based on customisable mappings, either hooking into a page not found or replacing the default automated URL handling.
 
 ## Requirement
 
-* SilverStripe 3.1 → **3.5**
+* SilverStripe 3.1 → **4.0**
 
 This module does **not** require the CMS.
 
@@ -24,25 +24,25 @@ This module does **not** require the CMS.
 
 These allow both simple and regular expression link redirections, and can be used for legacy page redirection, vanity URLs (more below), or redirection based on specific URL patterns.
 
-![link-mapping](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/images/misdirection-link-mapping.png)
+![link-mapping](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/client/images/misdirection-link-mapping.png)
 
 The link mapping with the highest priority (followed by greatest specificity) will be used, and replaces the default automated URL handling out of the box. This default behaviour may be configured to only hook into a page not found:
 
 ```yaml
-MisdirectionRequestFilter:
+nglasl\misdirection\MisdirectionRequestFilter:
   enforce_misdirection: false
 ```
 
 When there are multiple matches, the link mapping first created will be used. This default behaviour may be configured to prioritise the link mapping most recently created:
 
 ```yaml
-LinkMapping:
+nglasl\misdirection\LinkMapping:
   priority: 'DESC'
 ```
 
 ### Vanity URLs and Fallbacks
 
-![vanity-URLs-and-fallbacks](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/images/misdirection-vanity-URLs-and-fallbacks.png)
+![vanity-URLs-and-fallbacks](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/client/images/misdirection-vanity-URLs-and-fallbacks.png)
 
 #### Vanity URLs
 
@@ -61,16 +61,16 @@ The link mappings are processed server side to prevent inefficient and problemat
 
 When you want to see exactly what is happening behind the scenes for a given URL, the model admin provides a powerful testing interface!
 
-![testing](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/images/misdirection-testing.png)
+![testing](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/client/images/misdirection-testing.png)
 
 Once a maximum number of requests has been reached, the server will respond with a page not found. The following is the default configuration:
 
 ```yaml
-MisdirectionRequestFilter:
+nglasl\misdirection\MisdirectionRequestFilter:
   maximum_requests: 9
 ```
 
-![testing-maximum-requests](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/images/misdirection-testing-maximum-requests.png)
+![testing-maximum-requests](https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/client/images/misdirection-testing-maximum-requests.png)
 
 #### Bypassing Misdirection
 
@@ -81,15 +81,11 @@ It is possible to bypass the request filter completely by appending `?misdirecte
 This may be completely replaced, in which case legacy URLs will no longer resolve based on page version history.
 
 ```yaml
-MisdirectionRequestFilter:
+nglasl\misdirection\MisdirectionRequestFilter:
   replace_default: true
 ```
 
 When a page is moved, the appropriate link mappings are automatically created and maintained. This allows full control over which legacy URLs remain in the system.
-
-#### Historical Link Mappings
-
-To ensure the current page version history remains, `/dev/tasks/MisdirectionHistoricalLinkMappingsTask` may be used to instantiate the appropriate link mappings. However, this task is currently only supported by `MySQL`.
 
 ## Maintainer Contact
 

@@ -1,8 +1,18 @@
 <?php
 
+namespace nglasl\misdirection;
+
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\View\Requirements;
+
 /**
  *	This extension allows pages to have a fallback mapping for children that result in a page not found.
- *	@author Marcus Nyeholt <marcus@symbiote.com.au>
  *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
@@ -38,7 +48,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 
 	public function updateFields($fields) {
 
-		Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-fallback.js');
+		Requirements::javascript('nglasl/silverstripe-misdirection: client/javascript/misdirection-fallback.js');
 
 		// Update any fields that are displayed when not viewing a page.
 
@@ -63,15 +73,15 @@ class MisdirectionFallbackExtension extends DataExtension {
 			'Fallback',
 			'To',
 			$options
-		)->addExtraClass('fallback')->setHasEmptyDefault(true)->setRightTitle('This will be used when children result in a <strong>page not found</strong>'));
+		)->addExtraClass('fallback')->setHasEmptyDefault(true)->setDescription('This will be used when children result in a <strong>page not found</strong>'));
 		$fields->addFieldToTab($tab, TextField::create(
 			'FallbackLink',
 			'URL'
-		)->addExtraClass('fallback-link')->setRightTitle('This requires the <strong>HTTP/S</strong> scheme for an external URL'));
+		)->addExtraClass('fallback-link')->setDescription('This requires the <strong>HTTP/S</strong> scheme for an external URL'));
 
 		// Retrieve the response code selection.
 
-		$responses = Config::inst()->get('SS_HTTPResponse', 'status_codes');
+		$responses = Config::inst()->get(MisdirectionRequestFilter::class, 'status_codes');
 		$selection = array();
 		foreach($responses as $code => $description) {
 			if(($code >= 300) && ($code < 400)) {

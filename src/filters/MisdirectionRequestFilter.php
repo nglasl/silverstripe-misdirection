@@ -1,5 +1,16 @@
 <?php
 
+namespace nglasl\misdirection;
+
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Control\RequestFilter;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\ErrorPage\ErrorPage;
+
 /**
  *	Hooks into the current director response and appropriately redirects towards the highest priority link mapping that may have been defined.
  *	@author Nathan Glasl <nathan@symbiote.com.au>
@@ -10,7 +21,21 @@ class MisdirectionRequestFilter implements RequestFilter {
 	public $service;
 
 	private static $dependencies = array(
-		'service' => '%$MisdirectionService'
+		'service' => '%$' . MisdirectionService::class
+	);
+
+	/**
+	 *	The status codes for redirection, since the core definitions are protected.
+	 */
+
+	private static $status_codes = array(
+		301 => 'Moved Permanently',
+		302 => 'Found',
+		303 => 'See Other',
+		304 => 'Not Modified',
+		305 => 'Use Proxy',
+		307 => 'Temporary Redirect',
+		308 => 'Permanent Redirect'
 	);
 
 	/**
@@ -27,7 +52,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 	private static $maximum_requests = 9;
 
-	public function preRequest(SS_HTTPRequest $request, Session $session, DataModel $model) {
+	public function preRequest(HTTPRequest $request) {
 
 		return true;
 	}
@@ -38,7 +63,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 	 *	@URLparameter misdirected <{BYPASS_LINK_MAPPINGS}> boolean
 	 */
 
-	public function postRequest(SS_HTTPRequest $request, SS_HTTPResponse $response, DataModel $model) {
+	public function postRequest(HTTPRequest $request, HTTPResponse $response) {
 
 		// Bypass the request filter when requesting specific director rules such as "/admin".
 
@@ -50,7 +75,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 			'CMSSecurity',
 			'dev'
 		);
-		foreach($configuration->get('Director', 'rules') as $segment => $controller) {
+		foreach($configuration->get(Director::class, 'rules') as $segment => $controller) {
 
 			// Retrieve the specific director rules.
 
@@ -85,8 +110,8 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 		// Determine whether we're either hooking into a page not found or replacing the default automated URL handling.
 
-		$enforce = $configuration->get('MisdirectionRequestFilter', 'enforce_misdirection');
-		$replace = $configuration->get('MisdirectionRequestFilter', 'replace_default');
+		$enforce = $configuration->get(MisdirectionRequestFilter::class, 'enforce_misdirection');
+		$replace = $configuration->get(MisdirectionRequestFilter::class, 'replace_default');
 		if(($error || $enforce || $replace) && ($map = $this->service->getMappingByRequest($request))) {
 
 			// Update the response code where appropriate.
@@ -94,12 +119,6 @@ class MisdirectionRequestFilter implements RequestFilter {
 			$responseCode = $map->ResponseCode;
 			if($responseCode == 0) {
 				$responseCode = 301;
-			}
-			else if(($responseCode == 301) && $map->ForwardPOSTRequest) {
-				$responseCode = 308;
-			}
-			else if(($responseCode == 303) && $map->ForwardPOSTRequest) {
-				$responseCode = 307;
 			}
 
 			// Determine the home page URL when replacing the default automated URL handling.
@@ -140,7 +159,7 @@ class MisdirectionRequestFilter implements RequestFilter {
 
 			// Retrieve the appropriate page not found response.
 
-			(ClassInfo::exists('SiteTree') && ($page = ErrorPage::response_for(404))) ? $response->setBody($page->getBody()) : $response->setBody('No URL was matched!');
+			(ClassInfo::exists(SiteTree::class) && ($page = ErrorPage::response_for(404))) ? $response->setBody($page->getBody()) : $response->setBody('No URL was matched!');
 		}
 
 		// Continue processing the response.

@@ -1,5 +1,18 @@
 <?php
 
+namespace nglasl\misdirection;
+
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\HTTP;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Convert;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\SiteConfig\SiteConfig;
+use Symbiote\Multisites\Multisites;
+
 /**
  *	Handles the link mapping recursion to return the eventual result, while providing any additional functionality required by the module.
  *	@author Nathan Glasl <nathan@symbiote.com.au>
@@ -35,7 +48,7 @@ class MisdirectionService {
 	/**
 	 *	Retrieve the appropriate link mapping for a request, with the ability to enable testing and return the recursion stack.
 	 *
-	 *	@parameter <{REQUEST}> ss http request
+	 *	@parameter <{REQUEST}> http request
 	 *	@parameter <{RETURN_STACK}> boolean
 	 *	@return link mapping
 	 */
@@ -114,7 +127,7 @@ class MisdirectionService {
 			'Priority' => 'DESC',
 			'LinkType' => 'DESC',
 			'MappedLink' => 'DESC',
-			'ID' => Config::inst()->get('LinkMapping', 'priority')
+			'ID' => Config::inst()->get(LinkMapping::class, 'priority')
 		));
 
 		// Determine which link mapping should be returned, based on the sort order.
@@ -192,7 +205,7 @@ class MisdirectionService {
 
 			// Enforce a maximum number of redirects, preventing infinite recursion and inefficient link mappings.
 
-			if($counter === Config::inst()->get('MisdirectionRequestFilter', 'maximum_requests')) {
+			if($counter === Config::inst()->get(MisdirectionRequestFilter::class, 'maximum_requests')) {
 				$chain[] = array(
 					'ResponseCode' => 404
 				);
@@ -232,7 +245,7 @@ class MisdirectionService {
 
 		// Make sure the CMS module is present.
 
-		if(ClassInfo::exists('SiteTree') && $URL) {
+		if(ClassInfo::exists(SiteTree::class) && $URL) {
 
 			// Instantiate the required variables.
 
@@ -259,7 +272,7 @@ class MisdirectionService {
 
 			// This is required to support multiple sites.
 
-			if(ClassInfo::exists('Multisites') && ($parent = Multisites::inst()->getCurrentSite())) {
+			if(ClassInfo::exists(Multisites::class) && ($parent = Multisites::inst()->getCurrentSite())) {
 				$parentID = $parent->ID;
 				if($parent->Fallback) {
 					$applicableRule = $parent->Fallback;
@@ -322,7 +335,7 @@ class MisdirectionService {
 
 						// When appropriate, prepend the base URL to match a page redirection.
 
-						$link = self::is_external_URL($toURL) ? (ClassInfo::exists('Multisites') ? HTTP::setGetVar('misdirected', true, $toURL) : $toURL) : ('/' . HTTP::setGetVar('misdirected', true, Controller::join_links(Director::baseURL(), $toURL)));
+						$link = self::is_external_URL($toURL) ? (ClassInfo::exists(Multisites::class) ? HTTP::setGetVar('misdirected', true, $toURL) : $toURL) : ('/' . HTTP::setGetVar('misdirected', true, Controller::join_links(Director::baseURL(), $toURL)));
 						break;
 				}
 				if($link) {

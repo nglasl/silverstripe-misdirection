@@ -1,12 +1,23 @@
 <?php
 
+namespace nglasl\misdirection\tests;
+
+use nglasl\misdirection\LinkMapping;
+use nglasl\misdirection\MisdirectionService;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Dev\SapphireTest;
+use Symbiote\Multisites\Multisites;
+
 /**
  *	The misdirection specific unit testing.
  *	@author Nathan Glasl <nathan@symbiote.com.au>
- *	@author Marcus Nyeholt <marcus@symbiote.com.au>
  */
 
-class MisdirectionUnitTests extends SapphireTest {
+class UnitTests extends SapphireTest {
+
+	protected $usesDatabase = true;
 
 	/**
 	 *	The test to ensure the simple link mappings are functioning correctly.
@@ -34,12 +45,12 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Instantiate a request to use.
 
-		$request = new SS_HTTPRequest('GET', 'wrong/page');
+		$request = new HTTPRequest('GET', 'wrong/page');
 
 		// Determine whether the simple link mappings are functioning correctly.
 
 		$testing = true;
-		$service = singleton('MisdirectionService');
+		$service = singleton(MisdirectionService::class);
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
@@ -58,10 +69,6 @@ class MisdirectionUnitTests extends SapphireTest {
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
-
-		// The database needs to be emptied to prevent further testing conflict.
-
-		self::empty_temp_db();
 	}
 
 	/**
@@ -83,11 +90,7 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Determine whether the regular expression replacement is correct.
 
-		$this->assertEquals($mapping->getLink(), ClassInfo::exists('Multisites') ? 'https://www.correct.com/page?misdirected=1' : 'https://www.correct.com/page');
-
-		// The database needs to be emptied to prevent further testing conflict.
-
-		self::empty_temp_db();
+		$this->assertEquals($mapping->getLink(), ClassInfo::exists(Multisites::class) ? 'https://www.correct.com/page?misdirected=1' : 'https://www.correct.com/page');
 	}
 
 	/**
@@ -116,12 +119,12 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Instantiate a request to use.
 
-		$request = new SS_HTTPRequest('GET', 'wrong/page');
+		$request = new HTTPRequest('GET', 'wrong/page');
 
 		// Determine whether the regular expression link mappings are functioning correctly.
 
 		$testing = true;
-		$service = singleton('MisdirectionService');
+		$service = singleton(MisdirectionService::class);
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
@@ -140,10 +143,6 @@ class MisdirectionUnitTests extends SapphireTest {
 		$this->assertEquals(count($chain), 2);
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->getLink(), '/correct/page');
-
-		// The database needs to be emptied to prevent further testing conflict.
-
-		self::empty_temp_db();
 	}
 
 	/**
@@ -173,12 +172,12 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Instantiate a request to use.
 
-		$request = new SS_HTTPRequest('GET', 'wrong/page');
+		$request = new HTTPRequest('GET', 'wrong/page');
 
 		// Determine whether the link mapping first created is matched.
 
 		$testing = true;
-		$service = singleton('MisdirectionService');
+		$service = singleton(MisdirectionService::class);
 		$chain = $service->getMappingByRequest($request, $testing);
 		$this->assertEquals(count($chain), 1);
 		$match = end($chain);
@@ -186,7 +185,7 @@ class MisdirectionUnitTests extends SapphireTest {
 
 		// Update the default link mapping priority.
 
-		Config::inst()->update('LinkMapping', 'priority', 'DESC');
+		Config::modify()->set(LinkMapping::class, 'priority', 'DESC');
 
 		// Determine whether the link mapping most recently created is matched.
 
@@ -206,10 +205,6 @@ class MisdirectionUnitTests extends SapphireTest {
 		$this->assertEquals(count($chain), 1);
 		$match = end($chain);
 		$this->assertEquals($match['LinkMapping']->ID, $first->ID);
-
-		// The database needs to be emptied to prevent further testing conflict.
-
-		self::empty_temp_db();
 	}
 
 }

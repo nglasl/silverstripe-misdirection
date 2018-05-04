@@ -35,7 +35,7 @@
 		// Test the link mapping chain.
 
 		var URL = input ? input.val() : $('div.misdirection-testing.admin input.url').val();
-		$.getJSON('admin/misdirection/LinkMapping/getMappingChain', {
+		$.getJSON('admin/misdirection/nglasl-misdirection-LinkMapping/getMappingChain', {
 			map: URL
 		},
 		function(JSON) {
@@ -49,7 +49,7 @@
 
 					output += "<div class='result'>";
 					if(object['ResponseCode'] !== 404) {
-						output += '<h3><strong>' + object['Counter'] + '</strong></h3>';
+						output += "<div class='h3'><strong>" + object['Counter'] + '</strong></div>';
 						output += '<div><strong>Link Type</strong> ' + object['LinkType'] + '</div>';
 						output += '<div><strong>Mapped Link</strong> ' + object['MappedLink'].replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
 						output += '<div><strong>Redirect Link</strong> ' + object['RedirectLink'].replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
@@ -57,15 +57,15 @@
 						output += '<div><strong>Priority</strong> ' + object['Priority'] + '</div>';
 					}
 					else {
-						output += '<h3><strong>Maximum</strong></h3>';
+						output += "<div class='h3'><strong>Maximum</strong></div>";
 						output += '<div><strong>Response Code</strong> ' + object['ResponseCode'] + '</div>';
 					}
 					output += '</div>';
 				});
 			}
 			else {
-				output += "<div class='result'>";
-				output += '<h3><strong>No Matches</strong></h3>';
+				output += "<div class='result no-matches'>";
+				output += "<div class='h3'><strong>No Matches</strong></div>";
 				output += '</div>';
 			}
 
@@ -83,26 +83,26 @@
 		enable($(this));
 	});
 
-	page.on('change', 'div.misdirection-testing.admin input.url', function() {
+	page.on('blur', 'div.misdirection-testing.admin input.url', function() {
 
 		// Make sure the edit form doesn't detect changes.
 
-		$('#Form_EditForm').removeClass('changed');
+		$('form#Form_EditForm').removeClass('changed');
 	});
 
 	// The testing.
 
-	page.on('keydown', 'div.misdirection-testing.admin input.url', function(event) {
+	page.on('keydown', 'div.misdirection-testing.admin input.url, div.misdirection-testing.admin span.test', function(event) {
 
 		// Trigger a test request on pressing enter.
 
 		if(event.keyCode === 13) {
-			var input = $(this);
+			var input = $('div.misdirection-testing.admin input.url');
 			if(input.val().length > 0) {
 
 				// Test the link mapping chain for the given URL, and render this to the user.
 
-				test();
+				test(input);
 			}
 			return false;
 		}

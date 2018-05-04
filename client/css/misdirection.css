@@ -1,0 +1,75 @@
+
+/**
+ *	The misdirection specific styling.
+ *	@author Nathan Glasl <nathan@symbiote.com.au>
+ */
+
+div.misdirection-testing.admin {
+	background: #005A93;
+	color: white;
+	padding: 10px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+div.misdirection-testing.admin div {
+	margin-bottom: 10px;
+}
+
+div.misdirection-testing.admin div.wrapper {
+	white-space: nowrap;
+}
+
+div.misdirection-testing.admin input.url {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.misdirection-testing.admin span.test.disabled {
+	filter: Alpha(opacity = 40);
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+div.misdirection-testing.admin div.results {
+	overflow: hidden;
+	margin-bottom: 0;
+}
+
+/* Preload the required image to avoid performance issues. */
+
+body:after {
+	display: none;
+	content: url('../images/loading.gif');
+}
+
+div.misdirection-testing.admin div.results.loading {
+	min-height: 40px;
+	background: url('../images/loading.gif') no-repeat left center;
+}
+
+div.misdirection-testing.admin div.result {
+	float: left;
+	width: 18%;
+	margin: 10px 1% 0;
+}
+
+div.misdirection-testing.admin div.result:not(.no-matches) {
+	word-wrap: break-word;
+}
+
+/* This is used to correct the float height issue, however will not be supported by IE8. */
+
+div.misdirection-testing.admin div.result:nth-child(5n+1) {
+	clear: both;
+}
+
+div.misdirection-testing.admin div.result div.h3 {
+	text-decoration: underline;
+}
+
+div.mapped-link,
+div.redirect-link {
+	width: 50%;
+}

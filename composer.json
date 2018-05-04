@@ -1,7 +1,7 @@
 {
 	"name": "nglasl/silverstripe-misdirection",
-	"description": "A module for SilverStripe which will allow both simple and regular expression link redirections based on customisable mappings, either hooking into a page not found or replacing the default automated URL handling.",
-	"type": "silverstripe-module",
+	"description": "This module allows both simple and regular expression link redirections based on customisable mappings, either hooking into a page not found or replacing the default automated URL handling.",
+	"type": "silverstripe-vendormodule",
 	"keywords": [
 		"silverstripe",
 		"link mapping",
@@ -20,15 +20,27 @@
 		"email": "nathan@symbiote.com.au"
 	}],
 	"require": {
-		"silverstripe/framework": "~3.2"
+		"silverstripe/framework": "~4.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"nglasl\\misdirection\\": [
+				"src/controllers/",
+				"src/extensions/",
+				"src/forms/",
+				"src/objects/",
+				"src/filters/",
+				"src/services/"
+			],
+			"nglasl\\misdirection\\tests\\": "tests/"
+		}
 	},
 	"extra": {
-		"installer-name": "misdirection",
 		"branch-alias": {
-			"dev-master": "2.2.x-dev"
+			"dev-master": "3.0.x-dev"
 		},
-		"screenshots": [
-			"https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/images/misdirection-testing.png"
+		"expose": [
+			"client"
 		]
 	}
 }

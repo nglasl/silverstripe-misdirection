@@ -1,5 +1,12 @@
 <?php
 
+namespace nglasl\misdirection;
+
+use SilverStripe\Core\Extension;
+use SilverStripe\Security\Member;
+use SilverStripe\Security\Permission;
+use SilverStripe\View\Requirements;
+
 /**
  *	This extension adds the testing interface used to view the link mapping recursion stack.
  *	@author Nathan Glasl <nathan@symbiote.com.au>
@@ -13,7 +20,7 @@ class MisdirectionAdminTestingExtension extends Extension {
 
 	public function updateEditForm($form) {
 
-		Requirements::css(MISDIRECTION_PATH . '/css/misdirection.css');
+		Requirements::css('nglasl/silverstripe-misdirection: client/css/misdirection.css');
 
 		// Restrict this functionality to administrators.
 
@@ -24,7 +31,7 @@ class MisdirectionAdminTestingExtension extends Extension {
 
 				// Add the required HTML fragment.
 
-				Requirements::javascript(MISDIRECTION_PATH . '/javascript/misdirection-testing.js');
+				Requirements::javascript('nglasl/silverstripe-misdirection: client/javascript/misdirection-testing.js');
 				$configuration = $gridfield->config;
 				$configuration->addComponent(new MisdirectionTesting());
 			}

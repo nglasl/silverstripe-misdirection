@@ -1,11 +1,26 @@
 <?php
 
+namespace nglasl\misdirection\tests;
+
+use nglasl\misdirection\LinkMapping;
+use nglasl\misdirection\MisdirectionRequestFilter;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Dev\FunctionalTest;
+use SilverStripe\Security\Member;
+use Symbiote\Multisites\Multisites;
+
 /**
  *	The misdirection specific functional testing.
  *	@author Nathan Glasl <nathan@symbiote.com.au>
  */
 
-class MisdirectionFunctionalTests extends FunctionalTest {
+class FunctionalTests extends FunctionalTest {
+
+	protected $usesDatabase = true;
 
 	/**
 	 *	This is to prevent following the request filter's redirect.
@@ -39,12 +54,12 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 
 		// The CMS module needs to be present to test page behaviour.
 
-		if(ClassInfo::exists('SiteTree')) {
+		if(ClassInfo::exists(SiteTree::class)) {
 
 			// This is required to support multiple sites.
 
 			$this->logInAs(Member::default_admin());
-			$parentID = ClassInfo::exists('Multisites') ? Multisites::inst()->getCurrentSiteId() : 0;
+			$parentID = ClassInfo::exists(Multisites::class) ? Multisites::inst()->getCurrentSiteId() : 0;
 
 			// Instantiate pages to use.
 
@@ -55,7 +70,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 				)
 			);
 			$first->writeToStage('Stage');
-			$first->writeToStage('Live');
+			$first->publishRecursive();
 			$second = SiteTree::create(
 				array(
 					'URLSegment' => 'page',
@@ -63,7 +78,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 				)
 			);
 			$second->writeToStage('Stage');
-			$second->writeToStage('Live');
+			$second->publishRecursive();
 		}
 
 		// Determine whether the enforce misdirection is functioning correctly.
@@ -74,11 +89,11 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 
 		// The CMS module needs to be present to test page behaviour.
 
-		if(ClassInfo::exists('SiteTree')) {
+		if(ClassInfo::exists(SiteTree::class)) {
 
 			// Update the default enforce misdirection.
 
-			Config::inst()->update('MisdirectionRequestFilter', 'enforce_misdirection', false);
+			Config::modify()->set(MisdirectionRequestFilter::class, 'enforce_misdirection', false);
 
 			// Determine whether the page is now matched.
 
@@ -90,7 +105,7 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 
 			$first->Fallback = 'Nearest';
 			$first->writeToStage('Stage');
-			$first->writeToStage('Live');
+			$first->publishRecursive();
 
 			// The database needs to be cleaned up to prevent further testing conflict.
 
@@ -104,11 +119,17 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 			$this->assertEquals($response->getStatusCode(), 303);
 			$this->assertEquals($response->getHeader('Location'), '/wrong/?misdirected=1');
 		}
+		else {
+
+			// The database needs to be cleaned up to prevent further testing conflict.
+
+			$mapping->delete();
+		}
 
 		// Instantiate a director rule to use.
 
-		Config::inst()->update('Director', 'rules', array(
-			'wrong/page' => 'Controller'
+		Config::modify()->set(Director::class, 'rules', array(
+			'wrong/page' => Controller::class
 		));
 
 		// Determine whether the director rule is matched.
@@ -116,10 +137,6 @@ class MisdirectionFunctionalTests extends FunctionalTest {
 		$response = $this->get('wrong/page');
 		$this->assertEquals($response->getStatusCode(), 200);
 		$this->assertEquals($response->getHeader('Location'), null);
-
-		// The database needs to be emptied to prevent further testing conflict.
-
-		self::empty_temp_db();
 	}
 
 }
