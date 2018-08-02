@@ -109,4 +109,26 @@ class MisdirectionAdmin extends ModelAdmin {
 		}
 	}
 
+    /**
+     * Export all domain model fields, instead of display fields
+     * @return array all fields in the model
+     */
+    public function getExportFields()
+    {
+        $fields = array();
+        $fields['LinkType'] = 'LinkType';
+        $fields['MappedLink'] = 'MappedLink';
+        $fields['IncludesHostname'] = 'IncludesHostname';
+        $fields['Priority'] = 'Priority';
+        $fields['RedirectType'] = 'RedirectType';
+        $fields['RedirectLink'] = 'RedirectLink';
+        $fields['RedirectPageID'] = 'RedirectPageID';
+        $fields['ResponseCode'] = 'ResponseCode';
+        $fields['ForwardPOSTRequest'] = 'ForwardPOSTRequest';
+        $fields['HostnameRestriction'] = 'HostnameRestriction';
+
+        return $fields;
+    }
+
+
 }
