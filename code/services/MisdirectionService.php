@@ -283,7 +283,7 @@ class MisdirectionService {
 
 					// Determine the home page URL when appropriate.
 
-					$link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link();
+				    $link = preg_replace('/\/'.RootURLController::get_homepage_link().'[\/]?$/', '/', $page->Link());
 					$nearestParent = $link;
 
 					// Keep track of the current page fallback.

@@ -124,7 +124,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 					// Purge any link mappings that point back to the same page.
 
-					$this->owner->regulateMappings(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link(), $this->owner->ID);
+					$this->owner->regulateMappings(preg_replace('/\/'.RootURLController::get_homepage_link().'[\/]?$/', '/', $this->owner->Link()), $this->owner->ID);
 
 					// Recursively create link mappings for any children.
 
@@ -157,7 +157,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 			));
 			foreach($mappings as $mapping) {
 				$mapping->RedirectType = 'Link';
-				$mapping->RedirectLink = Director::makeRelative(($this->owner->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $this->owner->Link());
+				$mapping->RedirectLink = Director::makeRelative(preg_replace('/\/'.RootURLController::get_homepage_link().'[\/]?$/', '/', $this->owner->Link()));
 				$mapping->write();
 			}
 		}
@@ -197,7 +197,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 			// Purge any link mappings that point back to the same page.
 
-			$this->owner->regulateMappings(($child->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $child->Link(), $child->ID);
+			$this->owner->regulateMappings(preg_replace('/\/'.RootURLController::get_homepage_link().'[\/]?$/', '/', $child->Link()), $child->ID);
 
 			// Recursively create link mappings for any children.
 
