@@ -333,7 +333,7 @@ class LinkMapping extends DataObject {
 
 			// Determine the home page URL when appropriate.
 
-			if(($page = $this->getRedirectPage()) && ($link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) {
+		    if(($page = $this->getRedirectPage()) && ($link = preg_replace('/\/'.RootURLController::get_homepage_link().'[\/]?$/', '/', $page->Link()))) {
 
 				// This is to support multiple sites, where the absolute page URLs are treated as relative.
 
@@ -381,7 +381,7 @@ class LinkMapping extends DataObject {
 
 			// Determine the home page URL when appropriate.
 
-			if(($page = $this->getRedirectPage()) && ($link = ($page->Link() === Director::baseURL()) ? Controller::join_links(Director::baseURL(), 'home/') : $page->Link())) {
+		    if(($page = $this->getRedirectPage()) && ($link = preg_replace('/\/'.RootURLController::get_homepage_link().'[\/]?$/', '/', $page->Link()))) {
 
 				// Determine whether a redirection hostname exists.
 
@@ -413,7 +413,7 @@ class LinkMapping extends DataObject {
 
 	public function getLinkSummary() {
 
-		return ($link = $this->getLink()) ? trim($link, ' ?/') : '-';
+		return ($link = $this->getLink()) ? $link : '-';
 	}
 
 	/**
