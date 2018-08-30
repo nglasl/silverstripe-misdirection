@@ -103,11 +103,21 @@ class MisdirectionRequestFilter implements RequestFilter {
 			}
 
 			// Determine the home page URL when replacing the default automated URL handling.
-
 			$link = $map->getLink();
 
-			// Update the response using the link mapping redirection.
+            // append a parameter to the URL to notify the source of the redirected domain to the target domain
+            // using the HTTP referrer won't work because the user might have bookmarked the URL
 
+            // TODO we need to find a better way of handling this situation, because this doesn't seem the
+            // right place to add this piece of code...
+            $host = Director::protocolAndHost();
+            if (strpos('webtoolkit.govt.nz', $host) !== false) {
+                $link .= strpos($link, '?') === false ? '?rf=1' : '&rf=1';
+            } else if (strpos('ict.govt.nz', $host) !== false) {
+                $link .= strpos($link, '?') === false ? '?rf=2' : '&rf=2';
+            }
+
+			// Update the response using the link mapping redirection.
 			$response->setBody('');
 			$response->redirect($link, $responseCode);
 		}
