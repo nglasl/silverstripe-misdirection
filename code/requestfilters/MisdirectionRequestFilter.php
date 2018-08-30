@@ -111,9 +111,9 @@ class MisdirectionRequestFilter implements RequestFilter {
             // TODO we need to find a better way of handling this situation, because this doesn't seem the
             // right place to add this piece of code...
             $host = Director::protocolAndHost();
-            if (strpos('webtoolkit.govt.nz', $host) !== false) {
+            if (strpos($host, 'webtoolkit.govt.nz') !== false) {
                 $link .= strpos($link, '?') === false ? '?rf=1' : '&rf=1';
-            } else if (strpos('ict.govt.nz', $host) !== false) {
+            } else if (strpos($host, 'ict.govt.nz') !== false) {
                 $link .= strpos($link, '?') === false ? '?rf=2' : '&rf=2';
             }
 
