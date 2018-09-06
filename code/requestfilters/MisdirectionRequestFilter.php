@@ -115,6 +115,8 @@ class MisdirectionRequestFilter implements RequestFilter {
                 $link .= strpos($link, '?') === false ? '?rf=1' : '&rf=1';
             } else if (strpos($host, 'ict.govt.nz') !== false) {
                 $link .= strpos($link, '?') === false ? '?rf=2' : '&rf=2';
+            } else if (strpos($host, 'dns.govt.nz') !== false) {
+                $link .= strpos($link, '?') === false ? '?rf=3' : '&rf=3';
             }
 
 			// Update the response using the link mapping redirection.
