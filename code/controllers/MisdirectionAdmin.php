@@ -7,7 +7,10 @@
 
 class MisdirectionAdmin extends ModelAdmin {
 
-	private static $managed_models = 'LinkMapping';
+	private static $managed_models = array(
+		'LinkMapping',
+		'DomainParameter'
+	);
 
 	private static $menu_title = 'Misdirection';
 
@@ -26,14 +29,16 @@ class MisdirectionAdmin extends ModelAdmin {
 	public function getEditForm($ID = null, $fields = null) {
 
 		$form = parent::getEditForm($ID, $fields);
-		$gridfield = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
+
+		$gridName = $this->sanitiseClassName($this->modelClass);
+		$gridfield = $form->Fields()->fieldByName($gridName);
 		$gridfield->getConfig()->getComponentByType('GridFieldSortableHeader')->setFieldSorting(array(
 			'RedirectTypeSummary' => 'RedirectType'
 		));
 
 		// Allow extension customisation.
-
 		$this->extend('updateMisdirectionAdminEditForm', $form);
+
 		return $form;
 	}
 
@@ -108,5 +113,36 @@ class MisdirectionAdmin extends ModelAdmin {
 			return $this->httpError(404);
 		}
 	}
+
+    /**
+     * Export all domain model fields, instead of display fields
+     * @return array all fields in the model
+     */
+    public function getExportFields()
+    {
+		$gridName = $this->sanitiseClassName($this->modelClass);
+
+		$fields = array();
+		if ($gridName === 'LinkMapping') {
+			$fields['ID'] = 'ID';
+			$fields['LinkType'] = 'LinkType';
+			$fields['MappedLink'] = 'MappedLink';
+			$fields['IncludesHostname'] = 'IncludesHostname';
+			$fields['Priority'] = 'Priority';
+			$fields['RedirectType'] = 'RedirectType';
+			$fields['RedirectLink'] = 'RedirectLink';
+			$fields['RedirectPageID'] = 'RedirectPageID';
+			$fields['ResponseCode'] = 'ResponseCode';
+			$fields['ForwardPOSTRequest'] = 'ForwardPOSTRequest';
+			$fields['HostnameRestriction'] = 'HostnameRestriction';
+		} else if ($gridName === 'DomainParameter') {
+			$fields['ID'] = 'ID';
+			$fields['SourceDomain'] = 'SourceDomain';
+			$fields['Parameters'] = 'Parameters';
+		}
+
+        return $fields;
+    }
+
 
 }

@@ -110,8 +110,10 @@ class MisdirectionRequestFilter implements RequestFilter {
 				$link = $base;
 			}
 
-			// Update the response using the link mapping redirection.
+            // append a parameters to the URL based on the current domain
+            $link = $this->service->updateLinkParametersForDomain($link);
 
+            // Update the response using the link mapping redirection.
 			$response->setBody('');
 			$response->redirect($link, $responseCode);
 		}

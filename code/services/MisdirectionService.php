@@ -221,6 +221,27 @@ class MisdirectionService {
 		return $testing ? $chain : $map;
 	}
 
+
+    /**
+     * Return added parameters to the redirected url based on the redirected host
+     * @param $link the current link the user will be redirected to
+     * @return string updated link with extra parameters
+     */
+    public function updateLinkParametersForDomain($link) {
+        $protocolAndHost = Director::protocolAndHost();
+        $parts = parse_url($protocolAndHost);
+        $host = $parts['host'];
+
+        $domain = DomainParameter::get()->filter('SourceDomain', $host)->first();
+
+        if (!empty($domain) && ($host === $domain->SourceDomain)) {
+            $link .= strpos($link, '?') === false ? '?' : '&';
+            $link .= $domain->Parameters;
+        }
+
+        return $link;
+    }
+
 	/**
 	 *	Determine the fallback for a URL when the CMS module is present.
 	 *
