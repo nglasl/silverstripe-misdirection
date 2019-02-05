@@ -25,7 +25,7 @@
 	"extra": {
 		"installer-name": "misdirection",
 		"branch-alias": {
-			"dev-master": "2.2.x-dev"
+			"dev-master": "2.3.x-dev"
 		},
 		"screenshots": [
 			"https://raw.githubusercontent.com/nglasl/silverstripe-misdirection/master/images/misdirection-testing.png"

@@ -15,10 +15,6 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 		'VanityMapping' => 'LinkMapping'
 	);
 
-	/**
-	 *	Display the vanity mapping fields.
-	 */
-
 	public function updateSettingsFields($fields) {
 
 		$fields->addFieldToTab('Root.Misdirection', HeaderField::create(
@@ -40,6 +36,33 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 		// Allow extension customisation.
 
 		$this->owner->extend('updateSiteTreeMisdirectionExtensionSettingsFields', $fields);
+	}
+
+	public function validate(ValidationResult $result) {
+
+		// Retrieve the vanity mapping URL, where this is only possible using the POST variable.
+
+		$vanityURL = (!Controller::has_curr() || is_null($controller = Controller::curr()) || is_null($URL = $controller->getRequest()->postVar('VanityURL'))) ? $this->owner->VanityMapping()->MappedLink : $URL;
+
+		// Determine whether another vanity mapping already exists.
+		
+		$existing = LinkMapping::get()->filter(array(
+			'MappedLink' => $vanityURL,
+			'RedirectType' => 'Page',
+			'RedirectPageID:not' => array(
+				0,
+				$this->owner->ID
+			)
+		))->first();
+		if($result->valid() && $existing && ($page = $existing->getRedirectPage())) {
+			$link = Controller::join_links(CMSPageSettingsController::singleton()->Link('show'), $page->ID);
+			$result->error('Vanity URL already exists!');
+		}
+
+		// Allow extension.
+
+		$this->owner->extend('validateSiteTreeMisdirectionExtension', $result);
+		return $result;
 	}
 
 	/**
