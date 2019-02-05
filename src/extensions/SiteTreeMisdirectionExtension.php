@@ -2,6 +2,7 @@
 
 namespace nglasl\misdirection;
 
+use SilverStripe\CMS\Controllers\CMSPageSettingsController;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
@@ -9,6 +10,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\HeaderField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\ValidationResult;
 
 /**
  *	This extension provides vanity mapping directly from a page, and automatically creates the appropriate link mappings when replacing the default automated URL handling.
@@ -24,10 +26,6 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 	private static $has_one = array(
 		'VanityMapping' => LinkMapping::class
 	);
-
-	/**
-	 *	Display the vanity mapping fields.
-	 */
 
 	public function updateSettingsFields($fields) {
 
@@ -50,6 +48,33 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 		// Allow extension customisation.
 
 		$this->owner->extend('updateSiteTreeMisdirectionExtensionSettingsFields', $fields);
+	}
+
+	public function validate(ValidationResult $result) {
+
+		// Retrieve the vanity mapping URL, where this is only possible using the POST variable.
+
+		$vanityURL = (!Controller::has_curr() || is_null($controller = Controller::curr()) || is_null($URL = $controller->getRequest()->postVar('VanityURL'))) ? $this->owner->VanityMapping()->MappedLink : $URL;
+
+		// Determine whether another vanity mapping already exists.
+		
+		$existing = LinkMapping::get()->filter(array(
+			'MappedLink' => $vanityURL,
+			'RedirectType' => 'Page',
+			'RedirectPageID:not' => array(
+				0,
+				$this->owner->ID
+			)
+		))->first();
+		if($result->isValid() && $existing && ($page = $existing->getRedirectPage())) {
+			$link = Controller::join_links(CMSPageSettingsController::singleton()->Link('show'), $page->ID);
+			$result->addError("Vanity URL <a href='{$link}' target='_blank'>already exists</a>!", ValidationResult::TYPE_ERROR, null, ValidationResult::CAST_HTML);
+		}
+
+		// Allow extension.
+
+		$this->owner->extend('validateSiteTreeMisdirectionExtension', $result);
+		return $result;
 	}
 
 	/**

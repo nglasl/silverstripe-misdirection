@@ -262,10 +262,6 @@ class LinkMapping extends DataObject {
 		return $fields;
 	}
 
-	/**
-	 *	Confirm that the current link mapping is valid.
-	 */
-
 	public function validate() {
 
 		$result = parent::validate();
