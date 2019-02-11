@@ -55,6 +55,9 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 		// Retrieve the vanity mapping URL, where this is only possible using the POST variable.
 
 		$vanityURL = (!Controller::has_curr() || is_null($controller = Controller::curr()) || is_null($URL = $controller->getRequest()->postVar('VanityURL'))) ? $this->owner->VanityMapping()->MappedLink : $URL;
+		if(!$vanityURL) {
+			return $result;
+		}
 
 		// Determine whether another vanity mapping already exists.
 		
