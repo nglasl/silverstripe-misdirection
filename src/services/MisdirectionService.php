@@ -205,7 +205,7 @@ class MisdirectionService {
 
 			// Enforce a maximum number of redirects, preventing infinite recursion and inefficient link mappings.
 
-			if($counter === Config::inst()->get(MisdirectionRequestFilter::class, 'maximum_requests')) {
+			if($counter === Config::inst()->get(MisDirectionRequestProcessor::class, 'maximum_requests')) {
 				$chain[] = array(
 					'ResponseCode' => 404
 				);

@@ -2,7 +2,7 @@
 name: misdirection-request-filters
 ---
 SilverStripe\Core\Injector\Injector:
-  SilverStripe\Control\RequestProcessor:
+  SilverStripe\Control\Director:
     properties:
-      filters:
-        - '%$nglasl\misdirection\MisdirectionRequestFilter'
+      Middlewares:
+        MisDirectionRequestProcessor: '%$nglasl\misdirection\MisDirectionRequestProcessor'

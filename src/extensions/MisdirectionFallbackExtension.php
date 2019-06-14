@@ -81,7 +81,7 @@ class MisdirectionFallbackExtension extends DataExtension {
 
 		// Retrieve the response code selection.
 
-		$responses = Config::inst()->get(MisdirectionRequestFilter::class, 'status_codes');
+		$responses = Config::inst()->get(MisDirectionRequestProcessor::class, 'status_codes');
 		$selection = array();
 		foreach($responses as $code => $description) {
 			if(($code >= 300) && ($code < 400)) {

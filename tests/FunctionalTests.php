@@ -3,7 +3,7 @@
 namespace nglasl\misdirection\tests;
 
 use nglasl\misdirection\LinkMapping;
-use nglasl\misdirection\MisdirectionRequestFilter;
+use nglasl\misdirection\MisDirectionRequestProcessor;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
@@ -93,7 +93,7 @@ class FunctionalTests extends FunctionalTest {
 
 			// Update the default enforce misdirection.
 
-			Config::modify()->set(MisdirectionRequestFilter::class, 'enforce_misdirection', false);
+			Config::modify()->set(MisDirectionRequestProcessor::class, 'enforce_misdirection', false);
 
 			// Determine whether the page is now matched.
 

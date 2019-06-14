@@ -135,7 +135,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 		// Determine whether the default automated URL handling has been replaced.
 
-		if(Config::inst()->get(MisdirectionRequestFilter::class, 'replace_default')) {
+		if(Config::inst()->get(MisDirectionRequestProcessor::class, 'replace_default')) {
 
 			// Determine whether the URL segment or parent ID has been updated.
 
@@ -185,7 +185,7 @@ class SiteTreeMisdirectionExtension extends DataExtension {
 
 		// Determine whether this page has been completely removed.
 
-		if(Config::inst()->get(MisdirectionRequestFilter::class, 'replace_default') && !$this->owner->isPublished() && !$this->owner->isOnDraft()) {
+		if(Config::inst()->get(MisDirectionRequestProcessor::class, 'replace_default') && !$this->owner->isPublished() && !$this->owner->isOnDraft()) {
 
 			// Convert any link mappings that are directly associated with this page.
 
