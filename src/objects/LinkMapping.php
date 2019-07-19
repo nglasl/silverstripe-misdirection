@@ -101,19 +101,28 @@ class LinkMapping extends DataObject {
 		return true;
 	}
 
-	public function canEdit($member = null) {
-
-		return Permission::checkMember($member, 'ADMIN');
+	public function canEdit($member = null)
+	{
+		return (
+			Permission::checkMember($member, 'ADMIN') ||
+			Permission::checkMember($member, 'CMS_ACCESS_nglasl\misdirection\MisdirectionAdmin')
+		);
 	}
 
-	public function canCreate($member = null, $context = array()) {
-
-		return Permission::checkMember($member, 'ADMIN');
+	public function canCreate($member = null, $context = array())
+	{
+		return (
+			Permission::checkMember($member, 'ADMIN') ||
+			Permission::checkMember($member, 'CMS_ACCESS_nglasl\misdirection\MisdirectionAdmin')
+		);
 	}
 
-	public function canDelete($member = null) {
-
-		return Permission::checkMember($member, 'ADMIN');
+	public function canDelete($member = null)
+	{
+		return (
+			Permission::checkMember($member, 'ADMIN') ||
+			Permission::checkMember($member, 'CMS_ACCESS_nglasl\misdirection\MisdirectionAdmin')
+		);
 	}
 
 	/**
