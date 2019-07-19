@@ -56,8 +56,8 @@ class LinkMapping extends DataObject {
 	private static $default_sort = 'ID DESC';
 
 	private static $searchable_fields = array(
-		'LinkType',
 		'MappedLink',
+		'LinkType',
 		'Priority',
 		'RedirectType'
 	);
