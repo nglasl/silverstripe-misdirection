@@ -300,6 +300,7 @@ class LinkMapping extends DataObject {
 	public function onBeforeWrite() {
 
 		parent::onBeforeWrite();
+
 		$this->MappedLink = MisdirectionService::unify_URL($this->MappedLink);
 		$this->RedirectLink = trim($this->RedirectLink, ' ?/');
 		$this->HostnameRestriction = MisdirectionService::unify_URL($this->HostnameRestriction);
