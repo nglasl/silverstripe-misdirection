@@ -10,6 +10,8 @@ _The current release is **3.1.1**_
 
 This module does **not** require the CMS.
 
+**This repository is no longer supported, however this module is still supported [here](https://github.com/symbiote/silverstripe-misdirection).**
+
 ## Getting Started
 
 * [Place the module under your root project directory.](https://packagist.org/packages/nglasl/silverstripe-misdirection)
